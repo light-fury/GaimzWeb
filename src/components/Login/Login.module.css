@@ -86,6 +86,9 @@
 }
 
 .formButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 115px;
   height: 58px;
   background: #613BFF;
@@ -99,6 +102,11 @@
   color: #FFFFFF;
   outline: none;
   cursor: pointer;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
 }
 
 .heroContainer {

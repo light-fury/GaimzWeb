@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import { login } from '../redux/modules/authentication';
 
 import styles from './Login.module.css';
 import SocialButton from '../shared/SocialButton/SocialButton';
 import InputField from '../shared/InputField/InputField';
-
 import logo from '../../images/logo.svg';
 import logoText from '../../images/logoText.svg';
 import facebook from '../../images/socialMedia/facebook.svg';
 import twitch from '../../images/socialMedia/twitch.svg';
 import steam from '../../images/socialMedia/steam.svg';
+import loadingSpinner from '../../images/loadingSpinner.svg';
 
-const Login = () => {
+const Login = (props) => {
   const [formData, setFormData] = useState({
     email: 'ah@gaimz.com',
-    password: '••••••••••••'
+    password: 'password'
   });
 
   const handleSocialClick = (socialMedia) => {
@@ -27,20 +30,12 @@ const Login = () => {
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    const userPayload = {
-      user_email: formData.email,
-      user_password: formData.password
-    };
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userPayload)
-  };
-  fetch('https://basicapi.gaimz.com/login', requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        debugger
-      });
+    console.log('click');
+    props.login(formData.email, formData.password);
+  }
+
+  if (props.isAuthenticated) {
+    return <Redirect to='/feed' />;
   }
 
   return (
@@ -70,7 +65,9 @@ const Login = () => {
               <InputField type='email' name='email' label='Email' style={{ marginBottom: '28px' }} value={formData.email} onChange={handleChange} />
               <InputField type='password' name='password' label='password' style={{ marginBottom: '28px' }} value={formData.password} onChange={handleChange} />
               <p className={styles.formText}>Forgot password?</p>
-              <button className={styles.formButton} type='Submit'>Login</button>
+              <button className={styles.formButton} type='Submit'>
+                {props.isLoading ? (<img className={styles.loadingSpinner} src={loadingSpinner} />) : ('Login')}
+              </button>
             </form>
           </div>
         </div>
@@ -85,4 +82,20 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.authentication.isAuthenticated,
+    isLoading: state.authentication.isLoading
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (email, password) => dispatch(login(email, password))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);
