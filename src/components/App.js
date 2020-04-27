@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 import './App.css';
 import Alert from './Alert/Alert';
@@ -19,11 +19,6 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Alert />
-        {/* <ul>
-          <li><Link to='login'>Login</Link></li>
-          <li><Link to='Register'>Register</Link></li>
-          <li><Link to='Feed'>Feed</Link></li>
-        </ul> */}
         <main>
           <Switch>
             <Route path='/login' exact={true} component={Login} />

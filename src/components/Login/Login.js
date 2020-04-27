@@ -3,7 +3,9 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { login } from '../redux/modules/authentication';
+import { createAlert } from '../redux/modules/alert';
 
+import validate from '../utils/validate';
 import styles from './Login.module.css';
 import SocialButton from '../shared/SocialButton/SocialButton';
 import InputField from '../shared/InputField/InputField';
@@ -16,8 +18,8 @@ import loadingSpinner from '../../images/loadingSpinner.svg';
 
 const Login = (props) => {
   const [formData, setFormData] = useState({
-    email: 'ah@gaimz.com',
-    password: 'password'
+    email: '',
+    password: ''
   });
 
   const handleSocialClick = (socialMedia) => {
@@ -30,8 +32,12 @@ const Login = (props) => {
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('click');
-    props.login(formData.email, formData.password);
+    const errors = validate(formData.email, formData.password);
+    if (errors.length !== 0) {
+      errors.forEach((error) => props.createAlert(error, 'danger'));
+    } else {
+      props.login(formData.email, formData.password);
+    }
   }
 
   if (props.isAuthenticated) {
@@ -66,7 +72,7 @@ const Login = (props) => {
               <InputField type='password' name='password' label='password' style={{ marginBottom: '28px' }} value={formData.password} onChange={handleChange} />
               <p className={styles.formText}>Forgot password?</p>
               <button className={styles.formButton} type='Submit'>
-                {props.isLoading ? (<img className={styles.loadingSpinner} src={loadingSpinner} />) : ('Login')}
+                {props.isLoading ? (<img className={styles.loadingSpinner} src={loadingSpinner} alt='Loading Spinner' />) : ('Login')}
               </button>
             </form>
           </div>
@@ -91,7 +97,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (email, password) => dispatch(login(email, password))
+    login: (email, password) => dispatch(login(email, password)),
+    createAlert: (message, alertType) => dispatch(createAlert(message, alertType))
   }
 }
 

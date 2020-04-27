@@ -15,16 +15,42 @@
   color: #1E1F20;
 }
 
-.input {
+.inputContainer {
   width: 368px;
   height: 48px;
-  padding: 14px 50px 14px 14px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
   border: 2px solid #E9E9EC;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.input {
+  width: 100%;
+  flex: 1;
+  padding-left: 14px;
+  border: 0px;
   font-family: 'Muli';
   font-weight: 300;
   font-size: 14px;
   line-height: 20px;
   color: #8F92A1;
+}
+
+.input:focus {
+  outline-width: 0;
+}
+
+.validContainer {
+  width: 50px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.validCheck {
+  width: 20px;
+  height: 20px;
 }
