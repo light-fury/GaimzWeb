@@ -1,0 +1,148 @@
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.cardContainer {
+  flex: 2;
+  border-radius: 0px 32px 32px 0px;
+  background: #FFFFFF;
+}
+
+.contentContainer {
+  margin: 50px 72px 50px 72px;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 75px;
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
+  margin-right: 5px;
+}
+
+.logoText {
+  width: 66px;
+  height: 23px;
+  margin: 0px;
+}
+
+.cardTitle {
+  margin: 0px 0px 4px 0px;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 30px;
+  color: #1E1F20;
+}
+
+.cardBody {
+  margin: 0px 4px 0px 0px;
+  font-size: 14px;
+  line-height: 22px;
+  color: #8F92A1;
+}
+
+.socialContainer {
+  margin-top: 48px;
+}
+
+.socialButtonContainer {
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.socialText {
+  font-size: 12px;
+  line-height: 20px;
+  color: #8F92A1;
+  margin-top: 10px;
+}
+
+.formContainer {
+  margin-top: 38px;
+}
+
+.form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.formText {
+  font-size: 14px;
+  line-height: 22px;
+  color: #8F92A1;
+  margin: 0px 0px 38px 0px;
+}
+
+.formButton {
+  width: 115px;
+  height: 58px;
+  background: #613BFF;
+  border-radius: 12px;
+  border: 0px;
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #FFFFFF;
+  outline: none;
+  cursor: pointer;
+}
+
+.heroContainer {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../../images/loginBackground.svg');
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.heroTextTitle {
+  margin: 10px;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 36px;
+  color: #FFFFFF;
+}
+
+.heroTextBody {
+  margin: 10px;
+  font-size: 14px;
+  line-height: 22px;
+  color: #FFFFFF;
+}
+
+.heroButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 197px;
+  height: 58px;
+  margin: 10px;
+  border-radius: 12px;
+  border: 0;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #FFFFFF;
+  text-decoration: none;
+  background: #FA7267;
+  outline: none;
+  cursor: pointer;
+}

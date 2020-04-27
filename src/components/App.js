@@ -10,11 +10,11 @@ import Feed from './Feed/Feed';
 const App = () => {
   return (
     <Router>
-      <ul>
+      {/* <ul>
         <li><Link to='login'>Login</Link></li>
         <li><Link to='Register'>Register</Link></li>
         <li><Link to='Feed'>Feed</Link></li>
-      </ul>
+      </ul> */}
       <main>
         <Switch>
           <Route path='/login' exact={true} component={Login} />

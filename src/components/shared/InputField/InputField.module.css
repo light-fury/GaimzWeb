@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #1E1F20;
+}
+
+.input {
+  width: 368px;
+  height: 48px;
+  padding: 14px 50px 14px 14px;
+  border: 2px solid #E9E9EC;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: 'Muli';
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #8F92A1;
+}
