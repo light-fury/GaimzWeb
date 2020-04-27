@@ -1,4 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+  <a href="https://gaimz.io/" target="blank"><img src="https://gaimz.io/wp-content/uploads/2019/11/gaimziologo.png" width="200" alt="Gaimz Logo" /></a>
+</p>
+
+  
+
+## Description
+This project is the Web Frontend used for Gaimz as a platform, it was written in React - based on the Create React App CLI.
 
 ## Available Scripts
 
