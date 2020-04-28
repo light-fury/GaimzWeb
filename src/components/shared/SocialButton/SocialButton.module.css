@@ -1,0 +1,15 @@
+.container {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 0px;
+  outline: none;
+  color: #000000;
+  cursor: pointer;
+  background-color: #E8E9E9;
+}
+
+.content {
+  width: 20px;
+  height: 20px;
+}
