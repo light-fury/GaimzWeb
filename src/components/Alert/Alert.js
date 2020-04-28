@@ -11,7 +11,7 @@ const Alert = (props) => {
       { props.alerts !== null 
         && props.alerts.length > 0 
         && props.alerts.map((alert) => (
-        <div className={styles.alertContainer} onClick={() => props.removeAlert(alert.id)}>
+        <div className={styles.alertContainer} key={alert.id} onClick={() => props.removeAlert(alert.id)}>
           {alert.message}
         </div>
       ))}

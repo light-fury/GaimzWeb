@@ -42,12 +42,19 @@
   outline-width: 0;
 }
 
-.validContainer {
+.validationContainer {
   width: 50px;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.invalidCheck {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background: #FF3A3A;
 }
 
 .validCheck {

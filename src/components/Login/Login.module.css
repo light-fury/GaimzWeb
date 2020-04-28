@@ -85,23 +85,10 @@
   margin: 0px 0px 38px 0px;
 }
 
-.formButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 115px;
+.submitButton {
+  width: 115px; 
   height: 58px;
-  background: #613BFF;
-  border-radius: 12px;
-  border: 0px;
-  font-family: 'Muli';
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  color: #FFFFFF;
-  outline: none;
-  cursor: pointer;
+  background-color: #613BFF;
 }
 
 .loadingSpinner {

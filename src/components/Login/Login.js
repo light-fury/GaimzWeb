@@ -14,6 +14,7 @@ import logoText from '../../images/logoText.svg';
 import facebook from '../../images/socialMedia/facebook.svg';
 import twitch from '../../images/socialMedia/twitch.svg';
 import steam from '../../images/socialMedia/steam.svg';
+import Button from '../shared/Button/Button';
 import loadingSpinner from '../../images/loadingSpinner.svg';
 
 const Login = (props) => {
@@ -48,15 +49,12 @@ const Login = (props) => {
     <div className={styles.container}>
       <div className={styles.cardContainer}>
         <div className={styles.contentContainer}>
-
           <div className={styles.logoContainer}>
             <img className={styles.logo} src={logo} alt='Gaimz Logo' />
             <img className={styles.logoText} src={logoText} alt='Gaimz Text' />
           </div>
-
           <p className={styles.cardTitle}>Welcome Back!</p>
           <p className={styles.cardBody}>Sign in to continue</p>
-
           <div className={styles.socialContainer}>
             <div className={styles.socialButtonContainer}>
               <SocialButton icon={facebook} iconName='Facebook' style={{ color: '#FFFFFF', backgroundColor: '#39579B' }} onClick={() => handleSocialClick('facebook')} />
@@ -65,20 +63,16 @@ const Login = (props) => {
             </div>
             <p className={styles.socialText}>Or use your email account</p>
           </div>
-
           <div className={styles.formContainer}>
             <form className={styles.form} onSubmit={handleSubmit}>
               <InputField type='email' name='email' label='Email' style={{ marginBottom: '28px' }} value={formData.email} onChange={handleChange} />
               <InputField type='password' name='password' label='password' style={{ marginBottom: '28px' }} value={formData.password} onChange={handleChange} />
               <p className={styles.formText}>Forgot password?</p>
-              <button className={styles.formButton} type='Submit'>
-                {props.isLoading ? (<img className={styles.loadingSpinner} src={loadingSpinner} alt='Loading Spinner' />) : ('Login')}
-              </button>
+              <Button className={styles.submitButton} type='Submit'>{props.isLoading ? (<img className={styles.loadingSpinner} src={loadingSpinner} alt='Loading Spinner' />) : ('Login')}</Button>
             </form>
           </div>
         </div>
       </div>
-
       <div className={styles.heroContainer}>
         <p className={styles.heroTextTitle}>Hello Gamer</p>
         <p className={styles.heroTextBody}>Don't have an account yet?</p>
