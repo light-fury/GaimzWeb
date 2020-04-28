@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './Register.css';
+import styles from './Register.module.css';
 
-const Register = () => {
+const Register = (props) => {
   return (
     <div>
       Register
