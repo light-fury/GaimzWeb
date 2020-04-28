@@ -14,7 +14,7 @@ const Alert = (props) => {
         && props.alerts.map((alert) => (
         <div className={[styles.alertContainer, styles[alert.alertType]].join(' ')} key={alert.id}>
           {alert.message}
-          <img className={styles.cancelButton} src={dismiss} onClick={() => props.removeAlert(alert.id)} />
+          <img className={styles.cancelButton} src={dismiss} alt='Dismiss Alert' onClick={() => props.removeAlert(alert.id)} />
         </div>
       ))}
     </div>
