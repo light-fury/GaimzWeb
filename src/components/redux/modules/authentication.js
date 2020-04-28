@@ -12,10 +12,12 @@ const authentication = (state = initialState, action) => {
   switch(action.type) {
     case START_FETCHING:
       return {...state, isLoading: true }
+    case STOP_FETCHING:
+      return {...state, isLoading: false }
     case LOGIN_SUCCESS:
-      return {...state, isAuthenticated: true, isLoading: false }
+      return {...state, isAuthenticated: true }
     case LOGIN_FAILURE:
-      return {...state, isAuthenticated: false, isLoading: false }
+      return {...state, isAuthenticated: false }
     case LOAD_USER:
       return {...state, user: action.user }
     default:
@@ -27,6 +29,13 @@ const START_FETCHING = 'START_FETCHING';
 const startFetching = () => {
   return {
     type: START_FETCHING
+  }
+}
+
+const STOP_FETCHING = 'STOP_FETCHING';
+const stopFetching = () => {
+  return {
+    type: STOP_FETCHING
   }
 }
 
@@ -58,17 +67,20 @@ const login = (email, password) => async (dispatch) => {
   try {
     dispatch(startFetching());
     const response = await axios.post('https://basicapi.gaimz.com/login', body, config);
+    if(!response || !response.data.auth_token || !response.data.user) {
+      throw new Error();
+    }
     dispatch(loginSuccess());
+    dispatch(stopFetching());
     setAuthToken(response.data.auth_token);
     dispatch(loadUser(response.data.user));
     dispatch(createAlert(`Welcome back, ${response.data.user.user_name}`, 'success'));
   } catch (error) {
-    const errorMessage = error.response.data.message;
-    if (errorMessage) {
-      console.log(errorMessage);
-    }
     dispatch(loginFailure());
-    dispatch(createAlert('Invalid Credentials', 'danger'));
+    dispatch(stopFetching());
+    const errorMessage = error.response ? error.response.data.message : 'Something went wrong';
+    console.log(errorMessage);
+    dispatch(createAlert(errorMessage, 'danger'));
   }
 };
 

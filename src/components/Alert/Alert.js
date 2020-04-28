@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { removeAlert } from '../redux/modules/alert';
 
 import styles from './Alert.module.css';
-import cancel from '../../images/input/invalid.svg';
+import dismiss from '../../images/icons/x.svg';
 
 const Alert = (props) => {
   return (
@@ -14,7 +14,7 @@ const Alert = (props) => {
         && props.alerts.map((alert) => (
         <div className={[styles.alertContainer, styles[alert.alertType]].join(' ')} key={alert.id}>
           {alert.message}
-          <img className={styles.cancelButton} src={cancel} onClick={() => props.removeAlert(alert.id)} />
+          <img className={styles.cancelButton} src={dismiss} onClick={() => props.removeAlert(alert.id)} />
         </div>
       ))}
     </div>
