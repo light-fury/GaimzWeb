@@ -54,10 +54,16 @@
   width: 20px;
   height: 20px;
   border-radius: 20px;
-  background: #FF3A3A;
+  background-color: #FF3A3A;
 }
 
 .validCheck {
   width: 20px;
   height: 20px;
+}
+
+.passwordButton {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }

@@ -61,6 +61,7 @@ const login = (email, password) => async (dispatch) => {
     dispatch(loginSuccess());
     setAuthToken(response.data.auth_token);
     dispatch(loadUser(response.data.user));
+    dispatch(createAlert(`Welcome back, ${response.data.user.user_name}`, 'success'));
   } catch (error) {
     const errorMessage = error.response.data.message;
     if (errorMessage) {
