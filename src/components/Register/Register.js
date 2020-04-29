@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { login as loginAction } from '../redux/modules/authentication';
-import { createAlert as createAlertAction } from '../redux/modules/alert';
 
-import validate from '../utils/validate';
 import styles from './Register.module.css';
 import SocialButton from '../shared/SocialButton/SocialButton';
 import Button from '../shared/Button/Button';
@@ -37,6 +34,10 @@ const Register = ({ isAuthenticated, isLoading }) => {
     event.preventDefault();
     console.log('submitted');
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/feed" />;
+  }
 
   return (
     <div className={styles.container}>
