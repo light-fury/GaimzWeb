@@ -2,14 +2,16 @@ import React from 'react';
 
 import styles from './SocialButton.module.css';
 
-const SocialButton = (props) => {
+const SocialButton = ({
+  onClick, style, icon, iconName,
+}) => {
   const handleClick = () => {
-    props.onClick();
-  }
+    onClick();
+  };
 
   return (
-    <button className={styles.container} style={props.style} onClick={handleClick}>
-      <img className={styles.content} src={props.icon} alt={props.iconName} />
+    <button className={styles.container} style={style} type="button" onClick={handleClick}>
+      <img className={styles.content} src={icon} alt={iconName} />
     </button>
   );
 };
