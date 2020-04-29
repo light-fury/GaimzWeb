@@ -3,12 +3,12 @@ import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from './rootReducer';
 
-let configureStore = () => {
-  let store = createStore(
+const configureStore = () => {
+  const store = createStore(
     rootReducer,
-    applyMiddleware(thunkMiddleware)
+    applyMiddleware(thunkMiddleware),
   );
   return store;
-}
+};
 
 export default configureStore;

@@ -9,6 +9,6 @@ const validate = (email, password) => {
     errors.push('Password must be at least 8 characters');
   }
   return errors;
-}
+};
 
 export default validate;

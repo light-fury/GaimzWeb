@@ -5,7 +5,7 @@ import { authentication } from '../modules/authentication';
 
 const rootReducer = combineReducers({
   alert,
-  authentication
+  authentication,
 });
 
 export default rootReducer;
