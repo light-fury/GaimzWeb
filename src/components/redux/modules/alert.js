@@ -14,18 +14,19 @@ const removeAlert = (id) => ({
   id,
 });
 
-
 const alert = (state = initialState, action) => {
   switch (action.type) {
     case SET_ALERT:
-      return [...state, action.payload];
+      return [
+        ...state,
+        action.payload,
+      ];
     case REMOVE_ALERT:
       return state.filter((a) => a.id !== action.id);
     default:
       return state;
   }
 };
-
 
 const createAlert = (message, alertType, timeout = 5000) => (dispatch) => {
   const id = uuidv4();
