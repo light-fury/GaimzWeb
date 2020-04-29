@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -8,7 +9,7 @@ import dismiss from '../../images/icons/x.svg';
 
 const Alert = ({ alerts, remove }) => (
   <div className={styles.alertsContainer}>
-    { alerts !== null
+    {alerts !== null
         && alerts.length > 0
         && alerts.map((alert) => (
           <div className={[styles.alertContainer, styles[alert.alertType]].join(' ')} key={alert.id}>
@@ -20,7 +21,7 @@ const Alert = ({ alerts, remove }) => (
 );
 
 const mapStateToProps = (state) => ({
-  alerts: state.alert,
+  alerts: state.alert.alerts,
 });
 
 const mapDispatchToProps = (dispatch) => ({

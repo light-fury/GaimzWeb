@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     setAuthToken(localStorage.token);
     store.dispatch(loadUserAction());
-  }, []);
+  }, [localStorage.token]);
 
   return (
     <Provider store={store}>
