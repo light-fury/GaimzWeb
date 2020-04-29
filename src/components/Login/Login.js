@@ -8,13 +8,14 @@ import { createAlert } from '../redux/modules/alert';
 import validate from '../utils/validate';
 import styles from './Login.module.css';
 import SocialButton from '../shared/SocialButton/SocialButton';
+import Button from '../shared/Button/Button';
 import InputField from '../shared/InputField/InputField';
-import logo from '../../images/logo.svg';
-import logoText from '../../images/logoText.svg';
+
+import logo from '../../images/logos/logo.svg';
+import logoText from '../../images/logos/logoText.svg';
 import facebook from '../../images/socialMedia/facebook.svg';
 import twitch from '../../images/socialMedia/twitch.svg';
 import steam from '../../images/socialMedia/steam.svg';
-import Button from '../shared/Button/Button';
 import loadingSpinner from '../../images/loadingSpinner.svg';
 
 const Login = (props) => {
@@ -30,7 +31,7 @@ const Login = (props) => {
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   }
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const errors = validate(formData.email, formData.password);
