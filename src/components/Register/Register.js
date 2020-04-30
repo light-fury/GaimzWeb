@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -15,25 +15,31 @@ import twitch from '../../images/socialMedia/twitch.svg';
 import steam from '../../images/socialMedia/steam.svg';
 import loadingSpinner from '../../images/loadingSpinner.svg';
 
-const Register = ({ isAuthenticated, isLoading }) => {
+const Register = ({
+  isAuthenticated, isLoading,
+}) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   });
 
-  const handleSocialClick = (socialMedia) => {
+  const handleSocialClick = useCallback((socialMedia) => {
     console.log(socialMedia);
-  };
+  }, []);
 
-  const handleChange = (event) => {
+  const handleChange = useCallback((event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-  };
+  }, [formData]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    console.log('submitted');
-  };
+    console.log({
+      user_name: formData.name,
+      user_email: formData.email,
+      user_password: formData.password,
+    });
+  }, [formData]);
 
   if (isAuthenticated) {
     return <Redirect to="/feed" />;
@@ -81,7 +87,4 @@ const mapStateToProps = (state) => ({
   isLoading: state.authentication.isLoading,
 });
 
-export default connect(
-  mapStateToProps,
-  null,
-)(Register);
+export default connect(mapStateToProps)(Register);
