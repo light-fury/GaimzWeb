@@ -1,11 +1,12 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
+import { isEmail } from 'validator';
 
 import { connect } from 'react-redux';
 import { login as loginAction } from '../redux/modules/authentication';
 import { createAlert as createAlertAction } from '../redux/modules/alert';
 
-import validate from '../utils/validate';
 import styles from './Login.module.css';
 import SocialButton from '../shared/SocialButton/SocialButton';
 import Button from '../shared/Button/Button';
@@ -24,6 +25,17 @@ const Login = ({ createAlert, login, isAuthenticated, isLoading }) => {
     password: '',
   });
 
+  const loginErrors = useMemo(() => {
+    const errors = [];
+    if (!isEmail(formData.email)) {
+      errors.push('Email is invalid');
+    }
+    if (formData.password.length < 8) {
+      errors.push('Password must be at least 8 characters');
+    }
+    return errors;
+  }, [formData.email, formData.password]);
+
   const handleSocialClick = useCallback((socialMedia) => {
     console.log(socialMedia);
   }, []);
@@ -38,14 +50,13 @@ const Login = ({ createAlert, login, isAuthenticated, isLoading }) => {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      const errors = validate(formData.email, formData.password);
-      if (errors.length !== 0) {
-        errors.forEach((error) => createAlert(error, 'danger'));
+      if (loginErrors.length !== 0) {
+        loginErrors.forEach((error) => createAlert(error, 'danger'));
       } else {
         login(formData.email, formData.password);
       }
     },
-    [formData, createAlert, login]
+    [formData, createAlert, login, loginErrors]
   );
 
   if (isAuthenticated) {
@@ -119,13 +130,20 @@ const Login = ({ createAlert, login, isAuthenticated, isLoading }) => {
       </div>
       <div className={styles.heroContainer}>
         <p className={styles.heroTextTitle}>Hello Gamer</p>
-        <p className={styles.heroTextBody}>Don&apos;t have an account yet?</p>
+        <p className={styles.heroTextBody}>Don't have an account yet?</p>
         <Link to="/register" className={styles.heroButton}>
           Create New Account
         </Link>
       </div>
     </div>
   );
+};
+
+Login.propTypes = {
+  createAlert: PropTypes.func,
+  login: PropTypes.func,
+  isAuthenticated: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,36 +1,38 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "prettier",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "plugin:react/recommended",
-        "airbnb"
-    ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        "react/jsx-filename-extension": "off",
-        "react/prop-types": "warn",
-        "jsx-a11y/click-events-have-key-events": "warn",
-        "jsx-a11y/no-noninteractive-element-interactions": "warn",
-        "jsx-a11y/label-has-associated-control": "warn",
-        "react/jsx-props-no-spreading": "warn",
-        "no-param-reassign": ["error", {
-          "props": true,
-          "ignorePropertyModificationsFor": ["draft", "sketch", "outline"]
-        }]
-    }
+    "ecmaVersion": 2019,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    "react/jsx-filename-extension": "off",
+    "react/prop-types": "warn",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-noninteractive-element-interactions": "warn",
+    "jsx-a11y/label-has-associated-control": "warn",
+    "react/jsx-props-no-spreading": "warn",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["draft", "sketch", "outline"]
+      }
+    ]
+  }
 }
