@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './SocialButton.module.css';
 
@@ -17,6 +18,13 @@ const SocialButton = ({ onClick, style, icon, iconName }) => {
       <img className={styles.content} src={icon} alt={iconName} />
     </button>
   );
+};
+
+SocialButton.propTypes = {
+  onClick: PropTypes.func,
+  style: PropTypes.string,
+  icon: PropTypes.string,
+  iconName: PropTypes.string,
 };
 
 export default SocialButton;

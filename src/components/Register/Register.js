@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import styles from './Register.module.css';
@@ -130,6 +130,11 @@ const Register = ({ isAuthenticated, isLoading }) => {
       </div>
     </div>
   );
+};
+
+Register.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

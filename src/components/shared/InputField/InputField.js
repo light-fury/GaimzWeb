@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { isEmail } from 'validator';
 
 import styles from './InputField.module.css';
@@ -6,7 +7,7 @@ import valid from '../../../images/icons/check.svg';
 import invalid from '../../../images/icons/x.svg';
 import showPassword from '../../../images/icons/eye.svg';
 
-const InputFeild = ({ onChange, type, style, label, name, value }) => {
+const InputField = ({ onChange, type, style, label, name, value }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handleChange = (event) => {
@@ -57,4 +58,13 @@ const InputFeild = ({ onChange, type, style, label, name, value }) => {
   );
 };
 
-export default InputFeild;
+InputField.propTypes = {
+  onChange: PropTypes.func,
+  type: PropTypes.string,
+  style: PropTypes.string,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  value: PropTypes.string,
+};
+
+export default InputField;
