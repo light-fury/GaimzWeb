@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -26,15 +26,15 @@ const Login = ({
     password: '',
   });
 
-  const handleSocialClick = (socialMedia) => {
+  const handleSocialClick = useCallback((socialMedia) => {
     console.log(socialMedia);
-  };
+  }, []);
 
-  const handleChange = (event) => {
+  const handleChange = useCallback((event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-  };
+  }, [formData]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = useCallback((event) => {
     event.preventDefault();
     const errors = validate(formData.email, formData.password);
     if (errors.length !== 0) {
@@ -42,7 +42,8 @@ const Login = ({
     } else {
       login(formData.email, formData.password);
     }
-  };
+  }, [formData, createAlert, login]);
+
 
   if (isAuthenticated) {
     return <Redirect to="/feed" />;

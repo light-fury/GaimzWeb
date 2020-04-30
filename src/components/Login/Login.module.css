@@ -86,7 +86,7 @@
 }
 
 .submitButton {
-  width: 115px; 
+  width: 115px;
   height: 58px;
   background-color: #613BFF;
 }
@@ -137,7 +137,7 @@
   text-align: center;
   color: #FFFFFF;
   text-decoration: none;
-  background: #FA7267;
+  background-color: #FA7267;
   outline: none;
   cursor: pointer;
 }
