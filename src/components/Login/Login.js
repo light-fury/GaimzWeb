@@ -25,6 +25,7 @@ const Login = ({
     email: '',
     password: '',
   });
+  const { email, password } = formData;
 
   const handleSocialClick = useCallback((socialMedia) => {
     console.log(socialMedia);
@@ -36,13 +37,13 @@ const Login = ({
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    const errors = validate(formData.email, formData.password);
+    const errors = validate({ email, password });
     if (errors.length !== 0) {
       errors.forEach((error) => createAlert(error, 'danger'));
     } else {
-      login(formData.email, formData.password);
+      login(email, password);
     }
-  }, [formData, createAlert, login]);
+  }, [email, password, createAlert, login]);
 
 
   if (isAuthenticated) {
@@ -69,8 +70,8 @@ const Login = ({
           </div>
           <div className={styles.formContainer}>
             <form className={styles.form} onSubmit={handleSubmit}>
-              <InputField type="email" name="email" label="Email" style={{ marginBottom: '28px' }} value={formData.email} onChange={handleChange} />
-              <InputField type="password" name="password" label="password" style={{ marginBottom: '28px' }} value={formData.password} onChange={handleChange} />
+              <InputField type="email" name="email" label="Email" style={{ marginBottom: '28px' }} value={email} onChange={handleChange} />
+              <InputField type="password" name="password" label="password" style={{ marginBottom: '28px' }} value={password} onChange={handleChange} />
               <p className={styles.formText}>Forgot password?</p>
               <Button className={styles.submitButton} type="Submit">{isLoading ? (<img className={styles.loadingSpinner} src={loadingSpinner} alt="Loading Spinner" />) : ('Login')}</Button>
             </form>

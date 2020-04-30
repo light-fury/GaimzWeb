@@ -2,7 +2,9 @@ import React, { useState, useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
+import { createAlert as createAlertAction } from '../redux/modules/alert';
 
+import validate from '../utils/validate';
 import styles from './Register.module.css';
 import SocialButton from '../shared/SocialButton/SocialButton';
 import Button from '../shared/Button/Button';
@@ -16,13 +18,14 @@ import steam from '../../images/socialMedia/steam.svg';
 import loadingSpinner from '../../images/loadingSpinner.svg';
 
 const Register = ({
-  isAuthenticated, isLoading,
+  createAlert, isAuthenticated, isLoading,
 }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   });
+  const { name, email, password } = formData;
 
   const handleSocialClick = useCallback((socialMedia) => {
     console.log(socialMedia);
@@ -34,12 +37,13 @@ const Register = ({
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    console.log({
-      user_name: formData.name,
-      user_email: formData.email,
-      user_password: formData.password,
-    });
-  }, [formData]);
+    const errors = validate({ name, email, password });
+    if (errors.length !== 0) {
+      errors.forEach((error) => createAlert(error, 'danger'));
+    } else {
+      // register(name, email, password);
+    }
+  }, [name, email, password, createAlert]);
 
   if (isAuthenticated) {
     return <Redirect to="/feed" />;
@@ -65,9 +69,9 @@ const Register = ({
           </div>
           <div className={styles.formContainer}>
             <form className={styles.form} onSubmit={handleSubmit}>
-              <InputField type="name" name="name" label="Name" style={{ marginBottom: '28px' }} value={formData.name} onChange={handleChange} />
-              <InputField type="email" name="email" label="Email" style={{ marginBottom: '28px' }} value={formData.email} onChange={handleChange} />
-              <InputField type="password" name="password" label="password" style={{ marginBottom: '38px' }} value={formData.password} onChange={handleChange} />
+              <InputField type="name" name="name" label="Name" style={{ marginBottom: '28px' }} value={name} onChange={handleChange} />
+              <InputField type="email" name="email" label="Email" style={{ marginBottom: '28px' }} value={email} onChange={handleChange} />
+              <InputField type="password" name="password" label="password" style={{ marginBottom: '38px' }} value={password} onChange={handleChange} />
               <Button className={styles.submitButton} type="Submit">{isLoading ? (<img className={styles.loadingSpinner} src={loadingSpinner} alt="Loading Spinner" />) : ('Sign up')}</Button>
             </form>
           </div>
@@ -87,4 +91,11 @@ const mapStateToProps = (state) => ({
   isLoading: state.authentication.isLoading,
 });
 
-export default connect(mapStateToProps)(Register);
+const mapDispatchToProps = (dispatch) => ({
+  createAlert: (message, alertType) => dispatch(createAlertAction(message, alertType)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Register);

@@ -77,12 +77,9 @@ const authentication = (state = initialState, action) => produce(state, (draft) 
 
 const loadUser = () => async (dispatch) => {
   try {
-    dispatch(startFetching());
     const response = await axios.get('https://basicapi.gaimz.com/checktoken');
-    dispatch(stopFetching());
     dispatch(userLoaded(response.data.user));
   } catch (error) {
-    dispatch(stopFetching());
     dispatch(authenticationError());
   }
 };
