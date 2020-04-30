@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router, Route, Redirect, Switch,
 } from 'react-router-dom';
@@ -13,23 +13,32 @@ import Feed from './Feed/Feed';
 
 // Redux
 import Store from './redux/store/configureStore';
+import { loadUser as loadUserAction } from './redux/modules/authentication';
+import setAuthToken from './utils/setAuthToken';
 
 const store = Store();
 
-const App = () => (
-  <Provider store={store}>
-    <Router>
-      <Alert />
-      <main>
-        <Switch>
-          <Route path="/login" exact component={Login} />
-          <Route path="/register" exact component={Register} />
-          <PrivateRoute path="/feed" exact component={Feed} />
-          <Redirect to="/" />
-        </Switch>
-      </main>
-    </Router>
-  </Provider>
-);
+const App = () => {
+  useEffect(() => {
+    setAuthToken(localStorage.token);
+    store.dispatch(loadUserAction());
+  }, []);
+
+  return (
+    <Provider store={store}>
+      <Router>
+        <Alert />
+        <main>
+          <Switch>
+            <Route path="/login" exact component={Login} />
+            <Route path="/register" exact component={Register} />
+            <PrivateRoute path="/feed" exact component={Feed} />
+            <Redirect to="/" />
+          </Switch>
+        </main>
+      </Router>
+    </Provider>
+  );
+};
 
 export default App;
