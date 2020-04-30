@@ -17,21 +17,25 @@ const removeAlert = (id) => ({
   id,
 });
 
-const alert = (state = initialState, action) => produce(state, (draft) => {
-  switch (action.type) {
-    case SET_ALERT:
-      draft.alerts.push(action.payload);
-      return draft;
-    case REMOVE_ALERT:
-      if (state.alerts.some((item) => item.id === action.id)) {
-        draft.alerts.splice(draft.alerts.findIndex((item) => item.id === action.id), 1);
+const alert = (state = initialState, action) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case SET_ALERT:
+        draft.alerts.push(action.payload);
         return draft;
-      }
-      return state;
-    default:
-      return state;
-  }
-});
+      case REMOVE_ALERT:
+        if (state.alerts.some((item) => item.id === action.id)) {
+          draft.alerts.splice(
+            draft.alerts.findIndex((item) => item.id === action.id),
+            1
+          );
+          return draft;
+        }
+        return state;
+      default:
+        return state;
+    }
+  });
 
 const createAlert = (message, alertType, timeout = 5000) => (dispatch) => {
   const id = uuidv4();
@@ -40,8 +44,4 @@ const createAlert = (message, alertType, timeout = 5000) => (dispatch) => {
   setTimeout(() => dispatch(removeAlert(id)), timeout);
 };
 
-export {
-  alert,
-  createAlert,
-  removeAlert,
-};
+export { alert, createAlert, removeAlert };

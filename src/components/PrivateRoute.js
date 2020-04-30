@@ -6,11 +6,13 @@ import { connect } from 'react-redux';
 const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
   <Route
     {...rest}
-    render={(props) => (
-      isAuthenticated === true
-        ? <Component {...props} />
-        : <Redirect to="/login" />
-    )}
+    render={(props) =>
+      isAuthenticated === true ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login" />
+      )
+    }
   />
 );
 
@@ -18,7 +20,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.authentication.isAuthenticated,
 });
 
-export default connect(
-  mapStateToProps,
-  null,
-)(PrivateRoute);
+export default connect(mapStateToProps, null)(PrivateRoute);
