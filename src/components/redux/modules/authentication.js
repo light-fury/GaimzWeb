@@ -1,4 +1,5 @@
 import axios from 'axios';
+import produce from 'immer';
 import setAuthToken from '../../utils/setAuthToken';
 import { createAlert } from './alert';
 
@@ -45,43 +46,43 @@ const logoutSuccess = () => ({
   type: LOGOUT_SUCCESS,
 });
 
-const authentication = (state = initialState, action) => {
+const authentication = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
     case START_FETCHING:
-      return {
-        ...state, isLoading: true,
-      };
+      draft.isLoading = true;
+      return draft;
     case STOP_FETCHING:
-      return {
-        ...state, isLoading: false,
-      };
+      draft.isLoading = false;
+      return draft;
     case USER_LOADED:
-      return {
-        ...state, user: action.user, isAuthenticated: true,
-      };
+      draft.isAuthenticated = true;
+      draft.user = action.user;
+      return draft;
     case LOGIN_SUCCESS:
-      return {
-        ...state, isAuthenticated: true,
-      };
+      draft.isAuthenticated = true;
+      return draft;
     case LOGIN_FAILURE:
-      return {
-        ...state, isAuthenticated: false,
-      };
+      draft.isAuthenticated = false;
+      return draft;
     case AUTHENTICATION_ERROR:
     case LOGOUT_SUCCESS:
-      return {
-        ...state, token: null, isAuthenticated: false, user: null,
-      };
+      draft.token = null;
+      draft.isAuthenticated = false;
+      draft.user = null;
+      return draft;
     default:
       return state;
   }
-};
+});
 
 const loadUser = () => async (dispatch) => {
   try {
+    dispatch(startFetching());
     const response = await axios.get('https://basicapi.gaimz.com/checktoken');
+    dispatch(stopFetching());
     dispatch(userLoaded(response.data.user));
   } catch (error) {
+    dispatch(stopFetching());
     dispatch(authenticationError());
   }
 };

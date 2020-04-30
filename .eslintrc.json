@@ -27,6 +27,10 @@
         "jsx-a11y/click-events-have-key-events": "warn",
         "jsx-a11y/no-noninteractive-element-interactions": "warn",
         "jsx-a11y/label-has-associated-control": "warn",
-        "react/jsx-props-no-spreading": "warn"
+        "react/jsx-props-no-spreading": "warn",
+        "no-param-reassign": ["error", {
+          "props": true,
+          "ignorePropertyModificationsFor": ["draft", "sketch", "outline"]
+        }]
     }
 }
