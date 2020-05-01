@@ -24,7 +24,6 @@ const store = Store();
 const App = () => {
   useEffect(() => {
     setAuthToken(localStorage.token);
-    console.log('ere');
     store.dispatch(loadUserAction());
   }, []);
 

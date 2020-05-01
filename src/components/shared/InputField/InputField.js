@@ -61,7 +61,7 @@ const InputField = ({ onChange, type, style, label, name, value }) => {
 InputField.propTypes = {
   onChange: PropTypes.func,
   type: PropTypes.string,
-  style: PropTypes.string,
+  style: PropTypes.object,
   label: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,

@@ -22,7 +22,7 @@ const SocialButton = ({ onClick, style, icon, iconName }) => {
 
 SocialButton.propTypes = {
   onClick: PropTypes.func,
-  style: PropTypes.string,
+  style: PropTypes.object,
   icon: PropTypes.string,
   iconName: PropTypes.string,
 };

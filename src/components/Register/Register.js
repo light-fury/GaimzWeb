@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createAlert as createAlertAction } from '../redux/modules/alert';
+import { createAlert } from '../redux/modules/alert';
 
 import {
   validateName,
@@ -21,7 +21,7 @@ import twitch from '../../images/socialMedia/twitch.svg';
 import steam from '../../images/socialMedia/steam.svg';
 import loadingSpinner from '../../images/loadingSpinner.svg';
 
-const Register = ({ isAuthenticated, isLoading }) => {
+const Register = ({ isAuthenticated, isLoading, createValidationAlert }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -43,15 +43,29 @@ const Register = ({ isAuthenticated, isLoading }) => {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      if (
-        validateName(name) &&
-        validateEmail(email) &&
-        validatePassword(password)
-      ) {
+      var nameValidation = validateName(name);
+      var emailValidation = validateEmail(email);
+      var passwordValidation = validatePassword(password);
+      var validSubmission = true;
+      if (nameValidation.error !== null) {
+        createValidationAlert(nameValidation.error, 'danger');
+        validSubmission = false;
+      }
+      if (emailValidation.error !== null) {
+        createValidationAlert(emailValidation.error, 'danger');
+        validSubmission = false;
+      }
+      if (passwordValidation.error !== null) {
+        createValidationAlert(passwordValidation.error, 'danger');
+        validSubmission = false;
+      }
+
+      // TODO: Success
+      if (validSubmission) {
         console.log('all valid');
       }
     },
-    [name, email, password]
+    [name, email, password, createValidationAlert]
   );
 
   if (isAuthenticated) {
@@ -144,6 +158,7 @@ const Register = ({ isAuthenticated, isLoading }) => {
 Register.propTypes = {
   isAuthenticated: PropTypes.bool,
   isLoading: PropTypes.bool,
+  createValidationAlert: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -152,8 +167,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  createAlert: (message, alertType) =>
-    dispatch(createAlertAction(message, alertType)),
+  createValidationAlert: (message, alertType) =>
+    dispatch(createAlert(message, alertType)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
