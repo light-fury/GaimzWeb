@@ -7,7 +7,7 @@ import { removeAlert } from '../redux/modules/alert';
 import styles from './Alert.module.css';
 import dismiss from '../../images/icons/x.svg';
 
-const Alert = ({ alerts, remove }) => (
+const Alert = ({ c, alerts, remove }) => (
   <div className={styles.alertsContainer}>
     {alerts !== null &&
       alerts.length > 0 &&
@@ -29,13 +29,17 @@ const Alert = ({ alerts, remove }) => (
 );
 
 Alert.propTypes = {
+  c: PropTypes.number,
   alerts: PropTypes.array,
   remove: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  alerts: state.alert.alerts,
-});
+const mapStateToProps = (state) => {
+  return {
+    c: Math.random(),
+    alerts: state.alert.alerts,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   remove: (id) => dispatch(removeAlert(id)),

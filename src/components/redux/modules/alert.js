@@ -19,11 +19,9 @@ const removeAlert = (id) => ({
 
 const alert = (state = initialState, action) =>
   produce(state, (draft) => {
-    debugger
     switch (action.type) {
       case SET_ALERT:
         draft.alerts.push(action.payload);
-        debugger
         return draft;
       case REMOVE_ALERT:
         if (state.alerts.some((item) => item.id === action.id)) {
@@ -40,7 +38,6 @@ const alert = (state = initialState, action) =>
   });
 
 const createAlert = (message, alertType, timeout = 5000) => (dispatch) => {
-  debugger
   const id = uuidv4();
   const payload = { message, alertType, id };
   dispatch(setAlert(payload));

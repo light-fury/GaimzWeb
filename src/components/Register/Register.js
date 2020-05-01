@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createAlert as createAlertAction } from '../redux/modules/alert';
 
-import { validateName, validateEmail, validatePassword } from '../utils/validate';
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+} from '../utils/validate';
 import styles from './Register.module.css';
 import SocialButton from '../shared/SocialButton/SocialButton';
 import Button from '../shared/Button/Button';
@@ -36,12 +40,19 @@ const Register = ({ isAuthenticated, isLoading }) => {
     [formData]
   );
 
-  const handleSubmit = useCallback((event) => {
-    event.preventDefault();
-    if (validateName(name) && validateEmail(email) && validatePassword(password)) {
-      console.log('all valid')
-    }
-  }, [name, email, password]);
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      if (
+        validateName(name) &&
+        validateEmail(email) &&
+        validatePassword(password)
+      ) {
+        console.log('all valid');
+      }
+    },
+    [name, email, password]
+  );
 
   if (isAuthenticated) {
     return <Redirect to="/feed" />;
@@ -141,10 +152,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  createAlert: (message, alertType) => dispatch(createAlertAction(message, alertType)),
+  createAlert: (message, alertType) =>
+    dispatch(createAlertAction(message, alertType)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
