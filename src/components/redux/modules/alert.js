@@ -17,31 +17,34 @@ const removeAlert = (id) => ({
   id,
 });
 
-const alert = (state = initialState, action) => produce(state, (draft) => {
-  switch (action.type) {
-    case SET_ALERT:
-      draft.alerts.push(action.payload);
-      return draft;
-    case REMOVE_ALERT:
-      if (state.alerts.some((item) => item.id === action.id)) {
-        draft.alerts.splice(draft.alerts.findIndex((item) => item.id === action.id), 1);
+const alert = (state = initialState, action) =>
+  produce(state, (draft) => {
+    debugger
+    switch (action.type) {
+      case SET_ALERT:
+        draft.alerts.push(action.payload);
+        debugger
         return draft;
-      }
-      return state;
-    default:
-      return state;
-  }
-});
+      case REMOVE_ALERT:
+        if (state.alerts.some((item) => item.id === action.id)) {
+          draft.alerts.splice(
+            draft.alerts.findIndex((item) => item.id === action.id),
+            1
+          );
+          return draft;
+        }
+        return state;
+      default:
+        return state;
+    }
+  });
 
 const createAlert = (message, alertType, timeout = 5000) => (dispatch) => {
+  debugger
   const id = uuidv4();
   const payload = { message, alertType, id };
   dispatch(setAlert(payload));
   setTimeout(() => dispatch(removeAlert(id)), timeout);
 };
 
-export {
-  alert,
-  createAlert,
-  removeAlert,
-};
+export { alert, createAlert, removeAlert };

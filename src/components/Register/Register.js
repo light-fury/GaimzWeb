@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createAlert as createAlertAction } from '../redux/modules/alert';
 
-import validate from '../utils/validate';
+import { validateName, validateEmail, validatePassword } from '../utils/validate';
 import styles from './Register.module.css';
 import SocialButton from '../shared/SocialButton/SocialButton';
 import Button from '../shared/Button/Button';
@@ -17,9 +17,7 @@ import twitch from '../../images/socialMedia/twitch.svg';
 import steam from '../../images/socialMedia/steam.svg';
 import loadingSpinner from '../../images/loadingSpinner.svg';
 
-const Register = ({
-  createAlert, isAuthenticated, isLoading,
-}) => {
+const Register = ({ isAuthenticated, isLoading }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,19 +29,19 @@ const Register = ({
     console.log(socialMedia);
   }, []);
 
-  const handleChange = useCallback((event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-  }, [formData]);
+  const handleChange = useCallback(
+    (event) => {
+      setFormData({ ...formData, [event.target.name]: event.target.value });
+    },
+    [formData]
+  );
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    const errors = validate({ name, email, password });
-    if (errors.length !== 0) {
-      errors.forEach((error) => createAlert(error, 'danger'));
-    } else {
-      // register(name, email, password);
+    if (validateName(name) && validateEmail(email) && validatePassword(password)) {
+      console.log('all valid')
     }
-  }, [name, email, password, createAlert]);
+  }, [name, email, password]);
 
   if (isAuthenticated) {
     return <Redirect to="/feed" />;
@@ -61,18 +59,62 @@ const Register = ({
           <p className={styles.cardBody}>Register to continue</p>
           <div className={styles.socialContainer}>
             <div className={styles.socialButtonContainer}>
-              <SocialButton icon={facebook} iconName="Facebook" style={{ color: '#FFFFFF', backgroundColor: '#39579B' }} onClick={() => handleSocialClick('facebook')} />
-              <SocialButton icon={twitch} iconName="Twitch" onClick={() => handleSocialClick('twitch')} />
-              <SocialButton icon={steam} iconName="Steam" onClick={() => handleSocialClick('steam')} />
+              <SocialButton
+                icon={facebook}
+                iconName="Facebook"
+                style={{ color: '#FFFFFF', backgroundColor: '#39579B' }}
+                onClick={() => handleSocialClick('facebook')}
+              />
+              <SocialButton
+                icon={twitch}
+                iconName="Twitch"
+                onClick={() => handleSocialClick('twitch')}
+              />
+              <SocialButton
+                icon={steam}
+                iconName="Steam"
+                onClick={() => handleSocialClick('steam')}
+              />
             </div>
             <p className={styles.socialText}>Or use your email account</p>
           </div>
           <div className={styles.formContainer}>
             <form className={styles.form} onSubmit={handleSubmit}>
-              <InputField type="name" name="name" label="Name" style={{ marginBottom: '28px' }} value={name} onChange={handleChange} />
-              <InputField type="email" name="email" label="Email" style={{ marginBottom: '28px' }} value={email} onChange={handleChange} />
-              <InputField type="password" name="password" label="password" style={{ marginBottom: '38px' }} value={password} onChange={handleChange} />
-              <Button className={styles.submitButton} type="Submit">{isLoading ? (<img className={styles.loadingSpinner} src={loadingSpinner} alt="Loading Spinner" />) : ('Sign up')}</Button>
+              <InputField
+                type="name"
+                name="name"
+                label="Name"
+                style={{ marginBottom: '28px' }}
+                value={name}
+                onChange={handleChange}
+              />
+              <InputField
+                type="email"
+                name="email"
+                label="Email"
+                style={{ marginBottom: '28px' }}
+                value={email}
+                onChange={handleChange}
+              />
+              <InputField
+                type="password"
+                name="password"
+                label="password"
+                style={{ marginBottom: '38px' }}
+                value={password}
+                onChange={handleChange}
+              />
+              <Button className={styles.submitButton} type="Submit">
+                {isLoading ? (
+                  <img
+                    className={styles.loadingSpinner}
+                    src={loadingSpinner}
+                    alt="Loading Spinner"
+                  />
+                ) : (
+                  'Sign up'
+                )}
+              </Button>
             </form>
           </div>
         </div>
@@ -80,10 +122,17 @@ const Register = ({
       <div className={styles.heroContainer}>
         <p className={styles.heroTextTitle}>Hello Gamer</p>
         <p className={styles.heroTextBody}>Already have an account?</p>
-        <Link to="/login" className={styles.heroButton}>Login</Link>
+        <Link to="/login" className={styles.heroButton}>
+          Login
+        </Link>
       </div>
     </div>
   );
+};
+
+Register.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

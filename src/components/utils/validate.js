@@ -1,11 +1,29 @@
+import Store from '../redux/store/configureStore';
+import { createAlert } from '../redux/modules/alert';
 import { isEmail } from 'validator';
 
-const validate = ({ name = null, email, password }) => {
-  const errors = [];
-  if (name !== null) if (name.length < 3 || name.length > 255) errors.push('Name must be between 3 and 255 characters');
-  if (!isEmail(email)) errors.push('Email is invalid');
-  if (password.length < 8) errors.push('Password must be at least 8 characters');
-  return errors;
-};
+const store = Store();
 
-export default validate;
+export const validateName = (name) => {
+  if (name.length < 3 || name.length > 255) {
+    store.dispatch(createAlert('Name must be between 3 and 255 characters', 'danger'));
+    return false;
+  };
+  return true;
+}
+
+export const validateEmail = (email) => {
+  if (!isEmail(email)) {
+    store.dispatch(createAlert('Email is invalid', 'danger'));
+    return false;
+  }
+  return true;
+}
+
+export const validatePassword = (password) => {
+  if (password.length < 8) {
+    store.dispatch(createAlert('Password must be at least 8 characters', 'danger'));
+    return false;
+  }
+  return true;
+}

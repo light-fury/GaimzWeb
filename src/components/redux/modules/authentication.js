@@ -46,34 +46,35 @@ const logoutSuccess = () => ({
   type: LOGOUT_SUCCESS,
 });
 
-const authentication = (state = initialState, action) => produce(state, (draft) => {
-  switch (action.type) {
-    case START_FETCHING:
-      draft.isLoading = true;
-      return draft;
-    case STOP_FETCHING:
-      draft.isLoading = false;
-      return draft;
-    case USER_LOADED:
-      draft.isAuthenticated = true;
-      draft.user = action.user;
-      return draft;
-    case LOGIN_SUCCESS:
-      draft.isAuthenticated = true;
-      return draft;
-    case LOGIN_FAILURE:
-      draft.isAuthenticated = false;
-      return draft;
-    case AUTHENTICATION_ERROR:
-    case LOGOUT_SUCCESS:
-      draft.token = null;
-      draft.isAuthenticated = false;
-      draft.user = null;
-      return draft;
-    default:
-      return state;
-  }
-});
+const authentication = (state = initialState, action) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case START_FETCHING:
+        draft.isLoading = true;
+        return draft;
+      case STOP_FETCHING:
+        draft.isLoading = false;
+        return draft;
+      case USER_LOADED:
+        draft.isAuthenticated = true;
+        draft.user = action.user;
+        return draft;
+      case LOGIN_SUCCESS:
+        draft.isAuthenticated = true;
+        return draft;
+      case LOGIN_FAILURE:
+        draft.isAuthenticated = false;
+        return draft;
+      case AUTHENTICATION_ERROR:
+      case LOGOUT_SUCCESS:
+        draft.token = null;
+        draft.isAuthenticated = false;
+        draft.user = null;
+        return draft;
+      default:
+        return state;
+    }
+  });
 
 const loadUser = () => async (dispatch) => {
   try {
@@ -89,7 +90,11 @@ const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ user_email: email, user_password: password });
   try {
     dispatch(startFetching());
-    const response = await axios.post('https://basicapi.gaimz.com/login', body, config);
+    const response = await axios.post(
+      'https://basicapi.gaimz.com/login',
+      body,
+      config
+    );
     if (!response || !response.data.auth_token || !response.data.user) {
       throw new Error();
     }
@@ -97,11 +102,15 @@ const login = (email, password) => async (dispatch) => {
     dispatch(stopFetching());
     setAuthToken(response.data.auth_token);
     dispatch(userLoaded(response.data.user));
-    dispatch(createAlert(`Welcome back, ${response.data.user.user_name}`, 'success'));
+    dispatch(
+      createAlert(`Welcome back, ${response.data.user.user_name}`, 'success')
+    );
   } catch (error) {
     dispatch(loginFailure());
     dispatch(stopFetching());
-    const errorMessage = error.response ? error.response.data.message : 'Something went wrong';
+    const errorMessage = error.response
+      ? error.response.data.message
+      : 'Something went wrong';
     console.log(errorMessage);
     dispatch(createAlert(errorMessage, 'danger'));
   }
@@ -113,9 +122,4 @@ const logout = () => (dispatch) => {
   dispatch(createAlert('You have been successfully logged out!', 'success'));
 };
 
-export {
-  authentication,
-  loadUser,
-  login,
-  logout,
-};
+export { authentication, loadUser, login, logout };

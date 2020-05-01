@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { removeAlert } from '../redux/modules/alert';
 
@@ -9,16 +9,29 @@ import dismiss from '../../images/icons/x.svg';
 
 const Alert = ({ alerts, remove }) => (
   <div className={styles.alertsContainer}>
-    {alerts !== null
-        && alerts.length > 0
-        && alerts.map((alert) => (
-          <div className={[styles.alertContainer, styles[alert.alertType]].join(' ')} key={alert.id}>
-            {alert.message}
-            <img className={styles.cancelButton} src={dismiss} alt="Dismiss Alert" onClick={() => remove(alert.id)} />
-          </div>
-        ))}
+    {alerts !== null &&
+      alerts.length > 0 &&
+      alerts.map((alert) => (
+        <div
+          className={[styles.alertContainer, styles[alert.alertType]].join(' ')}
+          key={alert.id}
+        >
+          {alert.message}
+          <img
+            className={styles.cancelButton}
+            src={dismiss}
+            alt="Dismiss Alert"
+            onClick={() => remove(alert.id)}
+          />
+        </div>
+      ))}
   </div>
 );
+
+Alert.propTypes = {
+  alerts: PropTypes.array,
+  remove: PropTypes.func,
+};
 
 const mapStateToProps = (state) => ({
   alerts: state.alert.alerts,
