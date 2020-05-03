@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createAlert } from '../redux/modules/alert';
+import { register } from '../redux/modules/authentication';
 
 import {
   validateName,
@@ -21,7 +22,12 @@ import twitch from '../../images/socialMedia/twitch.svg';
 import steam from '../../images/socialMedia/steam.svg';
 import loadingSpinner from '../../images/loadingSpinner.svg';
 
-const Register = ({ isAuthenticated, isLoading, createValidationAlert }) => {
+const Register = ({
+  isAuthenticated,
+  isLoading,
+  createValidationAlert,
+  registerAction,
+}) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -62,10 +68,10 @@ const Register = ({ isAuthenticated, isLoading, createValidationAlert }) => {
 
       // TODO: Success
       if (validSubmission) {
-        console.log('all valid');
+        registerAction(name, email, password);
       }
     },
-    [name, email, password, createValidationAlert]
+    [name, email, password, createValidationAlert, registerAction]
   );
 
   if (isAuthenticated) {
@@ -159,6 +165,7 @@ Register.propTypes = {
   isAuthenticated: PropTypes.bool,
   isLoading: PropTypes.bool,
   createValidationAlert: PropTypes.func,
+  registerAction: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -169,6 +176,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   createValidationAlert: (message, alertType) =>
     dispatch(createAlert(message, alertType)),
+  registerAction: (name, email, password) =>
+    dispatch(register(name, email, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

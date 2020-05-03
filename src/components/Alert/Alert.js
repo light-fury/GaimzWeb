@@ -34,7 +34,7 @@ const Alert = ({ alerts, remove }) => (
 );
 
 Alert.propTypes = {
-  alerts: PropTypes.array,
+  alerts: PropTypes.object,
   remove: PropTypes.func,
 };
 
