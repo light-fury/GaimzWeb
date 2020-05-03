@@ -2,7 +2,14 @@ import React, { useState, useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createAlert } from '../redux/modules/alert';
+import { register } from '../redux/modules/authentication';
 
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+} from '../utils/validate';
 import styles from './Register.module.css';
 import SocialButton from '../shared/SocialButton/SocialButton';
 import Button from '../shared/Button/Button';
@@ -15,12 +22,18 @@ import twitch from '../../images/socialMedia/twitch.svg';
 import steam from '../../images/socialMedia/steam.svg';
 import loadingSpinner from '../../images/loadingSpinner.svg';
 
-const Register = ({ isAuthenticated, isLoading }) => {
+const Register = ({
+  isAuthenticated,
+  isLoading,
+  createValidationAlert,
+  registerAction,
+}) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   });
+  const { name, email, password } = formData;
 
   const handleSocialClick = useCallback((socialMedia) => {
     console.log(socialMedia);
@@ -36,13 +49,29 @@ const Register = ({ isAuthenticated, isLoading }) => {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      console.log({
-        user_name: formData.name,
-        user_email: formData.email,
-        user_password: formData.password,
-      });
+      var nameValidation = validateName(name);
+      var emailValidation = validateEmail(email);
+      var passwordValidation = validatePassword(password);
+      var validSubmission = true;
+      if (nameValidation.error !== null) {
+        createValidationAlert(nameValidation.error, 'danger');
+        validSubmission = false;
+      }
+      if (emailValidation.error !== null) {
+        createValidationAlert(emailValidation.error, 'danger');
+        validSubmission = false;
+      }
+      if (passwordValidation.error !== null) {
+        createValidationAlert(passwordValidation.error, 'danger');
+        validSubmission = false;
+      }
+
+      // TODO: Success
+      if (validSubmission) {
+        registerAction(name, email, password);
+      }
     },
-    [formData]
+    [name, email, password, createValidationAlert, registerAction]
   );
 
   if (isAuthenticated) {
@@ -87,7 +116,7 @@ const Register = ({ isAuthenticated, isLoading }) => {
                 name="name"
                 label="Name"
                 style={{ marginBottom: '28px' }}
-                value={formData.name}
+                value={name}
                 onChange={handleChange}
               />
               <InputField
@@ -95,7 +124,7 @@ const Register = ({ isAuthenticated, isLoading }) => {
                 name="email"
                 label="Email"
                 style={{ marginBottom: '28px' }}
-                value={formData.email}
+                value={email}
                 onChange={handleChange}
               />
               <InputField
@@ -103,7 +132,7 @@ const Register = ({ isAuthenticated, isLoading }) => {
                 name="password"
                 label="password"
                 style={{ marginBottom: '38px' }}
-                value={formData.password}
+                value={password}
                 onChange={handleChange}
               />
               <Button className={styles.submitButton} type="Submit">
@@ -135,6 +164,8 @@ const Register = ({ isAuthenticated, isLoading }) => {
 Register.propTypes = {
   isAuthenticated: PropTypes.bool,
   isLoading: PropTypes.bool,
+  createValidationAlert: PropTypes.func,
+  registerAction: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -142,4 +173,11 @@ const mapStateToProps = (state) => ({
   isLoading: state.authentication.isLoading,
 });
 
-export default connect(mapStateToProps)(Register);
+const mapDispatchToProps = (dispatch) => ({
+  createValidationAlert: (message, alertType) =>
+    dispatch(createAlert(message, alertType)),
+  registerAction: (name, email, password) =>
+    dispatch(register(name, email, password)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

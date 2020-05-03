@@ -7,35 +7,42 @@ import { removeAlert } from '../redux/modules/alert';
 import styles from './Alert.module.css';
 import dismiss from '../../images/icons/x.svg';
 
-const Alert = ({ alerts, remove }) => (
-  <div className={styles.alertsContainer}>
-    {alerts !== null &&
-      alerts.length > 0 &&
-      alerts.map((alert) => (
-        <div
-          className={[styles.alertContainer, styles[alert.alertType]].join(' ')}
-          key={alert.id}
-        >
-          {alert.message}
-          <img
-            className={styles.cancelButton}
-            src={dismiss}
-            alt="Dismiss Alert"
-            onClick={() => remove(alert.id)}
-          />
-        </div>
-      ))}
-  </div>
-);
-
+const Alert = ({ alerts, remove }) => {
+  return (
+    <div className={styles.alertsContainer}>
+      {alerts !== null &&
+        Object.values(alerts).length > 0 &&
+        Object.values(alerts).map((alert) => {
+          return (
+            <div
+              className={[styles.alertContainer, styles[alert.alertType]].join(
+                ' '
+              )}
+              key={alert.id}
+            >
+              {alert.message}
+              <img
+                className={styles.cancelButton}
+                src={dismiss}
+                alt="Dismiss Alert"
+                onClick={() => remove(alert.id)}
+              />
+            </div>
+          );
+        })}
+    </div>
+  );
+};
 Alert.propTypes = {
-  alerts: PropTypes.array,
+  alerts: PropTypes.object,
   remove: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  alerts: state.alert.alerts,
-});
+const mapStateToProps = (state) => {
+  return {
+    alerts: state.alert,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   remove: (id) => dispatch(removeAlert(id)),
