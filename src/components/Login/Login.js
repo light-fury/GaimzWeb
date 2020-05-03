@@ -56,8 +56,6 @@ const Login = ({
         createValidationAlert(passwordValidation.error, 'danger');
         validSubmission = false;
       }
-
-      // TODO: Success
       if (validSubmission) {
         loginAction(email, password);
       }

@@ -65,8 +65,6 @@ const Register = ({
         createValidationAlert(passwordValidation.error, 'danger');
         validSubmission = false;
       }
-
-      // TODO: Success
       if (validSubmission) {
         registerAction(name, email, password);
       }
