@@ -1,12 +1,12 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-import { isEmail } from 'validator';
 
 import { connect } from 'react-redux';
-import { login as loginAction } from '../redux/modules/authentication';
-import { createAlert as createAlertAction } from '../redux/modules/alert';
+import { createAlert } from '../redux/modules/alert';
+import { login } from '../redux/modules/authentication';
 
+import { validateEmail, validatePassword } from '../utils/validate';
 import styles from './Login.module.css';
 import SocialButton from '../shared/SocialButton/SocialButton';
 import Button from '../shared/Button/Button';
@@ -19,23 +19,17 @@ import twitch from '../../images/socialMedia/twitch.svg';
 import steam from '../../images/socialMedia/steam.svg';
 import loadingSpinner from '../../images/loadingSpinner.svg';
 
-const Login = ({ createAlert, login, isAuthenticated, isLoading }) => {
+const Login = ({
+  isAuthenticated,
+  isLoading,
+  createValidationAlert,
+  loginAction,
+}) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const { email, password } = formData;
-
-  const loginErrors = useMemo(() => {
-    const errors = [];
-    if (!isEmail(email)) {
-      errors.push('Email is invalid');
-    }
-    if (password.length < 8) {
-      errors.push('Password must be at least 8 characters');
-    }
-    return errors;
-  }, [email, password]);
 
   const handleSocialClick = useCallback((socialMedia) => {
     console.log(socialMedia);
@@ -51,13 +45,24 @@ const Login = ({ createAlert, login, isAuthenticated, isLoading }) => {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      if (loginErrors.length !== 0) {
-        loginErrors.forEach((error) => createAlert(error, 'danger'));
-      } else {
-        login(email, password);
+      var emailValidation = validateEmail(email);
+      var passwordValidation = validatePassword(password);
+      var validSubmission = true;
+      if (emailValidation.error !== null) {
+        createValidationAlert(emailValidation.error, 'danger');
+        validSubmission = false;
+      }
+      if (passwordValidation.error !== null) {
+        createValidationAlert(passwordValidation.error, 'danger');
+        validSubmission = false;
+      }
+
+      // TODO: Success
+      if (validSubmission) {
+        loginAction(email, password);
       }
     },
-    [email, password, createAlert, login, loginErrors]
+    [email, password, createValidationAlert, loginAction]
   );
 
   if (isAuthenticated) {
@@ -141,10 +146,10 @@ const Login = ({ createAlert, login, isAuthenticated, isLoading }) => {
 };
 
 Login.propTypes = {
-  createAlert: PropTypes.func,
-  login: PropTypes.func,
   isAuthenticated: PropTypes.bool,
   isLoading: PropTypes.bool,
+  createValidationAlert: PropTypes.func,
+  loginAction: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -153,9 +158,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (email, password) => dispatch(loginAction(email, password)),
-  createAlert: (message, alertType) =>
-    dispatch(createAlertAction(message, alertType)),
+  createValidationAlert: (message, alertType) =>
+    dispatch(createAlert(message, alertType)),
+  loginAction: (email, password) => dispatch(login(email, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
