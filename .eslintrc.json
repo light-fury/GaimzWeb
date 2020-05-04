@@ -1,12 +1,15 @@
 {
   "env": {
     "browser": true,
+    "commonjs": true,
+    "node": true,
     "es6": true
   },
   "extends": [
     "prettier",
     "plugin:prettier/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "eslint:recommended"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -23,9 +26,6 @@
   "rules": {
     "react/jsx-filename-extension": "off",
     "react/prop-types": "warn",
-    "jsx-a11y/click-events-have-key-events": "warn",
-    "jsx-a11y/no-noninteractive-element-interactions": "warn",
-    "jsx-a11y/label-has-associated-control": "warn",
     "react/jsx-props-no-spreading": "warn",
     "no-param-reassign": [
       "error",
