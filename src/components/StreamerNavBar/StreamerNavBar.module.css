@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-  /* transition: width 0.25s; */
+  transition: width 0.05s;
 }
 
 .containerCollapsed {
@@ -77,37 +77,43 @@ div.streamerContainerCollapsed > * {
 .streamerContainerExpanded {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   height: 400px;
   max-height: 400px;
 }
 
-.tableExpanded {
+.headerExpanded {
   width: 100%;
-  height: 100%;
-  table-layout: fixed;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 
-.tableHeadExpanded {
-  text-align: left;
+.headerCellExpanded {
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8f92a1;
 }
 
-.tableHeadNameCellExpanded,
-.tableHeadFollowingExpanded,
-.tableHeadSubscribedExpanded {
-  padding: 0px;
-}
-
-.tableHeadNameCellExpanded {
+.headerNameCellExpanded {
   width: 150px;
-  text-align: left;
 }
 
-.tableHeadFollowingCellExpanded,
-.tableHeadSubscribedCellExpanded {
+.headerFollowingCellExpanded,
+.headerSubscribedCellExpanded {
   width: 100px;
   text-align: center;
+}
+
+.bodyExpanded {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 .actionContainer {
@@ -116,6 +122,16 @@ div.streamerContainerCollapsed > * {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.noStreamersExpanded {
+  margin: 20px;
+  text-align: center;
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1e1f20;
 }
 
 .button {

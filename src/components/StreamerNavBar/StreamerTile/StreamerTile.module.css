@@ -1,29 +1,39 @@
-.tableRowExpanded {
-  height: 60px;
+.rowExpanded {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin: 8px 0px 8px 0px;
 }
 
-.tableNameCellExpanded {
-  width: 100%;
-  height: 60px;
-  box-sizing: border-box;
+.cellExpanded {
+}
+
+.cellNameExpanded {
+  width: 150px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
-.tableNameCellTextExpanded {
+.nameExpanded {
   margin-left: 8px;
+  font-family: 'Muli';
   font-weight: bold;
   font-size: 14px;
   line-height: 20px;
   color: #1e1f20;
 }
 
-.tableFollowingCellExpanded,
-.tableSubscribedCellExpanded {
-  width: 100%;
-  height: 60px;
-  box-sizing: border-box;
+.cellFollowingExpanded {
+  width: 100px;
+}
+
+.cellSubscribedExpanded {
+  width: 100px;
 }
 
 .checkButton,

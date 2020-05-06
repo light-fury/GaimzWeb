@@ -2,6 +2,9 @@ import React, { useState, useCallback, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+import { createAlert } from '../redux/modules/alert';
+
 import StreamerTile from './StreamerTile/StreamerTile';
 
 import logo from '../../images/logos/logo.svg';
@@ -12,9 +15,9 @@ import search from '../../images/icons/search.svg';
 
 import styles from './StreamerNavBar.module.css';
 
-const StreamerNavBar = ({ streamers }) => {
-  const [collapsed, setCollapsed] = useState(false);
-  const [className, setClassName] = useState('Expanded');
+const StreamerNavBar = ({ streamers, createAlertAction }) => {
+  const [collapsed, setCollapsed] = useState(true);
+  const [className, setClassName] = useState('Collapsed');
   const [searchInput, setSearchInput] = useState('');
 
   const handleCollapse = useCallback(
@@ -25,14 +28,15 @@ const StreamerNavBar = ({ streamers }) => {
       } else {
         setCollapsed(true);
         setClassName('Collapsed');
+        setSearchInput('');
       }
     },
-    [collapsed, className]
+    [collapsed, setCollapsed, setClassName, setSearchInput]
   );
 
-  const handleSettings = useCallback((event) => {
+  const handleSettings = () => {
     console.log('Settings Clicked');
-  }, []);
+  };
 
   const handleSearch = useCallback(
     (event) => {
@@ -40,6 +44,25 @@ const StreamerNavBar = ({ streamers }) => {
     },
     [setSearchInput]
   );
+
+  const handleFollow = (id, name, currentFollowing) => {
+    if (currentFollowing === true) {
+      createAlertAction(`You are no longer following ${name}!`, 'danger');
+    } else {
+      createAlertAction(`You are now following to ${name}!`, 'success');
+    }
+  };
+
+  const handleSubscribe = (id, name, currentSubscribed) => {
+    if (currentSubscribed === true) {
+      createAlertAction(
+        `You are no longer subscribed to from ${name}!`,
+        'danger'
+      );
+    } else {
+      createAlertAction(`You are now subscribed to ${name}!`, 'success');
+    }
+  };
 
   let filteredStreamers;
   if (searchInput.trim() === '') {
@@ -92,24 +115,36 @@ const StreamerNavBar = ({ streamers }) => {
                 ))}
             </Fragment>
           ) : (
-            <table
-              className={styles.tableExpanded}
-              cellSpacing="0"
-              cellPadding="0"
-            >
-              <thead className={styles.tableHeadExpanded}>
-                <tr>
-                  <th className={styles.tableHeadNameCellExpanded}>Name</th>
-                  <th className={styles.tableHeadFollowingCellExpanded}>
-                    Following
-                  </th>
-                  <th className={styles.tableHeadSubscribedCellExpanded}>
-                    Subscribed
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
+            <Fragment>
+              <div className={styles.headerExpanded}>
+                <div
+                  className={[
+                    styles.headerCellExpanded,
+                    styles.headerNameCellExpanded,
+                  ].join(' ')}
+                >
+                  Name
+                </div>
+                <div
+                  className={[
+                    styles.headerCellExpanded,
+                    styles.headerFollowingCellExpanded,
+                  ].join(' ')}
+                >
+                  Following
+                </div>
+                <div
+                  className={[
+                    styles.headerCellExpanded,
+                    styles.headerSubscribedCellExpanded,
+                  ].join(' ')}
+                >
+                  Subscribed
+                </div>
+              </div>
+              <div className={styles.bodyExpanded}>
                 {filteredStreamers !== null &&
+                  filteredStreamers.length !== 0 &&
                   filteredStreamers.map((streamer) => (
                     <StreamerTile
                       key={streamer.id}
@@ -120,10 +155,19 @@ const StreamerNavBar = ({ streamers }) => {
                       subscribed={streamer.subscribed}
                       online={streamer.online}
                       collapsed={collapsed}
+                      handleFollow={handleFollow}
+                      handleSubscribe={handleSubscribe}
                     />
                   ))}
-              </tbody>
-            </table>
+                {filteredStreamers.length === 0 && (
+                  <div className={styles.noStreamersExpanded}>
+                    Uh oh! We couldn't find anyone!
+                    <br />
+                    Try a different search!
+                  </div>
+                )}
+              </div>
+            </Fragment>
           )}
         </div>
       </div>
@@ -131,7 +175,7 @@ const StreamerNavBar = ({ streamers }) => {
       <div className={styles.actionContainer}>
         {!collapsed && (
           <div className={styles.searchContainer}>
-            <img className={styles.searchIcon} src={search} />
+            <img className={styles.searchIcon} src={search} alt="Search Icon" />
             <input
               className={styles.searchInput}
               placeholder="Search for streamers..."
@@ -157,6 +201,12 @@ const StreamerNavBar = ({ streamers }) => {
 
 StreamerNavBar.propTypes = {
   streamers: PropTypes.array,
+  createAlertAction: PropTypes.func,
 };
 
-export default StreamerNavBar;
+const mapDispatchToProps = (dispatch) => ({
+  createAlertAction: (message, alertType) =>
+    dispatch(createAlert(message, alertType)),
+});
+
+export default connect(null, mapDispatchToProps)(StreamerNavBar);

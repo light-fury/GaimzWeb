@@ -79,13 +79,13 @@ const streamers = [
     name: 'JamesLion',
     icon:
       'https://pbs.twimg.com/profile_images/1054434556156162054/1H_7AxP0.jpg',
-    following: true,
+    following: false,
     subscribed: true,
     online: false,
   },
   {
     id: 'e4',
-    name: 'BrandanDunn',
+    name: 'BrandenDunn',
     icon:
       'https://pbs.twimg.com/profile_images/953658232517652480/Xp0NB-TL.jpg',
     following: true,
