@@ -1,0 +1,14 @@
+.meatballMenu {
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  transition: all 0.4s ease-in-out;
+  fill: #1e1f20;
+  cursor: pointer;
+}
+
+.meatballMenu:hover {
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  transition: all 0.4s ease-in-out;
+  fill: #a0a0a0;
+}
