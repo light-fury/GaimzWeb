@@ -2,12 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { removeAlert } from '../redux/modules/alert';
-
 import MeatballMenu from '../shared/Icons/MeatballMenu';
+import Viewer from '../shared/Icons/Viewer';
 
 import styles from './FeedCard.module.css';
-import viewer from '../../images/icons/viewer.svg';
 
 const FeedCard = ({
   sourceImg,
@@ -41,7 +39,7 @@ const FeedCard = ({
           <p className={styles.subTitle}>{subTitle}</p>
           <div className={styles.viewerContainer}>
             <div className={styles.spacerDot} />
-            <img src={viewer} alt="Viewer Count" />
+            <Viewer />
             <p className={viewerCount}>{viewerCount}</p>
           </div>
         </div>
@@ -69,14 +67,11 @@ FeedCard.propTypes = {
   userName: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    alerts: state.alert,
-  };
+// TODO: To be filled out when above changes
+const mapStateToProps = () => {
+  return {};
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  remove: (id) => dispatch(removeAlert(id)),
-});
+const mapDispatchToProps = () => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(FeedCard);
