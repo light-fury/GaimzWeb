@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { isEmail } from 'validator';
 
 import styles from './InputField.module.css';
-import valid from '../../../images/icons/check.svg';
+import valid from '../../../images/icons/validCheck.svg';
 import invalid from '../../../images/icons/x.svg';
 import showPassword from '../../../images/icons/eye.svg';
 
@@ -34,12 +34,22 @@ const InputField = ({ onChange, type, style, label, name, value }) => {
           onChange={handleChange}
         />
         <div className={styles.validationContainer}>
+          {type === 'name' && value.length > 0 && value.length < 3 && (
+            <img
+              className={styles.invalidCheck}
+              src={invalid}
+              alt="Invalid Check"
+            />
+          )}
           {type === 'email' && value.length > 0 && !isEmail(value) && (
             <img
               className={styles.invalidCheck}
               src={invalid}
               alt="Invalid Check"
             />
+          )}
+          {type === 'name' && value.length > 0 && value.length >= 3 && (
+            <img className={styles.validCheck} src={valid} alt="Valid Check" />
           )}
           {type === 'email' && value.length > 0 && isEmail(value) && (
             <img className={styles.validCheck} src={valid} alt="Valid Check" />

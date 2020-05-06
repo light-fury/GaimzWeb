@@ -1,0 +1,57 @@
+.tableRowExpanded {
+  height: 60px;
+}
+
+.tableNameCellExpanded {
+  width: 100%;
+  height: 60px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tableNameCellTextExpanded {
+  margin-left: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1e1f20;
+}
+
+.tableFollowingCellExpanded,
+.tableSubscribedCellExpanded {
+  width: 100%;
+  height: 60px;
+  box-sizing: border-box;
+}
+
+.checkButton,
+.xButton {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.checkButton {
+  background-color: #613bff;
+}
+
+.xButton {
+  background-color: #eb5757;
+}
+
+.checkIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.xIcon {
+  width: 15px;
+  height: 15px;
+}

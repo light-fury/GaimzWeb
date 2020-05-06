@@ -1,7 +1,9 @@
 import React from 'react';
 
-import './Feed.css';
+import styles from './Feed.module.css';
 
-const Feed = () => <div>Feed</div>;
+const Feed = () => {
+  return <div className={styles.container}>Feed</div>;
+};
 
 export default Feed;

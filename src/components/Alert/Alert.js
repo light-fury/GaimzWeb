@@ -33,6 +33,7 @@ const Alert = ({ alerts, remove }) => {
     </div>
   );
 };
+
 Alert.propTypes = {
   alerts: PropTypes.object,
   remove: PropTypes.func,

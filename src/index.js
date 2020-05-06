@@ -5,4 +5,15 @@ import './index.css';
 import App from './components/App';
 import './fonts/Muli-VariableFont_wght.ttf';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Redux
+import Store from './components/redux/store/configureStore';
+import { Provider } from 'react-redux';
+
+const store = Store();
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
