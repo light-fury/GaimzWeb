@@ -83,6 +83,40 @@ div.streamerContainerCollapsed > * {
   max-height: 400px;
 }
 
+.titleContainerExpanded {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 36px;
+}
+
+.titleExpanded {
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 16px;
+  color: #1e1f20;
+}
+
+.onlineOnlyContainerExpanded {
+  width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.onlineOnlyTextExpanded {
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: right;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8f92a1;
+}
+
 .headerExpanded {
   width: 100%;
   display: flex;
@@ -132,6 +166,20 @@ div.streamerContainerCollapsed > * {
   font-size: 14px;
   line-height: 20px;
   color: #1e1f20;
+}
+
+.showMoreContainer,
+.showLessContainer {
+  width: 100%;
+  margin: 32px 0px 0px 8px;
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8f92a1;
+  cursor: pointer;
 }
 
 .button {

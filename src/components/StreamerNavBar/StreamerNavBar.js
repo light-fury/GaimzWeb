@@ -18,7 +18,10 @@ import styles from './StreamerNavBar.module.css';
 const StreamerNavBar = ({ streamers, createAlertAction }) => {
   const [collapsed, setCollapsed] = useState(true);
   const [className, setClassName] = useState('Collapsed');
+  const [showOffline, setShowOffline] = useState(false);
   const [searchInput, setSearchInput] = useState('');
+  const [showMore, setShowMore] = useState(false);
+  const [streamerLimit, setStreamerLimit] = useState(5);
 
   const handleCollapse = useCallback(
     (event) => {
@@ -29,9 +32,18 @@ const StreamerNavBar = ({ streamers, createAlertAction }) => {
         setCollapsed(true);
         setClassName('Collapsed');
         setSearchInput('');
+        setShowMore(false);
+        setStreamerLimit(5);
       }
     },
-    [collapsed, setCollapsed, setClassName, setSearchInput]
+    [
+      collapsed,
+      setCollapsed,
+      setClassName,
+      setSearchInput,
+      setShowMore,
+      setStreamerLimit,
+    ]
   );
 
   const handleSettings = () => {
@@ -43,6 +55,13 @@ const StreamerNavBar = ({ streamers, createAlertAction }) => {
       setSearchInput(event.target.value);
     },
     [setSearchInput]
+  );
+
+  const handleShowOffline = useCallback(
+    (event) => {
+      setShowOffline((currentShowOffline) => !currentShowOffline);
+    },
+    [setShowOffline]
   );
 
   const handleFollow = (id, name, currentFollowing) => {
@@ -64,13 +83,33 @@ const StreamerNavBar = ({ streamers, createAlertAction }) => {
     }
   };
 
-  let filteredStreamers;
+  const handleShowMore = useCallback(
+    (event) => {
+      if (showMore === true) {
+        setShowMore(false);
+        setStreamerLimit(5);
+      } else {
+        setShowMore(true);
+        setStreamerLimit(streamers.length);
+      }
+    },
+    [showMore, setShowMore, setStreamerLimit, streamers]
+  );
+
+  let filteredStreamers = streamers;
+  if (showOffline === false) {
+    filteredStreamers = filteredStreamers.filter(
+      (streamer) => streamer.online === true
+    );
+  }
+
   if (searchInput.trim() === '') {
-    filteredStreamers = streamers;
+    filteredStreamers = filteredStreamers.slice(0, streamerLimit);
   } else {
-    filteredStreamers = streamers.filter((streamer) =>
+    filteredStreamers = filteredStreamers.filter((streamer) =>
       streamer.name.toLowerCase().includes(searchInput.toLowerCase())
     );
+    filteredStreamers = filteredStreamers.slice(0, streamerLimit);
   }
 
   return (
@@ -116,6 +155,20 @@ const StreamerNavBar = ({ streamers, createAlertAction }) => {
             </Fragment>
           ) : (
             <Fragment>
+              <div className={styles.titleContainerExpanded}>
+                <span className={styles.titleExpanded}>Streamer List</span>
+                <div className={styles.onlineOnlyContainerExpanded}>
+                  <span className={styles.onlineOnlyTextExpanded}>
+                    Online Only
+                  </span>
+                  <input
+                    className={styles.onlineOnlyCheckboxExpanded}
+                    type="checkbox"
+                    checked={!showOffline}
+                    onChange={handleShowOffline}
+                  />
+                </div>
+              </div>
               <div className={styles.headerExpanded}>
                 <div
                   className={[
@@ -159,14 +212,35 @@ const StreamerNavBar = ({ streamers, createAlertAction }) => {
                       handleSubscribe={handleSubscribe}
                     />
                   ))}
-                {filteredStreamers.length === 0 && (
+                {filteredStreamers.length === 0 && streamers.length !== 0 && (
                   <div className={styles.noStreamersExpanded}>
                     Uh oh! We couldn't find anyone!
                     <br />
                     Try a different search!
                   </div>
                 )}
+                {filteredStreamers.length === 0 && streamers.length === 0 && (
+                  <div className={styles.noStreamersExpanded}>
+                    Uh oh! It looks like you haven't followed anyone yet!
+                  </div>
+                )}
+                {!showMore && (
+                  <div
+                    className={styles.showMoreContainer}
+                    onClick={handleShowMore}
+                  >
+                    Show More
+                  </div>
+                )}
               </div>
+              {showMore && (
+                <div
+                  className={styles.showLessContainer}
+                  onClick={handleShowMore}
+                >
+                  Show Less
+                </div>
+              )}
             </Fragment>
           )}
         </div>
