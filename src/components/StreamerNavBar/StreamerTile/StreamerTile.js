@@ -35,20 +35,21 @@ const StreamerTile = ({
               ' '
             )}
           >
-            <div className={following ? styles.checkButton : styles.xButton}>
+            <div
+              className={following ? styles.checkButton : styles.xButton}
+              onClick={() => handleFollow(id, name, following)}
+            >
               {following ? (
                 <img
                   className={styles.checkIcon}
                   src={check}
                   alt="Following Icon"
-                  onClick={() => handleFollow(id, name, following)}
                 />
               ) : (
                 <img
                   className={styles.xIcon}
                   src={x}
                   alt="Not Following Icon"
-                  onClick={() => handleFollow(id, name, following)}
                 />
               )}
             </div>
@@ -59,20 +60,21 @@ const StreamerTile = ({
               styles.cellSubscribedExpanded,
             ].join(' ')}
           >
-            <div className={subscribed ? styles.checkButton : styles.xButton}>
+            <div
+              className={subscribed ? styles.checkButton : styles.xButton}
+              onClick={() => handleSubscribe(id, name, subscribed)}
+            >
               {subscribed ? (
                 <img
                   className={styles.checkIcon}
                   src={check}
                   alt="Subscribed Icon"
-                  onClick={() => handleSubscribe(id, name, subscribed)}
                 />
               ) : (
                 <img
                   className={styles.xIcon}
                   src={x}
                   alt="Not Subscribed Icon"
-                  onClick={() => handleSubscribe(id, name, subscribed)}
                 />
               )}
             </div>

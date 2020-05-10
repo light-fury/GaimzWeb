@@ -4,18 +4,17 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { createAlert } from '../redux/modules/alert';
-
 import StreamerTile from './StreamerTile/StreamerTile';
-
 import logo from '../../images/logos/logo.svg';
 import gear from '../../images/icons/gear.svg';
 import arrowRight from '../../images/icons/arrowRight.svg';
 import arrowLeft from '../../images/icons/arrowLeft.svg';
 import search from '../../images/icons/search.svg';
-
 import styles from './StreamerNavBar.module.css';
+import { streamerData } from '../utils/dummyData';
+const streamers = streamerData;
 
-const StreamerNavBar = ({ streamers, createAlertAction }) => {
+const StreamerNavBar = ({ createAlertAction }) => {
   const [collapsed, setCollapsed] = useState(true);
   const [className, setClassName] = useState('Collapsed');
   const [showOffline, setShowOffline] = useState(false);
@@ -93,7 +92,7 @@ const StreamerNavBar = ({ streamers, createAlertAction }) => {
         setStreamerLimit(streamers.length);
       }
     },
-    [showMore, setShowMore, setStreamerLimit, streamers]
+    [showMore, setShowMore, setStreamerLimit]
   );
 
   let filteredStreamers = streamers;
