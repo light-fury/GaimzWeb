@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FeedCard from '../FeedCard/FeedCard';
+import FeedCard from '../FeedCard/Index';
 
 const Feed = () => {
   return (

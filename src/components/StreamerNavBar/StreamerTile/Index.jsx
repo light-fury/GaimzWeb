@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import Avatar from '../../shared/Avatar/Avatar';
+import Avatar from '../../shared/Avatar/Index';
 
 import styles from './StreamerTile.module.css';
 import check from '../../../images/icons/check.svg';

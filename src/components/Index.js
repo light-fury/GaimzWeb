@@ -11,12 +11,12 @@ import {
 import './App.css';
 import { loadUser } from './redux/modules/authentication';
 import setAuthToken from './utils/setAuthToken';
-import StreamerNavBar from './StreamerNavBar/StreamerNavBar';
-import Alert from './Alert/Alert';
+import StreamerNavBar from './StreamerNavBar/Index';
+import Alert from './Alert/Index';
 import PrivateRoute from './PrivateRoute';
-import Login from './Login/Login';
-import Register from './Register/Register';
-import Feed from './Feed/Feed';
+import Login from './Login/Index';
+import Register from './Register/Index';
+import Feed from './Feed/Index';
 
 const App = ({ isAuthenticated, loadUserAction }) => {
   useEffect(() => {
