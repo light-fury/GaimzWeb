@@ -1,0 +1,67 @@
+.rowExpanded {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin: 8px 0px 8px 0px;
+}
+
+.cellExpanded {
+}
+
+.cellNameExpanded {
+  width: 150px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.nameExpanded {
+  margin-left: 8px;
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1e1f20;
+}
+
+.cellFollowingExpanded {
+  width: 100px;
+}
+
+.cellSubscribedExpanded {
+  width: 100px;
+}
+
+.checkButton,
+.xButton {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.checkButton {
+  background-color: #613bff;
+}
+
+.xButton {
+  background-color: #eb5757;
+}
+
+.checkIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.xIcon {
+  width: 15px;
+  height: 15px;
+}

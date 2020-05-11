@@ -1,0 +1,242 @@
+.container {
+  height: 100vh;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  transition: width 0.05s;
+}
+
+.containerCollapsed {
+  width: 70px;
+}
+
+.containerExpanded {
+  width: 350px;
+  padding: 0px 13px 0px 13px;
+}
+
+.header {
+  width: 100%;
+  height: 75px;
+  display: flex;
+}
+
+.headerCollapsed {
+  justify-content: center;
+}
+
+.headerExpanded {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
+}
+
+.gear {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.middleContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.streamerContainer {
+  flex: 1;
+}
+
+.streamerContainerCollapsed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 400px;
+  max-height: 400px;
+}
+
+div.streamerContainerCollapsed,
+div.streamerContainerCollapsed > * {
+  margin: 8px;
+}
+
+.streamerContainerExpanded {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 400px;
+  max-height: 400px;
+}
+
+.titleContainerExpanded {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 36px;
+}
+
+.titleExpanded {
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 16px;
+  color: #1e1f20;
+}
+
+.onlineOnlyContainerExpanded {
+  width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.onlineOnlyTextExpanded {
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: right;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8f92a1;
+}
+
+.headerExpanded {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.headerCellExpanded {
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8f92a1;
+}
+
+.headerNameCellExpanded {
+  width: 150px;
+}
+
+.headerFollowingCellExpanded,
+.headerSubscribedCellExpanded {
+  width: 100px;
+  text-align: center;
+}
+
+.bodyExpanded {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.actionContainer {
+  width: 100%;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noStreamersExpanded {
+  margin: 20px;
+  text-align: center;
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1e1f20;
+}
+
+.showMoreContainer,
+.showLessContainer {
+  width: 100%;
+  margin: 32px 0px 0px 8px;
+  font-family: 'Muli';
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8f92a1;
+  cursor: pointer;
+}
+
+.button {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.buttonCollapsed {
+  background: #f7f7f7;
+}
+
+.buttonExpanded {
+  background: #1e1f20;
+  margin-left: 18px;
+}
+
+.buttonIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.searchContainer {
+  width: 262px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  background-color: #f7f7f7;
+}
+
+.searchIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.searchInput {
+  flex: 1;
+  margin-left: 18px;
+  font-family: 'Muli';
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  border: 0px;
+  outline: none;
+  color: #8f92a1;
+  background-color: #f7f7f7;
+}
+
+.searchInput::placeholder {
+  color: #8f92a1;
+}

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import FeedCard from '../FeedCard/FeedCard';
-import './Feed.css';
 
 const Feed = () => {
   return (
