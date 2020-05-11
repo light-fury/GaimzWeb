@@ -1,14 +1,13 @@
-import React, { useState, useCallback, Fragment } from 'react';
+import React, { useState, useRef, useCallback, useMemo, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { createAlert } from '../redux/modules/alert';
 import StreamerTile from './StreamerTile/StreamerTile';
+import Arrow from '../shared/Arrow/Arrow';
 import logo from '../../images/logos/logo.svg';
 import gear from '../../images/icons/gear.svg';
-import arrowRight from '../../images/icons/arrowRight.svg';
-import arrowLeft from '../../images/icons/arrowLeft.svg';
 import search from '../../images/icons/search.svg';
 import styles from './StreamerNavBar.module.css';
 import { streamerData } from '../utils/dummyData';
@@ -20,7 +19,7 @@ const StreamerNavBar = ({ createAlertAction }) => {
   const [showOffline, setShowOffline] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [showMore, setShowMore] = useState(false);
-  const [streamerLimit, setStreamerLimit] = useState(5);
+  const streamerLimit = useRef(5);
 
   const handleCollapse = useCallback(
     (event) => {
@@ -32,7 +31,7 @@ const StreamerNavBar = ({ createAlertAction }) => {
         setClassName('Collapsed');
         setSearchInput('');
         setShowMore(false);
-        setStreamerLimit(5);
+        streamerLimit.current = 5;
       }
     },
     [
@@ -41,7 +40,7 @@ const StreamerNavBar = ({ createAlertAction }) => {
       setClassName,
       setSearchInput,
       setShowMore,
-      setStreamerLimit,
+      streamerLimit,
     ]
   );
 
@@ -63,53 +62,57 @@ const StreamerNavBar = ({ createAlertAction }) => {
     [setShowOffline]
   );
 
-  const handleFollow = (id, name, currentFollowing) => {
-    if (currentFollowing === true) {
-      createAlertAction(`You are no longer following ${name}!`, 'danger');
-    } else {
-      createAlertAction(`You are now following to ${name}!`, 'success');
-    }
-  };
+  const handleFollow = useCallback(
+    (id, name, currentFollowing) => {
+      if (currentFollowing === true) {
+        createAlertAction(`You are no longer following ${name}!`, 'danger');
+      } else {
+        createAlertAction(`You are now following to ${name}!`, 'success');
+      }
+    },
+    [createAlertAction]
+  );
 
-  const handleSubscribe = (id, name, currentSubscribed) => {
-    if (currentSubscribed === true) {
-      createAlertAction(
-        `You are no longer subscribed to from ${name}!`,
-        'danger'
-      );
-    } else {
-      createAlertAction(`You are now subscribed to ${name}!`, 'success');
-    }
-  };
+  const handleSubscribe = useCallback(
+    (id, name, currentSubscribed) => {
+      if (currentSubscribed === true) {
+        createAlertAction(
+          `You are no longer subscribed to from ${name}!`,
+          'danger'
+        );
+      } else {
+        createAlertAction(`You are now subscribed to ${name}!`, 'success');
+      }
+    },
+    [createAlertAction]
+  );
 
   const handleShowMore = useCallback(
     (event) => {
       if (showMore === true) {
         setShowMore(false);
-        setStreamerLimit(5);
+        streamerLimit.current = 5;
       } else {
         setShowMore(true);
-        setStreamerLimit(streamers.length);
+        streamerLimit.current = streamers.length;
       }
     },
-    [showMore, setShowMore, setStreamerLimit]
+    [showMore, setShowMore, streamerLimit]
   );
 
-  let filteredStreamers = streamers;
-  if (showOffline === false) {
-    filteredStreamers = filteredStreamers.filter(
-      (streamer) => streamer.online === true
-    );
-  }
-
-  if (searchInput.trim() === '') {
-    filteredStreamers = filteredStreamers.slice(0, streamerLimit);
-  } else {
-    filteredStreamers = filteredStreamers.filter((streamer) =>
-      streamer.name.toLowerCase().includes(searchInput.toLowerCase())
-    );
-    filteredStreamers = filteredStreamers.slice(0, streamerLimit);
-  }
+  const filteredStreamers = useMemo(() => {
+    let filteredStreamers = streamers;
+    if (!showOffline)
+      filteredStreamers = filteredStreamers.filter(
+        (streamer) => streamer.online === true
+      );
+    if (searchInput.trim() !== '')
+      filteredStreamers = filteredStreamers.filter((streamer) =>
+        streamer.name.toLowerCase().includes(searchInput.toLowerCase())
+      );
+    filteredStreamers = filteredStreamers.slice(0, streamerLimit.current);
+    return filteredStreamers;
+  }, [showOffline, searchInput, showMore]);
 
   return (
     <div
@@ -139,9 +142,9 @@ const StreamerNavBar = ({ createAlertAction }) => {
           {collapsed ? (
             <Fragment>
               {filteredStreamers !== null &&
-                filteredStreamers.map((streamer) => (
+                filteredStreamers.map((streamer, index) => (
                   <StreamerTile
-                    key={streamer.id}
+                    key={`${index}-${streamer.id}`}
                     id={streamer.id}
                     name={streamer.name}
                     icon={streamer.icon}
@@ -197,9 +200,9 @@ const StreamerNavBar = ({ createAlertAction }) => {
               <div className={styles.bodyExpanded}>
                 {filteredStreamers !== null &&
                   filteredStreamers.length !== 0 &&
-                  filteredStreamers.map((streamer) => (
+                  filteredStreamers.map((streamer, index) => (
                     <StreamerTile
-                      key={streamer.id}
+                      key={`${index}-${streamer.id}`}
                       id={streamer.id}
                       name={streamer.name}
                       icon={streamer.icon}
@@ -223,7 +226,7 @@ const StreamerNavBar = ({ createAlertAction }) => {
                     Uh oh! It looks like you haven't followed anyone yet!
                   </div>
                 )}
-                {!showMore && (
+                {filteredStreamers.length !== 0 && !showMore && (
                   <div
                     className={styles.showMoreContainer}
                     onClick={handleShowMore}
@@ -232,7 +235,7 @@ const StreamerNavBar = ({ createAlertAction }) => {
                   </div>
                 )}
               </div>
-              {showMore && (
+              {filteredStreamers.length !== 0 && showMore && (
                 <div
                   className={styles.showLessContainer}
                   onClick={handleShowMore}
@@ -261,10 +264,9 @@ const StreamerNavBar = ({ createAlertAction }) => {
           className={[styles.button, styles[`button${className}`]].join(' ')}
           onClick={handleCollapse}
         >
-          <img
+          <Arrow
             className={styles.buttonIcon}
-            src={collapsed ? arrowRight : arrowLeft}
-            alt="Streamer List Button"
+            direction={collapsed ? 'right' : 'left'}
           />
         </div>
       </div>

@@ -202,6 +202,11 @@ div.streamerContainerCollapsed > * {
   margin-left: 18px;
 }
 
+.buttonIcon {
+  width: 18px;
+  height: 18px;
+}
+
 .searchContainer {
   width: 262px;
   height: 48px;
