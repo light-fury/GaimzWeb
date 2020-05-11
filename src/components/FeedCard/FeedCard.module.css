@@ -1,0 +1,164 @@
+.container {
+  display: flex;
+  background: #ffffff;
+  border-radius: 8px;
+  width: 610px;
+  height: 138px;
+  padding: 18px;
+  padding-bottom: 0;
+}
+
+.detailsContainer {
+  margin: 18px;
+  width: 100%;
+  margin-right: 0px;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 16px;
+  color: #1e1f20;
+}
+
+.viewerContainer {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+}
+
+.viewerContainer p {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1e1f20;
+}
+
+.metaContainer {
+  display: flex;
+  width: 35%;
+  margin: 0;
+  justify-content: space-between;
+}
+
+.metaContainer p {
+  margin: 0;
+  display: inline;
+}
+
+.avatarContainer {
+  display: flex;
+  margin-top: 25px;
+}
+
+.avatarContainer > p {
+  display: inline;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1e1f20;
+  margin: 0;
+  margin-top: 4px;
+}
+
+.avatarContainer > img {
+  display: inline;
+  margin-right: 8px;
+}
+
+.avatarSmall {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.title {
+  display: inline;
+}
+
+.subTitle {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1e1f20;
+}
+
+.viewerCount {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1e1f20;
+}
+
+.spacerDot {
+  background: #8f92a1;
+  width: 4px;
+  height: 4px;
+  border-radius: 5px;
+  margin-top: 8px;
+}
+
+.attraction {
+  position: relative;
+  width: 198px;
+  height: 118px;
+}
+
+.mainImage {
+  border-radius: 12px;
+  height: 118px;
+  width: 198px;
+}
+
+.livePill {
+  position: absolute;
+  left: 75%;
+  right: 5%;
+  top: 78%;
+  bottom: 2%;
+  background: #fa7267;
+  mix-blend-mode: normal;
+  border-radius: 4px;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+  color: #ffffff;
+  vertical-align: top;
+  text-align: center;
+  height: 20px;
+  width: 41px;
+
+  animation-name: pillPulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.livePill p {
+  display: inline;
+}
+
+@keyframes pillPulse {
+  0% {
+    background-color: #fa7267;
+  }
+  50% {
+    background-color: #f13324;
+  }
+  100% {
+    background-color: #fa7267;
+  }
+}
