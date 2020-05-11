@@ -1,16 +1,19 @@
 import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createAlert } from '../redux/modules/alert';
-import { login } from '../redux/modules/authentication';
+import { register } from '../redux/modules/authentication';
 
-import { validateEmail, validatePassword } from '../utils/validate';
-import styles from './Login.module.css';
-import SocialButton from '../shared/SocialButton/SocialButton';
-import Button from '../shared/Button/Button';
-import InputField from '../shared/InputField/InputField';
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+} from '../utils/validate';
+import styles from './Register.module.css';
+import SocialButton from '../shared/SocialButton/Index';
+import Button from '../shared/Button/Index';
+import InputField from '../shared/InputField/Index';
 
 import logo from '../../images/logos/logo.svg';
 import logoText from '../../images/logos/logoText.svg';
@@ -19,17 +22,18 @@ import twitch from '../../images/socialMedia/twitch.svg';
 import steam from '../../images/socialMedia/steam.svg';
 import loadingSpinner from '../../images/loadingSpinner.svg';
 
-const Login = ({
+const Register = ({
   isAuthenticated,
   isLoading,
   createValidationAlert,
-  loginAction,
+  registerAction,
 }) => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
   });
-  const { email, password } = formData;
+  const { name, email, password } = formData;
 
   const handleSocialClick = useCallback((socialMedia) => {
     console.log(socialMedia);
@@ -45,9 +49,14 @@ const Login = ({
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
+      var nameValidation = validateName(name);
       var emailValidation = validateEmail(email);
       var passwordValidation = validatePassword(password);
       var validSubmission = true;
+      if (nameValidation.error !== null) {
+        createValidationAlert(nameValidation.error, 'danger');
+        validSubmission = false;
+      }
       if (emailValidation.error !== null) {
         createValidationAlert(emailValidation.error, 'danger');
         validSubmission = false;
@@ -57,10 +66,10 @@ const Login = ({
         validSubmission = false;
       }
       if (validSubmission) {
-        loginAction(email, password);
+        registerAction(name, email, password);
       }
     },
-    [email, password, createValidationAlert, loginAction]
+    [name, email, password, createValidationAlert, registerAction]
   );
 
   if (isAuthenticated) {
@@ -75,8 +84,8 @@ const Login = ({
             <img className={styles.logo} src={logo} alt="Gaimz Logo" />
             <img className={styles.logoText} src={logoText} alt="Gaimz Text" />
           </div>
-          <p className={styles.cardTitle}>Welcome Back!</p>
-          <p className={styles.cardBody}>Sign in to continue</p>
+          <p className={styles.cardTitle}>Create an account</p>
+          <p className={styles.cardBody}>Register to continue</p>
           <div className={styles.socialContainer}>
             <div className={styles.socialButtonContainer}>
               <SocialButton
@@ -101,6 +110,14 @@ const Login = ({
           <div className={styles.formContainer}>
             <form className={styles.form} onSubmit={handleSubmit}>
               <InputField
+                type="name"
+                name="name"
+                label="Name"
+                style={{ marginBottom: '28px' }}
+                value={name}
+                onChange={handleChange}
+              />
+              <InputField
                 type="email"
                 name="email"
                 label="Email"
@@ -112,11 +129,10 @@ const Login = ({
                 type="password"
                 name="password"
                 label="password"
-                style={{ marginBottom: '28px' }}
+                style={{ marginBottom: '38px' }}
                 value={password}
                 onChange={handleChange}
               />
-              <p className={styles.formText}>Forgot password?</p>
               <Button className={styles.submitButton} type="Submit">
                 {isLoading ? (
                   <img
@@ -125,7 +141,7 @@ const Login = ({
                     alt="Loading Spinner"
                   />
                 ) : (
-                  'Login'
+                  'Sign up'
                 )}
               </Button>
             </form>
@@ -134,20 +150,20 @@ const Login = ({
       </div>
       <div className={styles.heroContainer}>
         <p className={styles.heroTextTitle}>Hello Gamer</p>
-        <p className={styles.heroTextBody}>Don't have an account yet?</p>
-        <Link to="/register" className={styles.heroButton}>
-          Create New Account
+        <p className={styles.heroTextBody}>Already have an account?</p>
+        <Link to="/login" className={styles.heroButton}>
+          Login
         </Link>
       </div>
     </div>
   );
 };
 
-Login.propTypes = {
+Register.propTypes = {
   isAuthenticated: PropTypes.bool,
   isLoading: PropTypes.bool,
   createValidationAlert: PropTypes.func,
-  loginAction: PropTypes.func,
+  registerAction: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -158,7 +174,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   createValidationAlert: (message, alertType) =>
     dispatch(createAlert(message, alertType)),
-  loginAction: (email, password) => dispatch(login(email, password)),
+  registerAction: (name, email, password) =>
+    dispatch(register(name, email, password)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

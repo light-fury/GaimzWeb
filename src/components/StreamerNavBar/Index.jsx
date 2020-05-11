@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { createAlert } from '../redux/modules/alert';
-import StreamerTile from './StreamerTile/StreamerTile';
-import Arrow from '../shared/Arrow/Arrow';
+import StreamerTile from './StreamerTile/Index';
+import Arrow from '../shared/Arrow/Index';
 import logo from '../../images/logos/logo.svg';
 import gear from '../../images/icons/gear.svg';
 import search from '../../images/icons/search.svg';
