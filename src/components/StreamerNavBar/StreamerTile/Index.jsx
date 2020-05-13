@@ -21,13 +21,19 @@ const StreamerTile = ({
   return (
     <Fragment>
       {collapsed ? (
-        <Avatar key={id} name={name} icon={icon} online={online} />
+        <Avatar key={id} name={name} icon={icon} online={online} size="40px" />
       ) : (
         <div className={styles.rowExpanded}>
           <div
             className={[styles.cellExpanded, styles.cellNameExpanded].join(' ')}
           >
-            <Avatar key={id} name={name} icon={icon} online={online} />
+            <Avatar
+              key={id}
+              name={name}
+              icon={icon}
+              online={online}
+              size="40px"
+            />
             <span className={styles.nameExpanded}>{name}</span>
           </div>
           <div

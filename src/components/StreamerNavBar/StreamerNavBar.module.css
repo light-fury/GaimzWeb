@@ -1,5 +1,6 @@
 .container {
   height: 100vh;
+  position: absolute;
   float: left;
   display: flex;
   flex-direction: column;
