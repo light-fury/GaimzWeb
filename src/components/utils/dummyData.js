@@ -124,7 +124,7 @@ export const feedData = [
     title: 'Please nerf Jager',
     subTitle: "Tom Clancy's Rainbow Six Siege",
     sourceImg:
-      'https://steamuserimages-a.akamaihd.net/ugc/854976708550502625/BA660762B442BF46527E66AA96E2B4A7E66A5212/?imw=1024&imh=559&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true',
+      'https://i.pinimg.com/originals/eb/98/b1/eb98b1f5170bd0ef1d6438072fd2e400.jpg',
     viewerCount: '3.5k',
     isLive: true,
   },
