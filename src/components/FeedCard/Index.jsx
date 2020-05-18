@@ -4,17 +4,19 @@ import PropTypes from 'prop-types';
 
 import MeatballMenu from '../shared/Icons/MeatballMenu';
 import Viewer from '../shared/Icons/Viewer';
+import Avatar from '../shared/Avatar/Index';
 
 import styles from './FeedCard.module.css';
 
 const FeedCard = ({
-  sourceImg,
-  isLive,
+  id,
+  userName,
+  userAvatar,
   title,
   subTitle,
+  sourceImg,
   viewerCount,
-  avatarUrl,
-  userName,
+  isLive,
 }) => {
   return (
     <div className={styles.container}>
@@ -44,12 +46,8 @@ const FeedCard = ({
           </div>
         </div>
         <div className={styles.avatarContainer}>
-          <img
-            className={styles.avatarSmall}
-            src={avatarUrl}
-            alt="user avatar"
-          />
-          <p>{userName}</p>
+          <Avatar name={userName} icon={userAvatar} online={true} size="28px" />
+          <span className={styles.username}>{userName}</span>
         </div>
       </div>
     </div>
@@ -58,13 +56,14 @@ const FeedCard = ({
 
 // TODO: Let's use a `user` type and get avatar and user from the store
 FeedCard.propTypes = {
-  sourceImg: PropTypes.string.isRequired,
-  isLive: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
+  userAvatar: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string.isRequired,
+  sourceImg: PropTypes.string.isRequired,
   viewerCount: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
+  isLive: PropTypes.bool.isRequired,
 };
 
 // TODO: To be filled out when above changes
