@@ -2,8 +2,7 @@ export const streamerData = [
   {
     id: 'e1',
     name: 'BrendenLive',
-    icon:
-      'https://tinyfac.es/data/avatars/475605E3-69C5-4D2B-8727-61B7BB8C4699-500w.jpeg',
+    icon: 'https://randomuser.me/api/portraits/men/1.jpg',
     following: true,
     subscribed: true,
     online: true,
@@ -19,8 +18,7 @@ export const streamerData = [
   {
     id: 'e3',
     name: 'JamesLion',
-    icon:
-      'https://pbs.twimg.com/profile_images/1054434556156162054/1H_7AxP0.jpg',
+    icon: 'https://randomuser.me/api/portraits/men/3.jpg',
     following: false,
     subscribed: true,
     online: false,
@@ -28,8 +26,7 @@ export const streamerData = [
   {
     id: 'e4',
     name: 'BrandenDunn',
-    icon:
-      'https://pbs.twimg.com/profile_images/953658232517652480/Xp0NB-TL.jpg',
+    icon: 'https://randomuser.me/api/portraits/men/4.jpg',
     following: true,
     subscribed: true,
     online: true,
@@ -37,52 +34,47 @@ export const streamerData = [
   {
     id: 'e5',
     name: 'SnailSong',
-    icon:
-      'https://pbs.twimg.com/profile_images/1063204281375834112/6h0HeYG_.jpg',
+    icon: 'https://randomuser.me/api/portraits/women/45.jpg',
     following: true,
     subscribed: false,
     online: true,
   },
   {
     id: 'e6',
-    name: 'BrendenLive',
-    icon:
-      'https://tinyfac.es/data/avatars/475605E3-69C5-4D2B-8727-61B7BB8C4699-500w.jpeg',
+    name: 'GaryJam',
+    icon: 'https://randomuser.me/api/portraits/men/8.jpg',
     following: true,
     subscribed: true,
     online: true,
   },
   {
     id: 'e7',
-    name: 'DaisyTTV',
-    icon: 'https://randomuser.me/api/portraits/women/44.jpg',
+    name: 'sharepickaxe',
+    icon: 'https://randomuser.me/api/portraits/men/18.jpg',
     following: true,
     subscribed: false,
     online: true,
   },
   {
     id: 'e8',
-    name: 'JamesLion',
-    icon:
-      'https://pbs.twimg.com/profile_images/1054434556156162054/1H_7AxP0.jpg',
+    name: 'Redselect',
+    icon: 'https://randomuser.me/api/portraits/men/10.jpg',
     following: false,
     subscribed: true,
     online: false,
   },
   {
     id: 'e9',
-    name: 'BrandenDunn',
-    icon:
-      'https://pbs.twimg.com/profile_images/953658232517652480/Xp0NB-TL.jpg',
+    name: 'BaileyB',
+    icon: 'https://randomuser.me/api/portraits/women/6.jpg',
     following: true,
     subscribed: true,
     online: true,
   },
   {
     id: 'e10',
-    name: 'SnailSong',
-    icon:
-      'https://pbs.twimg.com/profile_images/1063204281375834112/6h0HeYG_.jpg',
+    name: 'WingTiffey',
+    icon: 'https://randomuser.me/api/portraits/women/8.jpg',
     following: true,
     subscribed: false,
     online: true,
@@ -95,8 +87,7 @@ export const feedData = [
     id: 'c1',
     title: 'Hardcore Domination',
     subTitle: 'Call of Duty: Modern Warfare',
-    sourceImg:
-      'https://s3-alpha-sig.figma.com/img/4c7e/cf33/20e602ca51f49086bded4ec3e0491366?Expires=1589760000&Signature=IH7RrGp-SYKStkD07Y85Sh~P5Kb8s54jFSC3P4B6nGAt-xEtFyWPM-IgGvH60FlgdsY-BbYhckQVdRt-IQ8w1DBUJjj~L3cNTLIN8-PAv4gyESVQVEAspE9ZPHw~-orM9oUPBTOFkuyUVlIb9iAf2ZYg37ehRJR4qzWGJ~r98r5QCyfXOdQXD~KP2dgMJIZM9zfpslL67uy2qaz~kVDV~SFqeRJw6l8s42Xn2rCfJSwPBeFq9XpNlsppHiUKzsaSL6CKp1mt~3wDY9PNI4k-gHIoVrXs6FTwJKlQJl4aFtqA0zQRsbCYfN-bn53LOgvgs-l2ldFMDjChU0CUV9Zl~A__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
+    sourceImg: 'https://i.ytimg.com/vi/Tzs8nN_g7VY/maxresdefault.jpg',
     viewerCount: '4.8k',
     isLive: true,
   },
@@ -110,7 +101,7 @@ export const feedData = [
     isLive: true,
   },
   {
-    user: streamerData[2],
+    user: streamerData[8],
     id: 'c3',
     title: 'Please no basement time',
     subTitle: 'Dead By Daylight',
@@ -129,9 +120,9 @@ export const feedData = [
     isLive: true,
   },
   {
-    user: streamerData[4],
+    user: streamerData[6],
     id: 'c5',
-    title: 'Getting Diamond',
+    title: 'Looking for some diamonds!',
     subTitle: 'Minecraft',
     sourceImg:
       'https://www.thegamesstorebh.com/wp-content/uploads/2018/12/Minecraft-gameplay-image-6.jpg',
