@@ -23,7 +23,7 @@ const Feed = () => {
         <div className={styles.titleContainer}>
           <span className={styles.title}>Live Streams</span>
         </div>
-        <div className={styles.discoverContainer}>
+        <div className={styles.streamContainer}>
           {feedData !== null &&
             feedData.map((feedItem, index) => (
               <FeedCard

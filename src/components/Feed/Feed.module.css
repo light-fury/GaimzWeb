@@ -6,10 +6,10 @@
 
 .feedContainer {
   flex: 1;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
   max-height: 100vh;
-  padding: 0px 98px 0px 114px;
+  margin: 0px 0px 0px 114px;
 }
 
 .feedNavBar {
@@ -60,12 +60,23 @@
   color: #1e1f20;
 }
 
-.discoverContainer {
-  width: 635px;
-  height: 100%;
+.streamContainer {
+  flex: 1;
   padding-left: 15px;
+  margin: 0px 10px 10px 0px;
   overflow-y: scroll;
   overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.streamContainer::-webkit-scrollbar {
+  width: 5px;
+}
+
+.streamContainer::-webkit-scrollbar-thumb {
+  height: 128px;
+  border-radius: 100px;
+  background-color: #cdcfd5;
 }
 
 .dot {
