@@ -67,6 +67,8 @@
   overflow-y: scroll;
   overflow-x: hidden;
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #9c9c9c #cdcfd5;
 }
 
 .streamContainer::-webkit-scrollbar {
