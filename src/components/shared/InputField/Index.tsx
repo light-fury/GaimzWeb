@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, SyntheticEvent, CSSProperties } from 'react';
 import PropTypes from 'prop-types';
+//@ts-ignore
 import { isEmail } from 'validator';
 
 import styles from './InputField.module.css';
@@ -7,10 +8,34 @@ import valid from '../../../images/icons/validCheck.svg';
 import invalid from '../../../images/icons/x.svg';
 import showPassword from '../../../images/icons/eye.svg';
 
-const InputField = ({ onChange, type, style, label, name, value }) => {
+// TODO: String values to allow for incremental migrations
+enum Type {
+  Name = 'name',
+  Password = 'password',
+  Email = 'email',
+}
+
+interface PropTypes {
+  onChange: (...args: any[]) => void;
+  type: Type;
+  // TODO: Confirm object shape
+  style?: CSSProperties;
+  label: string;
+  name: string;
+  value: string;
+}
+
+const InputField = ({
+  onChange,
+  type,
+  style,
+  label,
+  name,
+  value,
+}: PropTypes) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const handleChange = (event) => {
+  const handleChange = (event: SyntheticEvent): void => {
     onChange(event);
   };
 
@@ -25,7 +50,7 @@ const InputField = ({ onChange, type, style, label, name, value }) => {
         <input
           className={styles.input}
           type={
-            type === 'password' && passwordVisible === false
+            type === Type.Password && passwordVisible === false
               ? 'password'
               : 'text'
           }
@@ -34,27 +59,27 @@ const InputField = ({ onChange, type, style, label, name, value }) => {
           onChange={handleChange}
         />
         <div className={styles.validationContainer}>
-          {type === 'name' && value.length > 0 && value.length < 3 && (
+          {type === Type.Name && value.length > 0 && value.length < 3 && (
             <img
               className={styles.invalidCheck}
               src={invalid}
               alt="Invalid Check"
             />
           )}
-          {type === 'email' && value.length > 0 && !isEmail(value) && (
+          {type === Type.Email && value.length > 0 && !isEmail(value) && (
             <img
               className={styles.invalidCheck}
               src={invalid}
               alt="Invalid Check"
             />
           )}
-          {type === 'name' && value.length > 0 && value.length >= 3 && (
+          {type === Type.Name && value.length > 0 && value.length >= 3 && (
             <img className={styles.validCheck} src={valid} alt="Valid Check" />
           )}
-          {type === 'email' && value.length > 0 && isEmail(value) && (
+          {type === Type.Email && value.length > 0 && isEmail(value) && (
             <img className={styles.validCheck} src={valid} alt="Valid Check" />
           )}
-          {type === 'password' && (
+          {type === Type.Password && (
             <img
               className={styles.passwordButton}
               src={showPassword}
@@ -66,15 +91,6 @@ const InputField = ({ onChange, type, style, label, name, value }) => {
       </div>
     </div>
   );
-};
-
-InputField.propTypes = {
-  onChange: PropTypes.func,
-  type: PropTypes.string,
-  style: PropTypes.object,
-  label: PropTypes.string,
-  name: PropTypes.string,
-  value: PropTypes.string,
 };
 
 export default InputField;
