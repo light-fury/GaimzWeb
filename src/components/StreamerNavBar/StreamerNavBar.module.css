@@ -6,6 +6,7 @@
   flex-direction: column;
   background-color: #ffffff;
   transition: width 0.05s;
+  z-index: 1;
 }
 
 .containerCollapsed {
