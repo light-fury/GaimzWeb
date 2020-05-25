@@ -21,28 +21,25 @@ const StreamerNavBar = ({ createAlertAction }) => {
   const [showMore, setShowMore] = useState(false);
   const streamerLimit = useRef(5);
 
-  const handleCollapse = useCallback(
-    (event) => {
-      if (collapsed === true) {
-        setCollapsed(false);
-        setClassName('Expanded');
-      } else {
-        setCollapsed(true);
-        setClassName('Collapsed');
-        setSearchInput('');
-        setShowMore(false);
-        streamerLimit.current = 5;
-      }
-    },
-    [
-      collapsed,
-      setCollapsed,
-      setClassName,
-      setSearchInput,
-      setShowMore,
-      streamerLimit,
-    ]
-  );
+  const handleCollapse = useCallback(() => {
+    if (collapsed === true) {
+      setCollapsed(false);
+      setClassName('Expanded');
+    } else {
+      setCollapsed(true);
+      setClassName('Collapsed');
+      setSearchInput('');
+      setShowMore(false);
+      streamerLimit.current = 5;
+    }
+  }, [
+    collapsed,
+    setCollapsed,
+    setClassName,
+    setSearchInput,
+    setShowMore,
+    streamerLimit,
+  ]);
 
   const handleSettings = () => {
     console.log('Settings Clicked');
@@ -55,12 +52,9 @@ const StreamerNavBar = ({ createAlertAction }) => {
     [setSearchInput]
   );
 
-  const handleShowOffline = useCallback(
-    (event) => {
-      setShowOffline((currentShowOffline) => !currentShowOffline);
-    },
-    [setShowOffline]
-  );
+  const handleShowOffline = useCallback(() => {
+    setShowOffline((currentShowOffline) => !currentShowOffline);
+  }, [setShowOffline]);
 
   const handleFollow = useCallback(
     (id, name, currentFollowing) => {
@@ -87,18 +81,15 @@ const StreamerNavBar = ({ createAlertAction }) => {
     [createAlertAction]
   );
 
-  const handleShowMore = useCallback(
-    (event) => {
-      if (showMore === true) {
-        setShowMore(false);
-        streamerLimit.current = 5;
-      } else {
-        setShowMore(true);
-        streamerLimit.current = streamers.length;
-      }
-    },
-    [showMore, setShowMore, streamerLimit]
-  );
+  const handleShowMore = useCallback(() => {
+    if (showMore === true) {
+      setShowMore(false);
+      streamerLimit.current = 5;
+    } else {
+      setShowMore(true);
+      streamerLimit.current = streamers.length;
+    }
+  }, [showMore, setShowMore, streamerLimit]);
 
   const filteredStreamers = useMemo(() => {
     let filteredStreamers = streamers;
@@ -112,7 +103,7 @@ const StreamerNavBar = ({ createAlertAction }) => {
       );
     filteredStreamers = filteredStreamers.slice(0, streamerLimit.current);
     return filteredStreamers;
-  }, [showOffline, searchInput, showMore]);
+  }, [showOffline, searchInput]);
 
   return (
     <div
