@@ -1,0 +1,40 @@
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeAlert, AlertStatus } from 'src/features/alert';
+import dismiss from 'src/images/icons/x.svg';
+import { RootState } from 'src/app/rootReducer';
+
+import styles from './Alert.module.css';
+
+const Alert = () => {
+  const dispatch = useDispatch();
+  const alert = useSelector((state: RootState) => state.alert);
+  let alerts = null;
+  if (alert !== null) {
+    alerts = Object.values(alert) as AlertStatus[];
+  }
+
+  return (
+    <div className={styles.alertsContainer}>
+      {alerts !== null &&
+        alerts.map((alert) => (
+          <div
+            className={[styles.alertContainer, styles[alert.alertType]].join(
+              ' '
+            )}
+            key={alert.id}
+          >
+            {alert.message}
+            <img
+              className={styles.cancelButton}
+              src={dismiss}
+              alt="Dismiss Alert"
+              onClick={() => dispatch(removeAlert(alert.id))}
+            />
+          </div>
+        ))}
+    </div>
+  );
+};
+
+export default Alert;
