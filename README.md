@@ -5,7 +5,7 @@
   
 
 ## Description
-This project is the Web Frontend used for Gaimz as a platform, it was written in React - based on the Create React App CLI.
+This project is the Web Frontend used for Gaimz as a platform, it was written in React - based on the Create React App CLI (TS-redux template).
 
 ## Available Scripts
 

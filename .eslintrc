@@ -1,0 +1,47 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "airbnb"
+  ],
+  "env": {
+    "jest": true
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "extensions": [".ts", ".tsx"]
+      }
+    }
+  },
+  "rules": {
+
+    // Disable <Fragment> => <> replacement. Feel free to change
+    "react/jsx-fragments": "off",
+    "object-curly-newline": "off",
+    // Disable prefer default export
+    "import/prefer-default-export": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prop-types": "warn",
+    "react/jsx-props-no-spreading": "warn",
+    "import/no-cycle": "off",
+    "comma-dangle": ["error", {
+      "arrays": "ignore",
+      "objects": "ignore",
+      "imports": "ignore",
+      "exports": "ignore",
+      "functions": "ignore"
+  }],
+    "import/extensions": ["error", "never"],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["draft", "sketch", "outline"]
+      }
+    ]
+  }
+}
