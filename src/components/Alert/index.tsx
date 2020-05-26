@@ -8,10 +8,10 @@ import styles from './Alert.module.css';
 
 const Alert = () => {
   const dispatch = useDispatch();
-  const alert = useSelector((state: RootState) => state.alert);
+  const alertState = useSelector((state: RootState) => state.alert);
   let alerts = null;
-  if (alert !== null) {
-    alerts = Object.values(alert) as AlertStatus[];
+  if (alertState !== null) {
+    alerts = Object.values(alertState) as AlertStatus[];
   }
 
   return (

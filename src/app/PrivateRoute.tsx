@@ -6,9 +6,7 @@ import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from './rootReducer';
 
-interface PrivateRouteProps extends RouteProps {
-}
-
+interface PrivateRouteProps extends RouteProps {}
 
 function PrivateRoute({ children, ...rest }: PrivateRouteProps) {
   const { isAuthenticated = false } = useSelector(
@@ -23,8 +21,8 @@ function PrivateRoute({ children, ...rest }: PrivateRouteProps) {
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
-              state: { from: location }
+              pathname: '/login',
+              state: { from: location },
             }}
           />
         )

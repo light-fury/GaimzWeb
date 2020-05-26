@@ -1,6 +1,4 @@
-import React, {
- useState, useRef, useCallback, useMemo, Fragment 
-} from 'react';
+import React, { useState, useRef, useCallback, useMemo, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
@@ -9,10 +7,10 @@ import { Arrow, StreamerTile } from 'src/components';
 import logo from 'src/images/logos/logo.svg';
 import gear from 'src/images/icons/gear.svg';
 import search from 'src/images/icons/search.svg';
-import styles from './StreamerNavBar.module.css';
 import { streamerData, Streamer } from 'src/utils/dummyData';
+import styles from './StreamerNavBar.module.css';
 
-interface StreamerNavBarProps{
+interface StreamerNavBarProps {
   streamers?: Streamer[];
 }
 
@@ -27,28 +25,25 @@ const StreamerNavBar = () => {
   const [showMore, setShowMore] = useState(false);
   const streamerLimit = useRef(5);
 
-  const handleCollapse = useCallback(
-    () => {
-      if (collapsed === true) {
-        setCollapsed(false);
-        setClassName('Expanded');
-      } else {
-        setCollapsed(true);
-        setClassName('Collapsed');
-        setSearchInput('');
-        setShowMore(false);
-        streamerLimit.current = 5;
-      }
-    },
-    [
-      collapsed,
-      setCollapsed,
-      setClassName,
-      setSearchInput,
-      setShowMore,
-      streamerLimit
-    ]
-  );
+  const handleCollapse = useCallback(() => {
+    if (collapsed === true) {
+      setCollapsed(false);
+      setClassName('Expanded');
+    } else {
+      setCollapsed(true);
+      setClassName('Collapsed');
+      setSearchInput('');
+      setShowMore(false);
+      streamerLimit.current = 5;
+    }
+  }, [
+    collapsed,
+    setCollapsed,
+    setClassName,
+    setSearchInput,
+    setShowMore,
+    streamerLimit,
+  ]);
 
   const handleSettings = () => {
     console.log('Settings Clicked');
@@ -61,12 +56,9 @@ const StreamerNavBar = () => {
     [setSearchInput]
   );
 
-  const handleShowOffline = useCallback(
-    (event) => {
-      setShowOffline((currentShowOffline) => !currentShowOffline);
-    },
-    [setShowOffline]
-  );
+  const handleShowOffline = useCallback(() => {
+    setShowOffline((currentShowOffline) => !currentShowOffline);
+  }, [setShowOffline]);
 
   const handleFollow = useCallback(
     (id, name, currentFollowing) => {
@@ -82,10 +74,9 @@ const StreamerNavBar = () => {
   const handleSubscribe = useCallback(
     (id, name, currentSubscribed) => {
       if (currentSubscribed === true) {
-        dispatch(createAlert(
-          `You are no longer subscribed to from ${name}!`,
-          'danger'
-        ));
+        dispatch(
+          createAlert(`You are no longer subscribed to from ${name}!`, 'danger')
+        );
       } else {
         dispatch(createAlert(`You are now subscribed to ${name}!`, 'success'));
       }
@@ -93,29 +84,31 @@ const StreamerNavBar = () => {
     [dispatch]
   );
 
-  const handleShowMore = useCallback(
-    (event) => {
-      if (showMore === true) {
-        setShowMore(false);
-        streamerLimit.current = 5;
-      } else {
-        setShowMore(true);
-        streamerLimit.current = streamers.length;
-      }
-    },
-    [showMore, setShowMore, streamerLimit]
-  );
+  const handleShowMore = useCallback(() => {
+    if (showMore === true) {
+      setShowMore(false);
+      streamerLimit.current = 5;
+    } else {
+      setShowMore(true);
+      streamerLimit.current = streamers.length;
+    }
+  }, [showMore, setShowMore, streamerLimit]);
 
   const filteredStreamers = useMemo(() => {
     let filteredStreamers = streamers;
-    if (!showOffline)
-    { 
-      filteredStreamers = filteredStreamers.filter((streamer) => streamer.online === true);
+    if (!showOffline) {
+      filteredStreamers = filteredStreamers.filter(
+        (streamer) => streamer.online === true
+      );
     }
-    if (searchInput.trim() !== '') { filteredStreamers = filteredStreamers.filter((streamer) => streamer.name.toLowerCase().includes(searchInput.toLowerCase())); }
+    if (searchInput.trim() !== '') {
+      filteredStreamers = filteredStreamers.filter((streamer) =>
+        streamer.name.toLowerCase().includes(searchInput.toLowerCase())
+      );
+    }
     filteredStreamers = filteredStreamers.slice(0, streamerLimit.current);
     return filteredStreamers;
-  }, [ showOffline, searchInput ]);
+  }, [showOffline, searchInput]);
 
   return (
     <div
@@ -139,13 +132,13 @@ const StreamerNavBar = () => {
         <div
           className={[
             styles.streamerContainer,
-            styles[`streamerContainer${className}`]
+            styles[`streamerContainer${className}`],
           ].join(' ')}
         >
           {collapsed ? (
             <Fragment>
-              {filteredStreamers !== null
-                && filteredStreamers.map((streamer, index) => (
+              {filteredStreamers !== null &&
+                filteredStreamers.map((streamer, index) => (
                   <StreamerTile
                     key={`${index}-${streamer.id}`}
                     id={streamer.id}
@@ -178,7 +171,7 @@ const StreamerNavBar = () => {
                 <div
                   className={[
                     styles.headerCellExpanded,
-                    styles.headerNameCellExpanded
+                    styles.headerNameCellExpanded,
                   ].join(' ')}
                 >
                   Name
@@ -186,7 +179,7 @@ const StreamerNavBar = () => {
                 <div
                   className={[
                     styles.headerCellExpanded,
-                    styles.headerFollowingCellExpanded
+                    styles.headerFollowingCellExpanded,
                   ].join(' ')}
                 >
                   Following
@@ -194,16 +187,16 @@ const StreamerNavBar = () => {
                 <div
                   className={[
                     styles.headerCellExpanded,
-                    styles.headerSubscribedCellExpanded
+                    styles.headerSubscribedCellExpanded,
                   ].join(' ')}
                 >
                   Subscribed
                 </div>
               </div>
               <div className={styles.bodyExpanded}>
-                {filteredStreamers !== null
-                  && filteredStreamers.length !== 0
-                  && filteredStreamers.map((streamer, index) => (
+                {filteredStreamers !== null &&
+                  filteredStreamers.length !== 0 &&
+                  filteredStreamers.map((streamer, index) => (
                     <StreamerTile
                       key={`${index}-${streamer.id}`}
                       id={streamer.id}

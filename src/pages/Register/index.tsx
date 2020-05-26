@@ -7,9 +7,8 @@ import { register } from 'src/features/authentication';
 import {
   validateName,
   validateEmail,
-  validatePassword
+  validatePassword,
 } from 'src/utils/validate';
-import styles from './Register.module.css';
 import { SocialButton, Button, InputField, InputType } from 'src/components';
 
 import logo from 'src/images/logos/logo.svg';
@@ -19,16 +18,18 @@ import twitch from 'src/images/socialMedia/twitch.svg';
 import steam from 'src/images/socialMedia/steam.svg';
 import loadingSpinner from 'src/images/loadingSpinner.svg';
 import { RootState } from 'src/app/rootReducer';
+import styles from './Register.module.css';
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { isAuthenticated, isLoading } = useSelector((state: RootState) => (state.authentication));
-
+  const { isAuthenticated, isLoading } = useSelector(
+    (state: RootState) => state.authentication
+  );
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
   });
   const { name, email, password } = formData;
 
@@ -155,7 +156,5 @@ const Register = () => {
     </div>
   );
 };
-
-
 
 export default Register;

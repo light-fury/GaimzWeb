@@ -1,15 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import styles from './Button.module.css';
 
-interface ButtonProps{
+interface ButtonProps {
   className: string;
-  children: JSX.Element[] | JSX.Element | string,
-  type: "button" | "submit" | "reset" | undefined;
+  children: JSX.Element[] | JSX.Element | string;
+  type: 'button' | 'submit' | 'reset' | undefined;
 }
 
-const Button = ({ className, children, type, ...props }: ButtonProps) => (
+const Button = ({
+  className = '',
+  children = 'Click Me',
+  type = 'button',
+  ...props
+}: ButtonProps) => (
   <button
     {...props}
     type={type}
@@ -18,11 +22,5 @@ const Button = ({ className, children, type, ...props }: ButtonProps) => (
     {children}
   </button>
 );
-
-Button.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
-  type: PropTypes.string
-};
 
 export default Button;

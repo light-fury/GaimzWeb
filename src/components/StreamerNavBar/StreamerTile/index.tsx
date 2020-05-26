@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
 
-import {Avatar} from 'src/components';
+import { Avatar } from 'src/components';
 
-import styles from './StreamerTile.module.css';
 import check from 'src/images/icons/check.svg';
 import x from 'src/images/icons/x.svg';
+import styles from './StreamerTile.module.css';
 
-interface StreamerTileProps{
+interface StreamerTileProps {
   id: string;
   name: string;
   icon: string;
@@ -15,7 +15,11 @@ interface StreamerTileProps{
   online: boolean;
   collapsed: boolean;
   handleFollow?: (id: string, name: string, currentFollowing: boolean) => void;
-  handleSubscribe?: (id: string, name: string, currentSubscribed: boolean) => void;
+  handleSubscribe?: (
+    id: string,
+    name: string,
+    currentSubscribed: boolean
+  ) => void;
 }
 
 const StreamerTile = ({
@@ -27,7 +31,7 @@ const StreamerTile = ({
   online,
   collapsed,
   handleFollow,
-  handleSubscribe
+  handleSubscribe,
 }: StreamerTileProps) => (
   <Fragment>
     {collapsed ? (
@@ -91,8 +95,6 @@ const StreamerTile = ({
   </Fragment>
 );
 
-StreamerTile.propTypes = {
-  
-};
+StreamerTile.propTypes = {};
 
 export default StreamerTile;

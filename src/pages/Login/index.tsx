@@ -6,8 +6,12 @@ import { createAlert } from 'src/features/alert';
 import { login } from 'src/features/authentication';
 
 import { validateEmail, validatePassword } from 'src/utils/validate';
-import styles from './Login.module.css';
-import { SocialButton, Button, InputField, InputType } from 'src/components/shared';
+import {
+  SocialButton,
+  Button,
+  InputField,
+  InputType,
+} from 'src/components/shared';
 
 import logo from 'src/images/logos/logo.svg';
 import logoText from 'src/images/logos/logoText.svg';
@@ -16,15 +20,17 @@ import twitch from 'src/images/socialMedia/twitch.svg';
 import steam from 'src/images/socialMedia/steam.svg';
 import loadingSpinner from 'src/images/loadingSpinner.svg';
 import { RootState } from 'src/app/rootReducer';
-
+import styles from './Login.module.css';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { isAuthenticated, isLoading } = useSelector((state: RootState) => (state.authentication));
+  const { isAuthenticated, isLoading } = useSelector(
+    (state: RootState) => state.authentication
+  );
 
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
   const { email, password } = formData;
 

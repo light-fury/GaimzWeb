@@ -5,8 +5,6 @@ import { feedData } from 'src/utils/dummyData';
 
 import styles from './Feed.module.css';
 
-
-
 const Feed = () => (
   <div className={styles.pageContainer}>
     <div className={styles.feedContainer}>
