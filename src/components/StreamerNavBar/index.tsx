@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useMemo, Fragment } from 'react';
+import React, { useState, useCallback, useMemo, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
@@ -23,7 +23,7 @@ const StreamerNavBar = () => {
   const [showOffline, setShowOffline] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [showMore, setShowMore] = useState(false);
-  const streamerLimit = useRef(5);
+  const [streamerLimit, setStreamerLimit] = useState(5);
 
   const handleCollapse = useCallback(() => {
     if (collapsed === true) {
@@ -34,7 +34,7 @@ const StreamerNavBar = () => {
       setClassName('Collapsed');
       setSearchInput('');
       setShowMore(false);
-      streamerLimit.current = 5;
+      setStreamerLimit(5);
     }
   }, [
     collapsed,
@@ -42,7 +42,7 @@ const StreamerNavBar = () => {
     setClassName,
     setSearchInput,
     setShowMore,
-    streamerLimit,
+    setStreamerLimit,
   ]);
 
   const handleSettings = () => {
@@ -87,12 +87,12 @@ const StreamerNavBar = () => {
   const handleShowMore = useCallback(() => {
     if (showMore === true) {
       setShowMore(false);
-      streamerLimit.current = 5;
+      setStreamerLimit(5);
     } else {
       setShowMore(true);
-      streamerLimit.current = streamers.length;
+      setStreamerLimit(streamers.length);
     }
-  }, [showMore, setShowMore, streamerLimit]);
+  }, [showMore, setShowMore, setStreamerLimit]);
 
   const filteredStreamers = useMemo(() => {
     let filteredStreamers = streamers;
@@ -106,9 +106,9 @@ const StreamerNavBar = () => {
         streamer.name.toLowerCase().includes(searchInput.toLowerCase())
       );
     }
-    filteredStreamers = filteredStreamers.slice(0, streamerLimit.current);
+    filteredStreamers = filteredStreamers.slice(0, streamerLimit);
     return filteredStreamers;
-  }, [showOffline, searchInput]);
+  }, [showOffline, searchInput, streamerLimit]);
 
   return (
     <div
