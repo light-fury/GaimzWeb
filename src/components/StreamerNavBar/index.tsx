@@ -95,19 +95,17 @@ const StreamerNavBar = () => {
   }, [showMore, setShowMore, setStreamerLimit]);
 
   const filteredStreamers = useMemo(() => {
-    let filteredStreamers = streamers;
+    let returnValue = streamers;
     if (!showOffline) {
-      filteredStreamers = filteredStreamers.filter(
-        (streamer) => streamer.online === true
-      );
+      returnValue = returnValue.filter((streamer) => streamer.online === true);
     }
     if (searchInput.trim() !== '') {
-      filteredStreamers = filteredStreamers.filter((streamer) =>
+      returnValue = returnValue.filter((streamer) =>
         streamer.name.toLowerCase().includes(searchInput.toLowerCase())
       );
     }
-    filteredStreamers = filteredStreamers.slice(0, streamerLimit);
-    return filteredStreamers;
+    returnValue = returnValue.slice(0, streamerLimit);
+    return returnValue;
   }, [showOffline, searchInput, streamerLimit]);
 
   return (

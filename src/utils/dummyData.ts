@@ -16,6 +16,22 @@ export interface Feed {
   isLive: boolean;
 }
 
+export interface MatchResult {
+  match_id: string;
+  won: boolean;
+  duration: number;
+  type: 'Gaimz Match';
+  user_id: string;
+  hero_name: string;
+  hero_avatar_url: string;
+  kills: number;
+  deaths: number;
+  assists: number;
+  items: string[];
+  gpm: number;
+  lasthits: number;
+}
+
 export const streamerData: Streamer[] = [
   {
     id: 'e1',
@@ -146,5 +162,56 @@ export const feedData = [
       'https://www.thegamesstorebh.com/wp-content/uploads/2018/12/Minecraft-gameplay-image-6.jpg',
     viewerCount: '0.9k',
     isLive: true,
+  },
+];
+
+export const recentMatchesData: MatchResult[] = [
+  {
+    match_id: '1',
+    hero_avatar_url:
+      'https://elasticbeanstalk-us-east-2-265842567910.s3.us-east-2.amazonaws.com/images/heroes/pudge_lg.png',
+    won: true,
+    duration: 300,
+    deaths: 5,
+    kills: 10,
+    assists: 15,
+    gpm: 350,
+    type: 'Gaimz Match',
+    user_id: '12345',
+    hero_name: 'Pudge',
+    items: [],
+    lasthits: 150,
+  },
+  {
+    match_id: '2',
+    hero_avatar_url:
+      'https://elasticbeanstalk-us-east-2-265842567910.s3.us-east-2.amazonaws.com/images/heroes/lion_lg.png',
+    won: true,
+    duration: 310,
+    deaths: 5,
+    kills: 50,
+    assists: 15,
+    gpm: 3500,
+    type: 'Gaimz Match',
+    user_id: '12345',
+    hero_name: 'Lion',
+    items: [],
+    lasthits: 97,
+  },
+  {
+    match_id: '3',
+    hero_avatar_url:
+      'https://elasticbeanstalk-us-east-2-265842567910.s3.us-east-2.amazonaws.com/images/heroes/lina_lg.png',
+    won: false,
+    duration: 3016,
+    deaths: 25,
+    kills: 10,
+    assists: 15,
+    gpm: 50,
+    type: 'Gaimz Match',
+    user_id: '12345',
+    hero_name: 'Lina',
+    items: [],
+    lasthits: 150,
   },
 ];
