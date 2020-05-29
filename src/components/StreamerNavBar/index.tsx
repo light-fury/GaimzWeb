@@ -1,20 +1,26 @@
-import React, { useState, useCallback, useMemo, Fragment } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  Fragment,
+  useEffect,
+} from 'react';
 import { Link } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createAlert } from 'src/features/alert';
 import { Arrow, StreamerTile } from 'src/components';
 import logo from 'src/images/logos/logo.svg';
 import gear from 'src/images/icons/gear.svg';
 import search from 'src/images/icons/search.svg';
-import { streamerData, Streamer } from 'src/utils/dummyData';
+
+import { Streamer, loadStreamers } from 'src/features/feed';
+import { RootState } from 'src/app/rootReducer';
 import styles from './StreamerNavBar.module.css';
 
 interface StreamerNavBarProps {
   streamers?: Streamer[];
 }
-
-const streamers = streamerData;
 
 const StreamerNavBar = () => {
   const dispatch = useDispatch();
@@ -24,6 +30,12 @@ const StreamerNavBar = () => {
   const [searchInput, setSearchInput] = useState('');
   const [showMore, setShowMore] = useState(false);
   const [streamerLimit, setStreamerLimit] = useState(5);
+
+  useEffect(() => {
+    dispatch(loadStreamers());
+  }, [dispatch]);
+
+  const { streamerData } = useSelector((s: RootState) => s.feed);
 
   const handleCollapse = useCallback(() => {
     if (collapsed === true) {
@@ -90,12 +102,12 @@ const StreamerNavBar = () => {
       setStreamerLimit(5);
     } else {
       setShowMore(true);
-      setStreamerLimit(streamers.length);
+      setStreamerLimit(streamerData.length);
     }
-  }, [showMore, setShowMore, setStreamerLimit]);
+  }, [showMore, setShowMore, setStreamerLimit, streamerData.length]);
 
   const filteredStreamers = useMemo(() => {
-    let returnValue = streamers;
+    let returnValue = streamerData;
     if (!showOffline) {
       returnValue = returnValue.filter((streamer) => streamer.online === true);
     }
@@ -106,7 +118,7 @@ const StreamerNavBar = () => {
     }
     returnValue = returnValue.slice(0, streamerLimit);
     return returnValue;
-  }, [showOffline, searchInput, streamerLimit]);
+  }, [showOffline, searchInput, streamerLimit, streamerData]);
 
   return (
     <div
@@ -208,18 +220,19 @@ const StreamerNavBar = () => {
                       handleSubscribe={handleSubscribe}
                     />
                   ))}
-                {filteredStreamers.length === 0 && streamers.length !== 0 && (
+                {filteredStreamers.length === 0 && streamerData.length !== 0 && (
                   <div className={styles.noStreamersExpanded}>
                     Uh oh! We couldn't find anyone!
                     <br />
                     Try a different search!
                   </div>
                 )}
-                {filteredStreamers.length === 0 && streamers.length === 0 && (
-                  <div className={styles.noStreamersExpanded}>
-                    Uh oh! It looks like you haven't followed anyone yet!
-                  </div>
-                )}
+                {filteredStreamers.length === 0 &&
+                  streamerData.length === 0 && (
+                    <div className={styles.noStreamersExpanded}>
+                      Uh oh! It looks like you haven't followed anyone yet!
+                    </div>
+                  )}
                 {filteredStreamers.length !== 0 && !showMore && (
                   <div
                     className={styles.showMoreContainer}

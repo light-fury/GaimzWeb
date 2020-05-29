@@ -1,36 +1,5 @@
-export interface Streamer {
-  id: string;
-  name: string;
-  icon: string;
-  following: boolean;
-  subscribed: boolean;
-  online: boolean;
-}
-export interface Feed {
-  user: Streamer;
-  id: string;
-  title: string;
-  subTitle: string;
-  sourceImg: string;
-  viewerCount: string;
-  isLive: boolean;
-}
-
-export interface MatchResult {
-  match_id: string;
-  won: boolean;
-  duration: number;
-  type: 'Gaimz Match';
-  user_id: string;
-  hero_name: string;
-  hero_avatar_url: string;
-  kills: number;
-  deaths: number;
-  assists: number;
-  items: string[];
-  gpm: number;
-  lasthits: number;
-}
+import { MatchResult } from 'src/features/matches';
+import { Streamer, Feed } from 'src/features/feed';
 
 export const streamerData: Streamer[] = [
   {
@@ -115,7 +84,7 @@ export const streamerData: Streamer[] = [
   },
 ];
 
-export const feedData = [
+export const feedData: Feed[] = [
   {
     user: streamerData[0],
     id: 'c1',
