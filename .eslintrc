@@ -22,6 +22,7 @@
     // Disable <Fragment> => <> replacement. Feel free to change
     "react/jsx-fragments": "off",
     "object-curly-newline": "off",
+    "camelcase": "off",
     // Disable prefer default export
     "import/prefer-default-export": "off",
     "react/jsx-filename-extension": "off",

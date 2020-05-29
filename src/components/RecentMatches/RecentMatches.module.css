@@ -1,0 +1,26 @@
+.won {
+  border: 3px solid lightgreen;
+}
+
+.loss {
+  border: 3px solid red;
+}
+
+.heroImage {
+  height: 60px;
+}
+
+.won,
+.loss {
+  border-radius: 5px;
+}
+
+.resultColumn {
+  flex: 1;
+  padding: 10px;
+}
+
+.resultRow {
+  display: flex;
+  flex-direction: row;
+}

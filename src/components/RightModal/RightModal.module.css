@@ -4,3 +4,41 @@
   background: #1e1f20;
   border-radius: 32px 0px 0px 32px;
 }
+
+.purple {
+  background: #613bff;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  margin: 0 20px;
+  float: right;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  margin: 0 20px;
+  float: right;
+  border-radius: 5px;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.header {
+  width: 100%;
+  padding: 50px 0;
+  height: 50px;
+}
+
+.content {
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
