@@ -8,9 +8,6 @@
   margin: 8px 0px 8px 0px;
 }
 
-.cellExpanded {
-}
-
 .cellNameExpanded {
   width: 150px;
   height: 40px;
@@ -46,6 +43,7 @@
   margin: auto;
   border-radius: 8px;
   cursor: pointer;
+  border: none;
 }
 
 .checkButton {

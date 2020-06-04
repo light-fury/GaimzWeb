@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column
+  flex-direction: column;
 }
 
 .alertContainer {
@@ -18,23 +18,25 @@
   font-weight: bold;
   font-size: 15px;
   line-height: 20px;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0px 25px 0px 25px;
   animation: slide_down 0.4s ease;
 }
 
 .success {
-  background-color: #4BDD08;
+  background-color: #4bdd08;
 }
 
 .danger {
-  background-color: #FF3A3A;
+  background-color: #ff3a3a;
 }
 
 .cancelButton {
   width: 20px;
   height: 20px;
   cursor: pointer;
+  background-color: inherit;
+  border: none;
 }
 
 @keyframes slide-down {

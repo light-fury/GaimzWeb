@@ -32,9 +32,9 @@ const Feed = () => {
         </div>
         <div className={styles.contentContainer}>
           {feedData !== null &&
-            feedData.map((feedItem, index) => (
+            feedData.map((feedItem) => (
               <FeedCard
-                key={`${index}-${feedItem.id}`}
+                key={`${feedItem.id}`}
                 id={feedItem.id}
                 userName={feedItem.user.name}
                 userAvatar={feedItem.user.icon}

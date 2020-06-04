@@ -12,7 +12,7 @@
   line-height: 20px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #1E1F20;
+  color: #1e1f20;
 }
 
 .inputContainer {
@@ -21,7 +21,7 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  border: 2px solid #E9E9EC;
+  border: 2px solid #e9e9ec;
   border-radius: 4px;
   box-sizing: border-box;
   overflow: hidden;
@@ -36,7 +36,7 @@
   font-weight: 300;
   font-size: 14px;
   line-height: 20px;
-  color: #8F92A1;
+  color: #8f92a1;
 }
 
 .input:focus {
@@ -55,7 +55,7 @@
   width: 20px;
   height: 20px;
   border-radius: 20px;
-  background-color: #FF3A3A;
+  background-color: #ff3a3a;
 }
 
 .validCheck {
@@ -67,4 +67,6 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
+  background-color: inherit;
+  border: none;
 }

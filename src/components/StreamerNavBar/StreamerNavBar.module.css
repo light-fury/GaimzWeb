@@ -46,10 +46,12 @@
   height: 44px;
 }
 
-.gear {
+.gearButton {
   width: 20px;
   height: 20px;
   cursor: pointer;
+  background-color: inherit;
+  border: none;
 }
 
 .middleContainer {
@@ -183,6 +185,8 @@ div.streamerContainerCollapsed > * {
   text-transform: uppercase;
   color: #8f92a1;
   cursor: pointer;
+  background-color: inherit;
+  border: none;
 }
 
 .button {
@@ -193,20 +197,16 @@ div.streamerContainerCollapsed > * {
   justify-content: center;
   border-radius: 12px;
   cursor: pointer;
+  border: none;
 }
 
 .buttonCollapsed {
-  background: #f7f7f7;
+  background: #1e1f20;
 }
 
 .buttonExpanded {
   background: #1e1f20;
   margin-left: 18px;
-}
-
-.buttonIcon {
-  width: 18px;
-  height: 18px;
 }
 
 .searchContainer {

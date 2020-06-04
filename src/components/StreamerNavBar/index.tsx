@@ -129,12 +129,9 @@ const StreamerNavBar = () => {
           <img className={styles.logo} src={logo} alt="Gaimz Logo" />
         </Link>
         {!collapsed && (
-          <img
-            className={styles.gear}
-            src={gear}
-            alt="Settings Icon"
-            onClick={handleSettings}
-          />
+          <button className={styles.gearButton} onClick={handleSettings}>
+            <img src={gear} alt="Settings Icon" />
+          </button>
         )}
       </div>
 
@@ -148,9 +145,9 @@ const StreamerNavBar = () => {
           {collapsed ? (
             <Fragment>
               {filteredStreamers !== null &&
-                filteredStreamers.map((streamer, index) => (
+                filteredStreamers.map((streamer) => (
                   <StreamerTile
-                    key={`${index}-${streamer.id}`}
+                    key={`${streamer.id}`}
                     id={streamer.id}
                     name={streamer.name}
                     icon={streamer.icon}
@@ -206,9 +203,9 @@ const StreamerNavBar = () => {
               <div className={styles.bodyExpanded}>
                 {filteredStreamers !== null &&
                   filteredStreamers.length !== 0 &&
-                  filteredStreamers.map((streamer, index) => (
+                  filteredStreamers.map((streamer) => (
                     <StreamerTile
-                      key={`${index}-${streamer.id}`}
+                      key={`${streamer.id}`}
                       id={streamer.id}
                       name={streamer.name}
                       icon={streamer.icon}
@@ -222,7 +219,7 @@ const StreamerNavBar = () => {
                   ))}
                 {filteredStreamers.length === 0 && streamerData.length !== 0 && (
                   <div className={styles.noStreamersExpanded}>
-                    Uh oh! We couldn't find anyone!
+                    Uh oh! We couldn&apos;t find anyone!
                     <br />
                     Try a different search!
                   </div>
@@ -230,25 +227,27 @@ const StreamerNavBar = () => {
                 {filteredStreamers.length === 0 &&
                   streamerData.length === 0 && (
                     <div className={styles.noStreamersExpanded}>
-                      Uh oh! It looks like you haven't followed anyone yet!
+                      Uh oh! It looks like you haven&apos;t followed anyone yet!
                     </div>
                   )}
                 {filteredStreamers.length !== 0 && !showMore && (
-                  <div
+                  <button
+                    type="button"
                     className={styles.showMoreContainer}
                     onClick={handleShowMore}
                   >
                     Show More
-                  </div>
+                  </button>
                 )}
               </div>
               {filteredStreamers.length !== 0 && showMore && (
-                <div
+                <button
+                  type="button"
                   className={styles.showLessContainer}
                   onClick={handleShowMore}
                 >
                   Show Less
-                </div>
+                </button>
               )}
             </Fragment>
           )}
@@ -267,15 +266,16 @@ const StreamerNavBar = () => {
             />
           </div>
         )}
-        <div
+        <button
           className={[styles.button, styles[`button${className}`]].join(' ')}
           onClick={handleCollapse}
         >
           <Arrow
-            className={styles.buttonIcon}
+            size={18}
+            color="white"
             direction={collapsed ? 'right' : 'left'}
           />
-        </div>
+        </button>
       </div>
     </div>
   );

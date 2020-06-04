@@ -137,7 +137,7 @@ const Login = () => {
       </div>
       <div className={styles.heroContainer}>
         <p className={styles.heroTextTitle}>Hello Gamer</p>
-        <p className={styles.heroTextBody}>Don't have an account yet?</p>
+        <p className={styles.heroTextBody}>Don&apos;t have an account yet?</p>
         <Link to="/register" className={styles.heroButton}>
           Create New Account
         </Link>

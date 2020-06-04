@@ -28,6 +28,7 @@
     "react/jsx-filename-extension": "off",
     "react/prop-types": "warn",
     "react/jsx-props-no-spreading": "warn",
+    "react/button-has-type": "off",
     "import/no-cycle": "off",
     "comma-dangle": ["error", {
       "arrays": "ignore",

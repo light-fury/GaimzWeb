@@ -43,7 +43,9 @@ const InputField = ({
 
   return (
     <div className={styles.container} style={style}>
-      <label className={styles.label}>{label}</label>
+      <label className={styles.label} htmlFor={name}>
+        {label}
+      </label>
       <div className={styles.inputContainer}>
         <input
           className={styles.input}
@@ -78,12 +80,13 @@ const InputField = ({
             <img className={styles.validCheck} src={valid} alt="Valid Check" />
           )}
           {type === InputType.Password && (
-            <img
-              className={styles.passwordButton}
-              src={showPassword}
-              alt="Show Password Button"
+            <button
               onClick={handlePasswordVisible}
-            />
+              className={styles.passwordButton}
+              type="button"
+            >
+              <img src={showPassword} alt="Show Password Button" />
+            </button>
           )}
         </div>
       </div>

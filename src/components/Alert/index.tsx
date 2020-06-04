@@ -25,12 +25,12 @@ const Alert = () => {
             key={alert.id}
           >
             {alert.message}
-            <img
+            <button
               className={styles.cancelButton}
-              src={dismiss}
-              alt="Dismiss Alert"
               onClick={() => dispatch(removeAlert(alert.id))}
-            />
+            >
+              <img src={dismiss} alt="Dismiss Alert" />
+            </button>
           </div>
         ))}
     </div>
