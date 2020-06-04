@@ -15,18 +15,16 @@ function PrivateRoute({ children, ...rest }: PrivateRouteProps) {
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        isAuthenticated ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: location },
-            }}
-          />
-        )
-      }
+      render={({ location }) => (isAuthenticated ? (
+        children
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/login',
+            state: { from: location },
+          }}
+        />
+      ))}
     />
   );
 }

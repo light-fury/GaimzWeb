@@ -16,8 +16,8 @@ const Alert = () => {
 
   return (
     <div className={styles.alertsContainer}>
-      {alerts !== null &&
-        alerts.map((alert) => (
+      {alerts !== null
+        && alerts.map((alert) => (
           <div
             className={[styles.alertContainer, styles[alert.alertType]].join(
               ' '

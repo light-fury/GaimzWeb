@@ -31,8 +31,8 @@ const Feed = () => {
           <span className={styles.title}>Live Streams</span>
         </div>
         <div className={styles.contentContainer}>
-          {feedData !== null &&
-            feedData.map((feedItem) => (
+          {feedData !== null
+            && feedData.map((feedItem) => (
               <FeedCard
                 key={`${feedItem.id}`}
                 id={feedItem.id}

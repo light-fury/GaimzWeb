@@ -77,7 +77,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "eslint --ext .js,.jsx,.ts,.tsx  --fix ./"
     }
   },
   "prettier": {

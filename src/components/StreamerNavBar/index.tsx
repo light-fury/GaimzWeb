@@ -112,8 +112,8 @@ const StreamerNavBar = () => {
       returnValue = returnValue.filter((streamer) => streamer.online === true);
     }
     if (searchInput.trim() !== '') {
-      returnValue = returnValue.filter((streamer) =>
-        streamer.name.toLowerCase().includes(searchInput.toLowerCase())
+      returnValue = returnValue.filter(
+        (streamer) => streamer.name.toLowerCase().includes(searchInput.toLowerCase())
       );
     }
     returnValue = returnValue.slice(0, streamerLimit);
@@ -144,8 +144,8 @@ const StreamerNavBar = () => {
         >
           {collapsed ? (
             <Fragment>
-              {filteredStreamers !== null &&
-                filteredStreamers.map((streamer) => (
+              {filteredStreamers !== null
+                && filteredStreamers.map((streamer) => (
                   <StreamerTile
                     key={`${streamer.id}`}
                     id={streamer.id}
@@ -201,9 +201,9 @@ const StreamerNavBar = () => {
                 </div>
               </div>
               <div className={styles.bodyExpanded}>
-                {filteredStreamers !== null &&
-                  filteredStreamers.length !== 0 &&
-                  filteredStreamers.map((streamer) => (
+                {filteredStreamers !== null
+                  && filteredStreamers.length !== 0
+                  && filteredStreamers.map((streamer) => (
                     <StreamerTile
                       key={`${streamer.id}`}
                       id={streamer.id}
@@ -224,12 +224,12 @@ const StreamerNavBar = () => {
                     Try a different search!
                   </div>
                 )}
-                {filteredStreamers.length === 0 &&
-                  streamerData.length === 0 && (
+                {filteredStreamers.length === 0
+                  && streamerData.length === 0 && (
                     <div className={styles.noStreamersExpanded}>
                       Uh oh! It looks like you haven&apos;t followed anyone yet!
                     </div>
-                  )}
+                )}
                 {filteredStreamers.length !== 0 && !showMore && (
                   <button
                     type="button"
