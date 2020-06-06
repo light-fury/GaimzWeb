@@ -11,10 +11,19 @@ import styles from './MatchMaking.module.css';
 
 const MatchMaking = () => {
   const dispatch = useDispatch();
+  const { recentMatchesData, user } = useSelector(
+    (s: RootState) => ({
+      recentMatchesData: s.matches.recentMatchesData,
+      user: s.authentication.user
+    })
+  );
+
   useEffect(() => {
-    dispatch(loadRecentMatches());
-  }, [dispatch]);
-  const { recentMatchesData } = useSelector((s: RootState) => s.matches);
+    const userId = user?.user_id;
+    if (userId !== undefined) {
+      dispatch(loadRecentMatches(userId));
+    }
+  }, [dispatch, user]);
   return (
     <div className={styles.pageContainer}>
       <div className={styles.mainContainer}>

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
+import axios from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { recentMatchesData } from 'src/utils/dummyData';
 import { AppThunk } from './helpers';
 
 export interface MatchResult {
@@ -53,10 +53,11 @@ export const {
 
 export default matches.reducer;
 
-export const loadRecentMatches = (): AppThunk => async (dispatch) => {
+export const loadRecentMatches = (userId: string): AppThunk => async (dispatch) => {
   try {
     dispatch(startFetching());
-    const response = { data: recentMatchesData };
+    const response = await axios.get(`https://mmapi.gaimz.com/results/list/${userId}`);
+    console.log(response);
     dispatch(recentMatchesLoaded(response.data));
   } catch (error) {
     // log an error here

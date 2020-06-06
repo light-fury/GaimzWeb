@@ -11,7 +11,7 @@ interface AuthenticationState {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  user: User | null;
+  user: UserNestedObject | null;
 }
 
 interface User {
@@ -74,7 +74,7 @@ const authentication = createSlice({
     stopFetching(state) {
       state.isLoading = false;
     },
-    userLoaded(state, { payload }: PayloadAction<User>) {
+    userLoaded(state, { payload }: PayloadAction<UserNestedObject>) {
       state.isAuthenticated = true;
       state.user = payload;
     },
