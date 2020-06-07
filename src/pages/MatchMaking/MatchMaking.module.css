@@ -92,3 +92,37 @@
   border-radius: 12px;
   background-color: #1e1f20;
 }
+
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.matchButton {
+  padding: 1rem 0;
+  background-color: #613BFF;
+  min-width: 300px;
+  font-size: 14px;
+  font-family: 'Muli';
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.settingsButton {
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Muli';
+  min-width: 300px;
+  text-align: center;
+  font-weight: bold;
+  color: #979797;
+  margin-top: 3rem;
+}
+
+.dota2Bg {
+  margin-bottom: 3.5rem;
+}

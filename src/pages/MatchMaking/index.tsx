@@ -1,16 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { RightModal } from 'src/components';
 import RecentMatches from 'src/components/RecentMatches';
 import { RootState } from 'src/app/rootReducer';
 import { loadRecentMatches } from 'src/features/matches';
 
+import dota2Bg from 'src/images/matchmaking/dota2Bg.svg';
 import styles from './MatchMaking.module.css';
+import MatchmakingSettings from '../../components/MatchmakingSettings';
 
 const MatchMaking = () => {
   const dispatch = useDispatch();
+
+  const [isSettingsClicked, setIsSettingsClicked] = useState(false);
+
   const { recentMatchesData, user } = useSelector(
     (s: RootState) => ({
       recentMatchesData: s.matches.recentMatchesData,
@@ -24,6 +29,15 @@ const MatchMaking = () => {
       dispatch(loadRecentMatches(userId));
     }
   }, [dispatch, user]);
+
+  const onFindMatchClick = () => {
+
+  };
+
+  const onSettingsClick = () => {
+    setIsSettingsClicked(!isSettingsClicked);
+  };
+
   return (
     <div className={styles.pageContainer}>
       <div className={styles.mainContainer}>
@@ -46,7 +60,35 @@ const MatchMaking = () => {
         </div>
       </div>
       <RightModal>
-        <h1 style={{ color: 'white' }}>Hello there!</h1>
+        {isSettingsClicked
+          ? <MatchmakingSettings />
+          : (
+            <>
+              <div className={styles.centerContainer}>
+                <img
+                  className={styles.dota2Bg}
+                  src={dota2Bg}
+                  alt="Dota 2 Background"
+                />
+              </div>
+              <div className={styles.centerContainer}>
+                <div
+                  className={styles.matchButton}
+                  onClick={onFindMatchClick}
+                >
+                  Find Match
+                </div>
+              </div>
+              <div className={styles.centerContainer}>
+                <div
+                  className={styles.settingsButton}
+                  onClick={onSettingsClick}
+                >
+                  Settings
+                </div>
+              </div>
+            </>
+          )}
       </RightModal>
     </div>
   );
