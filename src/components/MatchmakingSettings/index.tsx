@@ -5,15 +5,12 @@ interface MatchmakingSettingsProps {
 
 }
 
-const MatchmakingSettings = ({ }: MatchmakingSettingsProps) => {
-
-  return (
-    <div>
-      <div className={styles.title}>
-        SEARCH SETTINGS
-      </div>
+const MatchmakingSettings = ({ }: MatchmakingSettingsProps) => (
+  <div>
+    <div className={styles.title}>
+      SEARCH SETTINGS
     </div>
-  );
-};
+  </div>
+);
 
 export default MatchmakingSettings;
