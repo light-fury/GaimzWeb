@@ -20,3 +20,14 @@
   font-size: 18px;
   color: #FFFFFF;
 }
+
+.descriptionText {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  text-align: center;
+  color: white;
+  padding: 0 4rem;
+  letter-spacing: -0.25px;
+}

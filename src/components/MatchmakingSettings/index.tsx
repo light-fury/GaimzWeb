@@ -1,5 +1,5 @@
 import React from 'react';
-import {Option} from 'react-dropdown';
+import { Option } from 'react-dropdown';
 import styles from './MatchmakingSettings.module.css';
 import LabelDropdown from '../LabelDropdown';
 
@@ -91,13 +91,12 @@ const StreamerOptionDropDown: Option[] = [
   }
 ];
 
-const MatchmakingSettings = ({matchmakingSettings, onChangeMatchmakingSettings}: MatchmakingSettingsProps) => {
-
+const MatchmakingSettings = ({ matchmakingSettings, onChangeMatchmakingSettings }: MatchmakingSettingsProps) => {
   const onSettingsChange = (val: string, field: string) => {
     // @ts-ignore
     matchmakingSettings[field] = val;
     onChangeMatchmakingSettings(matchmakingSettings);
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -108,7 +107,7 @@ const MatchmakingSettings = ({matchmakingSettings, onChangeMatchmakingSettings}:
         label="GAME TYPE"
         selectedItemValue={matchmakingSettings.gameType}
         dropdownItems={GameTypeDropDown}
-        onSelectValue={(val) => onSettingsChange(val, "gameType")}
+        onSelectValue={(val) => onSettingsChange(val, 'gameType')}
       />
       <div className={styles.row}>
         <div className={styles.halfContainer}>
@@ -117,7 +116,7 @@ const MatchmakingSettings = ({matchmakingSettings, onChangeMatchmakingSettings}:
               label="GAME MODE"
               selectedItemValue={matchmakingSettings.gameMode}
               dropdownItems={GameModeDropDown}
-              onSelectValue={(val) => onSettingsChange(val, "gameMode")}
+              onSelectValue={(val) => onSettingsChange(val, 'gameMode')}
             />
           </div>
         </div>
@@ -127,7 +126,7 @@ const MatchmakingSettings = ({matchmakingSettings, onChangeMatchmakingSettings}:
               label="REGION"
               selectedItemValue={matchmakingSettings.region}
               dropdownItems={RegionDropDown}
-              onSelectValue={(val) => onSettingsChange(val, "region")}
+              onSelectValue={(val) => onSettingsChange(val, 'region')}
             />
           </div>
         </div>
@@ -136,13 +135,13 @@ const MatchmakingSettings = ({matchmakingSettings, onChangeMatchmakingSettings}:
         label="SELECT STREAMER"
         selectedItemValue={matchmakingSettings.streamer}
         dropdownItems={StreamerDropDown}
-        onSelectValue={(val) => onSettingsChange(val, "streamer")}
+        onSelectValue={(val) => onSettingsChange(val, 'streamer')}
       />
       <LabelDropdown
         label="CREATE MATCH"
         selectedItemValue={matchmakingSettings.streamerOption}
         dropdownItems={StreamerOptionDropDown}
-        onSelectValue={(val) => onSettingsChange(val, "streamerOption")}
+        onSelectValue={(val) => onSettingsChange(val, 'streamerOption')}
       />
     </div>
   );
