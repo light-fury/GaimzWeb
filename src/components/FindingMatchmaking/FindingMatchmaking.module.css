@@ -1,0 +1,22 @@
+.container {
+  padding: 0 3rem;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.elapsedTime {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  color: #FFFFFF;
+}

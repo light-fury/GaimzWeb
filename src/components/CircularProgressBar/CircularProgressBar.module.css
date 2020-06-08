@@ -1,0 +1,10 @@
+.progressCircleCenterContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.progressCircleContainer {
+  width: 166px;
+  height: 166px;
+  margin: 2rem 0;
+}

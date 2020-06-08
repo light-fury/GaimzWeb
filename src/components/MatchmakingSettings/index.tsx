@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
-import { Option } from 'react-dropdown';
+import React from 'react';
+import {Option} from 'react-dropdown';
 import styles from './MatchmakingSettings.module.css';
 import LabelDropdown from '../LabelDropdown';
 
-interface MatchmakingSettingsProps {
+export interface IMatchmakingSettings {
+  gameType: string;
+  gameMode: string;
+  region: string;
+  streamer: string;
+  streamerOption: string;
+}
 
+interface MatchmakingSettingsProps {
+  matchmakingSettings: IMatchmakingSettings;
+  onChangeMatchmakingSettings: (matchmakingSettings: IMatchmakingSettings) => void;
 }
 
 const GameTypeDropDown: Option[] = [
@@ -39,7 +48,7 @@ const RegionDropDown: Option[] = [
     value: 'auto'
   },
   {
-    label: 'North America',
+    label: 'N. America',
     value: 'NA'
   },
   {
@@ -82,32 +91,13 @@ const StreamerOptionDropDown: Option[] = [
   }
 ];
 
-const MatchmakingSettings = ({}: MatchmakingSettingsProps) => {
-  const [gameType, setGameType] = useState('1v1');
-  const [gameMode, setGameMode] = useState('allPick');
-  const [region, setRegion] = useState('auto');
-  const [streamer, setStreamer] = useState('streamer1');
-  const [streamerOption, setStreamerOption] = useState('subscribers');
+const MatchmakingSettings = ({matchmakingSettings, onChangeMatchmakingSettings}: MatchmakingSettingsProps) => {
 
-  const onSelectGameType = (value: string) => {
-    setGameType(value);
-  };
-
-  const onSelectGameMode = (value: string) => {
-    setGameMode(value);
-  };
-
-  const onSelectRegion = (value: string) => {
-    setRegion(value);
-  };
-
-  const onSelectStreamer = (value: string) => {
-    setStreamer(value);
-  };
-
-  const onSelectStreamerOptions = (value: string) => {
-    setStreamerOption(value);
-  };
+  const onSettingsChange = (val: string, field: string) => {
+    // @ts-ignore
+    matchmakingSettings[field] = val;
+    onChangeMatchmakingSettings(matchmakingSettings);
+  }
 
   return (
     <div className={styles.container}>
@@ -116,18 +106,18 @@ const MatchmakingSettings = ({}: MatchmakingSettingsProps) => {
       </div>
       <LabelDropdown
         label="GAME TYPE"
-        selectedItemValue={gameType}
+        selectedItemValue={matchmakingSettings.gameType}
         dropdownItems={GameTypeDropDown}
-        onSelectValue={onSelectGameType}
+        onSelectValue={(val) => onSettingsChange(val, "gameType")}
       />
       <div className={styles.row}>
         <div className={styles.halfContainer}>
           <div className={styles.leftContainer}>
             <LabelDropdown
               label="GAME MODE"
-              selectedItemValue={gameMode}
+              selectedItemValue={matchmakingSettings.gameMode}
               dropdownItems={GameModeDropDown}
-              onSelectValue={onSelectGameMode}
+              onSelectValue={(val) => onSettingsChange(val, "gameMode")}
             />
           </div>
         </div>
@@ -135,24 +125,24 @@ const MatchmakingSettings = ({}: MatchmakingSettingsProps) => {
           <div className={styles.rightContainer}>
             <LabelDropdown
               label="REGION"
-              selectedItemValue={region}
+              selectedItemValue={matchmakingSettings.region}
               dropdownItems={RegionDropDown}
-              onSelectValue={onSelectRegion}
+              onSelectValue={(val) => onSettingsChange(val, "region")}
             />
           </div>
         </div>
       </div>
       <LabelDropdown
         label="SELECT STREAMER"
-        selectedItemValue={streamer}
+        selectedItemValue={matchmakingSettings.streamer}
         dropdownItems={StreamerDropDown}
-        onSelectValue={onSelectStreamer}
+        onSelectValue={(val) => onSettingsChange(val, "streamer")}
       />
       <LabelDropdown
         label="CREATE MATCH"
-        selectedItemValue={streamerOption}
+        selectedItemValue={matchmakingSettings.streamerOption}
         dropdownItems={StreamerOptionDropDown}
-        onSelectValue={onSelectStreamerOptions}
+        onSelectValue={(val) => onSettingsChange(val, "streamerOption")}
       />
     </div>
   );
