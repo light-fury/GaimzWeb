@@ -61,7 +61,19 @@ const MatchMaking = () => {
       </div>
       <RightModal>
         {isSettingsClicked
-          ? <MatchmakingSettings />
+          ? (
+            <>
+              <MatchmakingSettings />
+              <div className={styles.centerContainer}>
+                <div
+                  className={styles.matchButton}
+                  onClick={onFindMatchClick}
+                >
+                  Find Match
+                </div>
+              </div>
+            </>
+          )
           : (
             <>
               <div className={styles.centerContainer}>

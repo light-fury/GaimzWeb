@@ -1,3 +1,8 @@
+.container {
+  padding: 0 3rem;
+  margin-bottom: 3rem;
+}
+
 .title {
   color: #FFFFFF;
   font-family: Muli;
@@ -6,4 +11,31 @@
   font-size: 12px;
   text-align: center;
   letter-spacing: 1px;
+}
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.halfContainer {
+  width: 50%;
+}
+
+.leftContainer {
+  padding-right: 0.5rem;
+}
+
+.rightContainer {
+  padding-left: 0.5rem;
 }

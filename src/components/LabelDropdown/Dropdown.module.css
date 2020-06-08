@@ -1,0 +1,24 @@
+.container {
+  margin-top: 2rem;
+}
+
+.dropboxClassName {
+  background-color: transparent !important;
+  border-radius: 5px !important;
+  border: 2px solid rgba(143, 146, 161, 0.2) !important;
+  color: rgba(255, 255, 255, 0.63) !important;
+}
+
+.label {
+  margin-bottom: 0.5rem;
+  color: white;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.menuClassName {
+  background-color: transparent !important;
+  color: rgba(255, 255, 255, 0.63) !important;
+}
