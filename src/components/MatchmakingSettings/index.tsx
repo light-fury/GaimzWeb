@@ -1,7 +1,7 @@
 import React from 'react';
 import { Option } from 'react-dropdown';
 import styles from './MatchmakingSettings.module.css';
-import LabelDropdown from '../LabelDropdown';
+import LabelDropdown from '../shared/LabelDropdown';
 
 export interface IMatchmakingSettings {
   gameType: string;

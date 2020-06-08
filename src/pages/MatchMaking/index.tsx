@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { RightModal } from 'src/components';
+import {RightModal} from 'src/components';
 import RecentMatches from 'src/components/RecentMatches';
-import { RootState } from 'src/app/rootReducer';
-import { loadRecentMatches } from 'src/features/matches';
+import {RootState} from 'src/app/rootReducer';
+import {loadRecentMatches} from 'src/features/matches';
 
 import dota2Bg from 'src/images/matchmaking/dota2Bg.svg';
 import styles from './MatchMaking.module.css';
-import MatchmakingSettings, { IMatchmakingSettings } from '../../components/MatchmakingSettings';
+import MatchmakingSettings, {IMatchmakingSettings} from '../../components/MatchmakingSettings';
 import FindingMatchmaking from '../../components/FindingMatchmaking';
+import MatchmakingPassword from "../../components/MatchmakingPassword";
 
 enum MatchmakingFlow {
   FIND_MATCH = 'FIND_MATCH',
@@ -36,7 +37,7 @@ const MatchMaking = () => {
   });
   const [matchmakingFlow, setMatchmakingFlow] = useState<MatchmakingFlow>(MatchmakingFlow.FIND_MATCH);
 
-  const { recentMatchesData, user } = useSelector(
+  const {recentMatchesData, user} = useSelector(
     (s: RootState) => ({
       recentMatchesData: s.matches.recentMatchesData,
       user: s.authentication.user
@@ -89,7 +90,11 @@ const MatchMaking = () => {
         );
       case MatchmakingFlow.SEARCHING_GAME:
         return (
-          <FindingMatchmaking />
+          <FindingMatchmaking/>
+        );
+      case MatchmakingFlow.PASSWORD_REQUIRED:
+        return (
+          <MatchmakingPassword/>
         );
       default:
         return null;
@@ -105,7 +110,7 @@ const MatchMaking = () => {
           </div>
           <div className={[styles.topNavBarItem, styles.active].join(' ')}>
             <span>Matchmaking</span>
-            <div className={styles.dot} />
+            <div className={styles.dot}/>
           </div>
         </div>
         <div className={styles.titleContainer}>
@@ -113,7 +118,7 @@ const MatchMaking = () => {
         </div>
         <div className={styles.contentContainer}>
           {recentMatchesData !== null && (
-            <RecentMatches recentMatchesData={recentMatchesData} />
+            <RecentMatches recentMatchesData={recentMatchesData}/>
           )}
         </div>
       </div>
@@ -131,7 +136,7 @@ const MatchMaking = () => {
                 {renderMatchmakingFlowComponent()}
               </>
             )
-}
+        }
         <div className={styles.centerContainer}>
           <div
             className={styles.matchButton}

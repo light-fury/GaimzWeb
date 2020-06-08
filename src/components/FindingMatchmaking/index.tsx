@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FindingMatchmaking.module.css';
-import CircularProgressBar from '../CircularProgressBar';
+import CircularProgressBar from '../shared/CircularProgressBar';
 
 interface FindingMatchmakingProps {
 
