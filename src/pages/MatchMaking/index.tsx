@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {RightModal} from 'src/components';
+import { RightModal } from 'src/components';
 import RecentMatches from 'src/components/RecentMatches';
-import {RootState} from 'src/app/rootReducer';
-import {loadRecentMatches} from 'src/features/matches';
+import { RootState } from 'src/app/rootReducer';
+import { loadRecentMatches } from 'src/features/matches';
 
 import dota2Bg from 'src/images/matchmaking/dota2Bg.svg';
 import styles from './MatchMaking.module.css';
-import MatchmakingSettings, {IMatchmakingSettings} from '../../components/MatchmakingSettings';
+import MatchmakingSettings, { IMatchmakingSettings } from '../../components/MatchmakingSettings';
 import FindingMatchmaking from '../../components/FindingMatchmaking';
 import MatchmakingPassword from '../../components/MatchmakingPassword';
-import MatchmakingVersus from "../../components/MatchmakingVersus";
+import MatchmakingVersus from '../../components/MatchmakingVersus';
 
 enum MatchmakingFlow {
   INITIAL_STATE = 'INITIAL_STATE',
@@ -26,11 +26,11 @@ enum MatchmakingFlow {
 }
 
 const MatchMaking = () => {
-  let timeouts: NodeJS.Timeout[] = [];
+  const timeouts: NodeJS.Timeout[] = [];
   const dispatch = useDispatch();
 
   // TODO: Properly set match name from api
-  const [matchName, setMatchName] = useState<string>("#GAMELOBBYNAME1234");
+  const [matchName, setMatchName] = useState<string>('#GAMELOBBYNAME1234');
 
   const [isSettingsClicked, setIsSettingsClicked] = useState(false);
   const [matchmakingSettings, setMatchmakingSettings] = useState<IMatchmakingSettings>({
@@ -43,7 +43,7 @@ const MatchMaking = () => {
   const [matchmakingFlow, setMatchmakingFlow] = useState<MatchmakingFlow>(MatchmakingFlow.INITIAL_STATE);
   const [elapsedTime, setElapsedTime] = useState<number>(0);
 
-  const {recentMatchesData, user} = useSelector(
+  const { recentMatchesData, user } = useSelector(
     (s: RootState) => ({
       recentMatchesData: s.matches.recentMatchesData,
       user: s.authentication.user
@@ -104,19 +104,11 @@ const MatchMaking = () => {
 
   const renderLeftPanel = () => {
     switch (matchmakingFlow) {
-      case MatchmakingFlow.PREPARING_MATCH_LOBBY:
-      case MatchmakingFlow.SENDING_INVITES:
-        return (
-          <div>
-
-          </div>
-        )
       case MatchmakingFlow.MATCH_IN_PROGRESS:
       case MatchmakingFlow.MATCH_END:
         return (
-          <div>
-          </div>
-        )
+          <div />
+        );
       default:
         return (
           <>
@@ -125,13 +117,13 @@ const MatchMaking = () => {
             </div>
             <div className={styles.contentContainer}>
               {recentMatchesData !== null && (
-                <RecentMatches recentMatchesData={recentMatchesData}/>
+                <RecentMatches recentMatchesData={recentMatchesData} />
               )}
             </div>
           </>
-        )
+        );
     }
-  }
+  };
 
   const renderRightPanel = () => {
     switch (matchmakingFlow) {
@@ -181,7 +173,7 @@ const MatchMaking = () => {
         );
       case MatchmakingFlow.LOBBY_PASSWORD_REQUIRED:
         return (
-          <MatchmakingPassword/>
+          <MatchmakingPassword />
         );
       case MatchmakingFlow.MATCH_IN_PROGRESS:
         return (
@@ -189,17 +181,38 @@ const MatchMaking = () => {
             <MatchmakingVersus players={[
               {
                 radiant: {
-                  player_status: "match_requested",
-                  user_id: "Swagger"
+                  player_status: 'match_requested',
+                  user_id: 'Swagger'
                 },
                 dire: {
-                  player_status: "match_requested",
-                  user_id: "Shroud"
+                  player_status: 'match_requested',
+                  user_id: 'Shroud'
                 }
               }
-            ]}/>
+            ]}
+            />
           </div>
-        )
+        );
+      case MatchmakingFlow.MATCH_END:
+        return (
+          <div>
+            <MatchmakingVersus players={[
+              {
+                radiant: {
+                  player_status: 'match_requested',
+                  user_id: 'Swagger',
+                  won: true
+                },
+                dire: {
+                  player_status: 'match_requested',
+                  user_id: 'Shroud',
+                  won: false
+                }
+              }
+            ]}
+            />
+          </div>
+        );
       default:
         return null;
     }
@@ -287,43 +300,46 @@ const MatchMaking = () => {
               REPORT ISSUE
             </div>
           </div>
-        )
+        );
       default:
         return null;
     }
   };
 
   const startCounting = (count: number) => {
-    let id = setTimeout(() => runElapsedTimeCounter(count), 1000);
+    const id = setTimeout(() => runElapsedTimeCounter(count), 1000);
     timeouts.push(id);
   };
 
   const runElapsedTimeCounter = (count: number) => {
     count++;
     setElapsedTime(count);
-    let id = setTimeout(() => runElapsedTimeCounter(count), 1000);
+    const id = setTimeout(() => runElapsedTimeCounter(count), 1000);
     timeouts.push(id);
-    // TODO: delete below lines, for testing purposes only
-    if (count == 5) {
+    // TODO: delete below lines, and replace with a call to match/match_id api
+    if (count == 3) {
       setMatchmakingFlow(MatchmakingFlow.LOBBY_PASSWORD_REQUIRED);
     }
-    if (count == 10) {
+    if (count == 6) {
       setMatchmakingFlow(MatchmakingFlow.MATCH_FOUND_READY);
     }
-    if (count == 15) {
+    if (count == 9) {
       setMatchmakingFlow(MatchmakingFlow.PREPARING_MATCH_LOBBY);
     }
-    if (count == 20) {
+    if (count == 12) {
       setMatchmakingFlow(MatchmakingFlow.SENDING_INVITES);
     }
-    if (count == 22) {
+    if (count == 15) {
       setMatchmakingFlow(MatchmakingFlow.MATCH_IN_PROGRESS);
+    }
+    if (count == 18) {
+      setMatchmakingFlow(MatchmakingFlow.MATCH_END);
     }
   };
 
   const setAllToInitialState = () => {
     if (timeouts?.length > 0) {
-      timeouts.forEach(timeOut => {
+      timeouts.forEach((timeOut) => {
         clearTimeout(timeOut);
       });
     }
@@ -341,7 +357,7 @@ const MatchMaking = () => {
           </div>
           <div className={[styles.topNavBarItem, styles.active].join(' ')}>
             <span>Matchmaking</span>
-            <div className={styles.dot}/>
+            <div className={styles.dot} />
           </div>
         </div>
         {renderLeftPanel()}
