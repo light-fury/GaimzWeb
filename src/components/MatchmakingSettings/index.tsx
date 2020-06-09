@@ -2,6 +2,7 @@ import React from 'react';
 import { Option } from 'react-dropdown';
 import styles from './MatchmakingSettings.module.css';
 import LabelDropdown from '../shared/LabelDropdown';
+import sharedStyles from '../shared/sharedcss.module.css'
 
 export interface IMatchmakingSettings {
   gameType: string;
@@ -109,7 +110,7 @@ const MatchmakingSettings = ({ matchmakingSettings, onChangeMatchmakingSettings 
         dropdownItems={GameTypeDropDown}
         onSelectValue={(val) => onSettingsChange(val, 'gameType')}
       />
-      <div className={styles.row}>
+      <div className={sharedStyles.row}>
         <div className={styles.halfContainer}>
           <div className={styles.leftContainer}>
             <LabelDropdown

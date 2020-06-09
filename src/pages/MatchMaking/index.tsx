@@ -12,6 +12,7 @@ import styles from './MatchMaking.module.css';
 import MatchmakingSettings, {IMatchmakingSettings} from '../../components/MatchmakingSettings';
 import FindingMatchmaking from '../../components/FindingMatchmaking';
 import MatchmakingPassword from '../../components/MatchmakingPassword';
+import MatchmakingVersus from "../../components/MatchmakingVersus";
 
 enum MatchmakingFlow {
   INITIAL_STATE = 'INITIAL_STATE',
@@ -27,6 +28,9 @@ enum MatchmakingFlow {
 const MatchMaking = () => {
   let timeouts: NodeJS.Timeout[] = [];
   const dispatch = useDispatch();
+
+  // TODO: Properly set match name from api
+  const [matchName, setMatchName] = useState<string>("#GAMELOBBYNAME1234");
 
   const [isSettingsClicked, setIsSettingsClicked] = useState(false);
   const [matchmakingSettings, setMatchmakingSettings] = useState<IMatchmakingSettings>({
@@ -98,7 +102,47 @@ const MatchMaking = () => {
     }
   };
 
-  const renderMatchmakingFlowComponent = () => {
+  const renderLeftPanel = () => {
+    switch (matchmakingFlow) {
+      case MatchmakingFlow.PREPARING_MATCH_LOBBY:
+      case MatchmakingFlow.SENDING_INVITES:
+        return (
+          <div>
+
+          </div>
+        )
+      case MatchmakingFlow.MATCH_IN_PROGRESS:
+      case MatchmakingFlow.MATCH_END:
+        return (
+          <div>
+          </div>
+        )
+      default:
+        return (
+          <>
+            <div className={styles.topNavBar}>
+              <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
+                <Link to="/feed">Discover</Link>
+              </div>
+              <div className={[styles.topNavBarItem, styles.active].join(' ')}>
+                <span>Matchmaking</span>
+                <div className={styles.dot}/>
+              </div>
+            </div>
+            <div className={styles.titleContainer}>
+              <span className={styles.title}>Recent Matches</span>
+            </div>
+            <div className={styles.contentContainer}>
+              {recentMatchesData !== null && (
+                <RecentMatches recentMatchesData={recentMatchesData}/>
+              )}
+            </div>
+          </>
+        )
+    }
+  }
+
+  const renderRightPanel = () => {
     switch (matchmakingFlow) {
       case MatchmakingFlow.INITIAL_STATE:
         return (
@@ -131,7 +175,7 @@ const MatchMaking = () => {
       case MatchmakingFlow.PREPARING_MATCH_LOBBY:
         return (
           <FindingMatchmaking
-            title="#GAMELOBBYNAME1234"
+            title={matchName}
             progress={80}
             circularButtonCenterText="Gaimz Bot Preparing Lobby"
           />
@@ -148,6 +192,23 @@ const MatchMaking = () => {
         return (
           <MatchmakingPassword/>
         );
+      case MatchmakingFlow.MATCH_IN_PROGRESS:
+        return (
+          <div>
+            <MatchmakingVersus players={[
+              {
+                radiant: {
+                  player_status: "match_requested",
+                  user_id: "Swagger"
+                },
+                dire: {
+                  player_status: "match_requested",
+                  user_id: "Shroud"
+                }
+              }
+            ]}/>
+          </div>
+        )
       default:
         return null;
     }
@@ -224,6 +285,18 @@ const MatchMaking = () => {
             </div>
           </>
         );
+      case MatchmakingFlow.MATCH_IN_PROGRESS:
+      case MatchmakingFlow.MATCH_END:
+        return (
+          <div className={styles.bottomButtonContainer}>
+            <div className={styles.bottomTextMatchName}>
+              {matchName}
+            </div>
+            <div className={styles.reportIssuesButton} onClick={onReportIssueClicked}>
+              REPORT ISSUE
+            </div>
+          </div>
+        )
       default:
         return null;
     }
@@ -252,6 +325,9 @@ const MatchMaking = () => {
     if (count == 20) {
       setMatchmakingFlow(MatchmakingFlow.SENDING_INVITES);
     }
+    if (count == 22) {
+      setMatchmakingFlow(MatchmakingFlow.MATCH_IN_PROGRESS);
+    }
   };
 
   const setAllToInitialState = () => {
@@ -268,23 +344,7 @@ const MatchMaking = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.mainContainer}>
-        <div className={styles.topNavBar}>
-          <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
-            <Link to="/feed">Discover</Link>
-          </div>
-          <div className={[styles.topNavBarItem, styles.active].join(' ')}>
-            <span>Matchmaking</span>
-            <div className={styles.dot}/>
-          </div>
-        </div>
-        <div className={styles.titleContainer}>
-          <span className={styles.title}>Recent Matches</span>
-        </div>
-        <div className={styles.contentContainer}>
-          {recentMatchesData !== null && (
-            <RecentMatches recentMatchesData={recentMatchesData}/>
-          )}
-        </div>
+        {renderLeftPanel()}
       </div>
       <RightModal>
         {
@@ -297,7 +357,7 @@ const MatchMaking = () => {
             )
             : (
               <>
-                {renderMatchmakingFlowComponent()}
+                {renderRightPanel()}
               </>
             )
         }
