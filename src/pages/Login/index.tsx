@@ -20,6 +20,7 @@ import twitch from 'src/images/socialMedia/twitch.svg';
 import steam from 'src/images/socialMedia/steam.svg';
 import loadingSpinner from 'src/images/loadingSpinner.svg';
 import { RootState } from 'src/app/rootReducer';
+import { SocialPlatform, connectWithSocial } from 'src/utils/socialPlatforms';
 import styles from './Login.module.css';
 
 const Login = () => {
@@ -34,8 +35,8 @@ const Login = () => {
   });
   const { email, password } = formData;
 
-  const handleSocialClick = useCallback((socialMedia) => {
-    console.log(socialMedia);
+  const handleSocialClick = useCallback((socialMedia: SocialPlatform) => {
+    connectWithSocial(socialMedia);
   }, []);
 
   const handleChange = useCallback(
@@ -86,17 +87,17 @@ const Login = () => {
                 icon={facebook}
                 iconName="Facebook"
                 style={{ color: '#FFFFFF', backgroundColor: '#39579B' }}
-                onClick={() => handleSocialClick('facebook')}
+                onClick={() => handleSocialClick(SocialPlatform.Facebook)}
               />
               <SocialButton
                 icon={twitch}
                 iconName="Twitch"
-                onClick={() => handleSocialClick('twitch')}
+                onClick={() => handleSocialClick(SocialPlatform.Twitch)}
               />
               <SocialButton
                 icon={steam}
                 iconName="Steam"
-                onClick={() => handleSocialClick('steam')}
+                onClick={() => handleSocialClick(SocialPlatform.Steam)}
               />
             </div>
             <p className={styles.socialText}>Or use your email account</p>

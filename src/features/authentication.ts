@@ -8,7 +8,7 @@ import { createAlert } from './alert';
 import { AppThunk } from './helpers';
 
 interface AuthenticationState {
-  token: string | null;
+  token: string | null; // Are we actually using state.token?
   isAuthenticated: boolean;
   isLoading: boolean;
   user: UserNestedObject | null;

@@ -1,0 +1,19 @@
+.steam{
+  background-color: black;
+  color: white;
+}
+
+.twitch{
+  background-color: white;
+  color: black;
+}
+
+.btnBlock{
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.connectionsContainer{
+  padding: 10px;
+}

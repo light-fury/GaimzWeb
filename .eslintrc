@@ -37,6 +37,7 @@
       "exports": "ignore",
       "functions": "ignore"
   }],
+  "no-restricted-syntax": ["off", "ForOfStatement"],
     "import/extensions": ["error", "never"],
     "no-param-reassign": [
       "error",
