@@ -15,15 +15,15 @@ const MatchmakingVersusRow = (props: MatchmakingVersusRowProps) => {
     <div className={sharedStyles.row}>
       <div className={`${sharedStyles.halfContainer} ${sharedStyles.row}`}>
         <img src={radiantImg}/>
-        <div className={styles.playerText}>
+        <div className={styles.playerText} style={{marginLeft: "1rem"}}>
           {props.radiantPlayer.user_id}
         </div>
       </div>
       <div className={`${sharedStyles.halfContainer} ${sharedStyles.row} ${sharedStyles.alignRight}`}>
-        <img src={direImg}/>
-        <div className={styles.playerText}>
+        <div className={styles.playerText} style={{marginRight: "1rem"}}>
           {props.direPlayer.user_id}
         </div>
+        <img src={direImg}/>
       </div>
     </div>
   )

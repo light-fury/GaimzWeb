@@ -120,15 +120,6 @@ const MatchMaking = () => {
       default:
         return (
           <>
-            <div className={styles.topNavBar}>
-              <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
-                <Link to="/feed">Discover</Link>
-              </div>
-              <div className={[styles.topNavBarItem, styles.active].join(' ')}>
-                <span>Matchmaking</span>
-                <div className={styles.dot}/>
-              </div>
-            </div>
             <div className={styles.titleContainer}>
               <span className={styles.title}>Recent Matches</span>
             </div>
@@ -344,6 +335,15 @@ const MatchMaking = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.mainContainer}>
+        <div className={styles.topNavBar}>
+          <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
+            <Link to="/feed">Discover</Link>
+          </div>
+          <div className={[styles.topNavBarItem, styles.active].join(' ')}>
+            <span>Matchmaking</span>
+            <div className={styles.dot}/>
+          </div>
+        </div>
         {renderLeftPanel()}
       </div>
       <RightModal>
