@@ -1,46 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './FindingMatchmaking.module.css';
 import CircularProgressBar from '../shared/CircularProgressBar';
 
 interface FindingMatchmakingProps {
-
+  title: string;
+  progress: number;
+  description?: string;
+  circularButtonCenterText: string;
 }
 
-const FindingMatchmaking = ({}: FindingMatchmakingProps) => {
-  const [elapsedTime, setElapsedTime] = useState<number>(0);
-
-  useEffect(() => {
-    startCounting();
-  }, []);
-
-  const startCounting = () => {
-    setTimeout(() => runElapsedTimeCounter(elapsedTime), 1000);
-  };
-
-  const runElapsedTimeCounter = (count: number) => {
-    count++;
-    setElapsedTime(count);
-    setTimeout(() => runElapsedTimeCounter(count), 1000);
-  };
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.title}>
-        Finding Match...
-      </div>
-      <CircularProgressBar
-        percentage={20}
-        children={(
-          <div className={styles.elapsedTime}>
-            {`${elapsedTime} seconds`}
-          </div>
-                           )}
-      />
-      <div className={styles.descriptionText}>
-        Double click the timer to hide the search and explore Gaimz. We will notify you when the match is found.
-      </div>
+const FindingMatchmaking = ({ circularButtonCenterText, title, progress, description }: FindingMatchmakingProps) => (
+  <div className={styles.container}>
+    <div className={styles.title}>
+      {title}
     </div>
-  );
-};
+    <CircularProgressBar
+      percentage={progress}
+      children={(
+        <div className={styles.elapsedTime}>
+          {circularButtonCenterText}
+        </div>
+        )}
+    />
+    {description
+      && (
+      <div className={styles.descriptionText}>
+        {description}
+      </div>
+      )}
+  </div>
+);
 
 export default FindingMatchmaking;

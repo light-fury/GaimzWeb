@@ -1,24 +1,22 @@
-import React, {useCallback, useState} from "react";
+import React, { useState } from 'react';
 import styles from './MatchmakingPassword.module.css';
-import {InputType} from "../shared/InputField";
-import {InputField} from "../shared";
-import DarkInputField from "../shared/DarkInputField";
+import { InputType } from '../shared/InputField';
+import DarkInputField from '../shared/DarkInputField';
 
 interface MatchmakingPasswordProps {
 
 }
 
 const MatchmakingPassword = ({}: MatchmakingPasswordProps) => {
-
-  const [password, setPassword] = useState<string>("");
+  const [password, setPassword] = useState<string>('');
 
   const onPasswordEnter = () => {
 
-  }
+  };
 
   const onCancel = () => {
 
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -42,7 +40,7 @@ const MatchmakingPassword = ({}: MatchmakingPasswordProps) => {
       <div className={styles.centerContainer}>
         <div
           className={styles.cancelButton}
-          style={{marginTop: 20}}
+          style={{ marginTop: 20 }}
           onClick={onCancel}
         >
           Cancel
@@ -52,7 +50,7 @@ const MatchmakingPassword = ({}: MatchmakingPasswordProps) => {
         You are trying to enter a password protected lobby. Please enter the password to queue for the match
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default MatchmakingPassword;
