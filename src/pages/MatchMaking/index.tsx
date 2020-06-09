@@ -13,6 +13,8 @@ import MatchmakingSettings, { IMatchmakingSettings } from '../../components/Matc
 import FindingMatchmaking from '../../components/FindingMatchmaking';
 import MatchmakingPassword from '../../components/MatchmakingPassword';
 import MatchmakingVersus from '../../components/MatchmakingVersus';
+import { MatchResponse, PlayerInterface, Stats } from '../../utils/MatchmakingModels';
+import MatchMakingStats from '../../components/MatchmakingStats';
 
 enum MatchmakingFlow {
   INITIAL_STATE = 'INITIAL_STATE',
@@ -30,7 +32,50 @@ const MatchMaking = () => {
   const dispatch = useDispatch();
 
   // TODO: Properly set match name from api
-  const [matchName, setMatchName] = useState<string>('#GAMELOBBYNAME1234');
+  const matchResponse: MatchResponse = {
+    bet: 0,
+    end_time: '2020-06-10',
+    game_id: '213',
+    game_mode: 'solo',
+    match_id: '1234',
+    match_status: 'MATCH IN PROGRESS',
+    start_time: '2020-06-10',
+    lobby_name: '#GAMELOBBYNAME1234'
+  };
+  const matchStats: Stats = {
+    dire: {
+      players: [
+        {
+          player_status: 'match_requested',
+          user_id: 'Shroud'
+        }
+      ],
+      name: 'dire',
+      id: 123
+    },
+    radiant: {
+      players: [
+        {
+          player_status: 'match_requested',
+          user_id: 'Swagger'
+        }
+      ],
+      name: 'radiant',
+      id: 123
+    },
+    teams: [
+      {
+        players: [],
+        name: 'dire',
+        id: 123
+      },
+      {
+        players: [],
+        name: 'radiant',
+        id: 123
+      }
+    ]
+  };
 
   const [isSettingsClicked, setIsSettingsClicked] = useState(false);
   const [matchmakingSettings, setMatchmakingSettings] = useState<IMatchmakingSettings>({
@@ -107,7 +152,10 @@ const MatchMaking = () => {
       case MatchmakingFlow.MATCH_IN_PROGRESS:
       case MatchmakingFlow.MATCH_END:
         return (
-          <div />
+          <MatchMakingStats
+            matchStats={matchStats}
+            matchResponse={matchResponse}
+          />
         );
       default:
         return (
@@ -158,7 +206,7 @@ const MatchMaking = () => {
       case MatchmakingFlow.PREPARING_MATCH_LOBBY:
         return (
           <FindingMatchmaking
-            title={matchName}
+            title={matchResponse.lobby_name}
             progress={80}
             circularButtonCenterText="Gaimz Bot Preparing Lobby"
           />
@@ -176,41 +224,39 @@ const MatchMaking = () => {
           <MatchmakingPassword />
         );
       case MatchmakingFlow.MATCH_IN_PROGRESS:
-        return (
-          <div>
-            <MatchmakingVersus players={[
-              {
-                radiant: {
-                  player_status: 'match_requested',
-                  user_id: 'Swagger'
-                },
-                dire: {
-                  player_status: 'match_requested',
-                  user_id: 'Shroud'
-                }
-              }
-            ]}
-            />
-          </div>
-        );
       case MatchmakingFlow.MATCH_END:
+        // TODO: get players from api
+        let playersTemp: { radiant: PlayerInterface, dire: PlayerInterface }[] = [
+          {
+            radiant: {
+              player_status: 'match_requested',
+              user_id: 'Swagger',
+            },
+            dire: {
+              player_status: 'match_requested',
+              user_id: 'Shroud'
+            }
+          }
+        ];
+        if (matchmakingFlow === MatchmakingFlow.MATCH_END) {
+          playersTemp = [
+            {
+              radiant: {
+                player_status: 'match_requested',
+                user_id: 'Swagger',
+                won: true
+              },
+              dire: {
+                player_status: 'match_requested',
+                user_id: 'Shroud',
+                won: false
+              }
+            }
+          ];
+        }
         return (
           <div>
-            <MatchmakingVersus players={[
-              {
-                radiant: {
-                  player_status: 'match_requested',
-                  user_id: 'Swagger',
-                  won: true
-                },
-                dire: {
-                  player_status: 'match_requested',
-                  user_id: 'Shroud',
-                  won: false
-                }
-              }
-            ]}
-            />
+            <MatchmakingVersus players={playersTemp} />
           </div>
         );
       default:
@@ -219,7 +265,7 @@ const MatchMaking = () => {
   };
 
 
-  const renderButtonComponents = () => {
+  const renderRightButtonsComponent = () => {
     switch (matchmakingFlow) {
       case MatchmakingFlow.MATCH_FOUND_READY:
         return (
@@ -294,7 +340,7 @@ const MatchMaking = () => {
         return (
           <div className={styles.bottomButtonContainer}>
             <div className={styles.bottomTextMatchName}>
-              {matchName}
+              {matchResponse.lobby_name}
             </div>
             <div className={styles.reportIssuesButton} onClick={onReportIssueClicked}>
               REPORT ISSUE
@@ -317,22 +363,22 @@ const MatchMaking = () => {
     const id = setTimeout(() => runElapsedTimeCounter(count), 1000);
     timeouts.push(id);
     // TODO: delete below lines, and replace with a call to match/match_id api
-    if (count == 3) {
+    if (count === 3) {
       setMatchmakingFlow(MatchmakingFlow.LOBBY_PASSWORD_REQUIRED);
     }
-    if (count == 6) {
+    if (count === 6) {
       setMatchmakingFlow(MatchmakingFlow.MATCH_FOUND_READY);
     }
-    if (count == 9) {
+    if (count === 9) {
       setMatchmakingFlow(MatchmakingFlow.PREPARING_MATCH_LOBBY);
     }
-    if (count == 12) {
+    if (count === 12) {
       setMatchmakingFlow(MatchmakingFlow.SENDING_INVITES);
     }
-    if (count == 15) {
+    if (count === 15) {
       setMatchmakingFlow(MatchmakingFlow.MATCH_IN_PROGRESS);
     }
-    if (count == 18) {
+    if (count === 18) {
       setMatchmakingFlow(MatchmakingFlow.MATCH_END);
     }
   };
@@ -377,7 +423,7 @@ const MatchMaking = () => {
               </>
             )
         }
-        {renderButtonComponents()}
+        {renderRightButtonsComponent()}
       </RightModal>
     </div>
   );

@@ -15,8 +15,8 @@ export interface PlayerInterface {
 
 export interface Stats {
   teams: Side[];
-  dire?: Side;
-  radiant?: Side;
+  dire: Side;
+  radiant: Side;
   teamWon?: number;
 }
 
@@ -33,5 +33,6 @@ export interface MatchResponse {
   end_time: string;
   bet: number;
   game_mode: string;
-
+  match_status: string;
+  lobby_name: string;
 }
