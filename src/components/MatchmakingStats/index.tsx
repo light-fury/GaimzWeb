@@ -9,6 +9,15 @@ interface MatchmakingStatsProps {
   matchResponse: MatchResponse;
 }
 
+export const matchmakingStatsColWidth = [
+  20,
+  31,
+  11,
+  11,
+  11,
+  16
+]
+
 const MatchMakingStats = (props: MatchmakingStatsProps) => {
   const {matchResponse, matchStats} = props;
 
@@ -59,43 +68,43 @@ const MatchMakingStats = (props: MatchmakingStatsProps) => {
           </div>
         </div>
         <div className={`${sharedStyles.row} ${styles.playerHeaderContainer}`}>
-          <div className={styles.playerHeader} style={{width: "20%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[0]}%`}}>
             Dire
           </div>
-          <div className={styles.playerHeader} style={{width: "35%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[1]}%`}}>
             Hero
           </div>
-          <div className={styles.playerHeader} style={{width: "10%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[2]}%`}}>
             K/D/A
           </div>
-          <div className={styles.playerHeader} style={{width: "10%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[3]}%`}}>
             GPM
           </div>
-          <div className={styles.playerHeader} style={{width: "10%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[4]}%`}}>
             LH/DN
           </div>
-          <div className={styles.playerHeader} style={{width: "15%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[5]}%`}}>
             ITEMS
           </div>
         </div>
         {matchStats.dire.players.map(player => <MatchmakingPlayerHero player={player}/>)}
         <div className={`${sharedStyles.row} ${styles.playerHeaderContainer}`}>
-          <div className={styles.playerHeader} style={{width: "20%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[0]}%`}}>
             Radiant
           </div>
-          <div className={styles.playerHeader} style={{width: "35%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[1]}%`}}>
             Hero
           </div>
-          <div className={styles.playerHeader} style={{width: "10%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[2]}%`}}>
             K/D/A
           </div>
-          <div className={styles.playerHeader} style={{width: "10%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[3]}%`}}>
             GPM
           </div>
-          <div className={styles.playerHeader} style={{width: "10%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[4]}%`}}>
             LH/DN
           </div>
-          <div className={styles.playerHeader} style={{width: "15%"}}>
+          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[5]}%`}}>
             ITEMS
           </div>
         </div>
