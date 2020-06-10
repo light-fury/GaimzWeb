@@ -40,7 +40,8 @@ const MatchMaking = () => {
     match_id: '1234',
     match_status: 'MATCH IN PROGRESS',
     start_time: '2020-06-10',
-    lobby_name: '#GAMELOBBYNAME1234'
+    lobby_name: '#GAMELOBBYNAME1234',
+    game: "Dota 2"
   };
   const matchStats: Stats = {
     dire: {

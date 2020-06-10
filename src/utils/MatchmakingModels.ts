@@ -35,4 +35,5 @@ export interface MatchResponse {
   game_mode: string;
   match_status: string;
   lobby_name: string;
+  game: string;
 }

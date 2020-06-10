@@ -1,0 +1,11 @@
+.containerCard {
+  background-color: white;
+  box-shadow: 0 10px 20px 0 rgba(0,0,0,.001);
+  border-radius: 5px;
+  padding: 1rem 2rem;
+  margin-top: 0.5rem;
+}
+
+.playerStats {
+
+}

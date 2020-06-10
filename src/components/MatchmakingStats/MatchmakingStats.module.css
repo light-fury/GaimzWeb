@@ -1,8 +1,44 @@
+.container {
+  padding: 0 4rem;
+}
+
 .title {
   font-family: Muli;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #1E1F20;
+}
+
+.headerColsContainer {
+  margin: 2rem 0 1rem 0;
+}
+
+.headerText {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #1E1F20;
+  width: 16.66%
+}
+
+.playerHeaderContainer {
+  margin: 5rem 0 0.5rem 0;
+  padding: 1rem 2rem;
+}
+
+.playerStats {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
   line-height: 20px;
   letter-spacing: 1px;
   text-transform: uppercase;
