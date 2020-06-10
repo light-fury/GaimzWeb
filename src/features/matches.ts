@@ -2,6 +2,9 @@
 import axios from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from './helpers';
+import {MatchRequestDTO} from "../utils/MatchmakingModels";
+
+const apiUrl = "https://mmapi.gaimz.com";
 
 export interface MatchResult {
   match_id: string;
@@ -56,7 +59,7 @@ export default matches.reducer;
 export const loadRecentMatches = (userId: string): AppThunk => async (dispatch) => {
   try {
     dispatch(startFetching());
-    const response = await axios.get(`https://mmapi.gaimz.com/results/list/${userId}`);
+    const response = await axios.get(`${apiUrl}/results/list/${userId}`);
     // console.log(response);
     dispatch(recentMatchesLoaded(response.data));
   } catch (error) {
@@ -64,5 +67,17 @@ export const loadRecentMatches = (userId: string): AppThunk => async (dispatch) 
     // console.log(error);
   } finally {
     dispatch(stopFetching());
+  }
+};
+
+export const findMatch = (matchRequestDTO: MatchRequestDTO): AppThunk => async (dispatch) => {
+  console.log("findMatch");
+  try {
+    const response = await axios.post(`${apiUrl}/match`, matchRequestDTO);
+    console.log(response);
+    // dispatch(recentMatchesLoaded(response.data));
+  } catch (error) {
+    // log an error here
+    console.log(error);
   }
 };

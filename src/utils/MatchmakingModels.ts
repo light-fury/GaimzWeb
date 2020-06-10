@@ -38,3 +38,12 @@ export interface MatchResponse {
   lobby_name: string;
   game: string;
 }
+
+export interface MatchRequestDTO {
+  game_id: string;
+  bet: 0;
+  game_mode: string;
+  game_type: string;
+  restriction: string;
+  password: string;
+}

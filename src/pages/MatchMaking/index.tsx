@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RightModal } from 'src/components';
 import RecentMatches from 'src/components/RecentMatches';
 import { RootState } from 'src/app/rootReducer';
-import { loadRecentMatches } from 'src/features/matches';
+import {findMatch, loadRecentMatches} from 'src/features/matches';
 
 import dota2Bg from 'src/images/matchmaking/dota2Bg.svg';
 import styles from './MatchMaking.module.css';
@@ -13,8 +13,9 @@ import MatchmakingSettings, { IMatchmakingSettings } from '../../components/Matc
 import FindingMatchmaking from '../../components/FindingMatchmaking';
 import MatchmakingPassword from '../../components/MatchmakingPassword';
 import MatchmakingVersus from '../../components/MatchmakingVersus';
-import { MatchResponse, PlayerInterface, Stats } from '../../utils/MatchmakingModels';
+import {MatchRequestDTO, MatchResponse, PlayerInterface, Stats} from '../../utils/MatchmakingModels';
 import MatchMakingStats from '../../components/MatchmakingStats';
+import {match} from "assert";
 
 enum MatchmakingFlow {
   INITIAL_STATE = 'INITIAL_STATE',
@@ -33,8 +34,8 @@ const MatchMaking = () => {
 
   const [isSettingsClicked, setIsSettingsClicked] = useState(false);
   const [matchmakingSettings, setMatchmakingSettings] = useState<IMatchmakingSettings>({
-    gameType: '1v1',
-    gameMode: 'allPick',
+    gameType: 'allPick',
+    gameMode: '1v1',
     region: 'auto',
     streamer: 'streamer1',
     streamerOption: 'subscribers'
@@ -132,7 +133,15 @@ const MatchMaking = () => {
   const onMainButtonClicked = () => {
     switch (matchmakingFlow) {
       case MatchmakingFlow.INITIAL_STATE:
-        // TODO: connect with api to request a search game based on the matchmaking settings
+        let matchDto: MatchRequestDTO = {
+          bet: 0,
+          game_id: "123",
+          game_mode: matchmakingSettings.gameMode,
+          game_type: matchmakingSettings.gameType,
+          password: "",
+          restriction: matchmakingSettings.region
+        }
+        findMatch(matchDto);
         startCounting(0);
         setMatchmakingFlow(MatchmakingFlow.SEARCHING_FOR_MATCHES);
         break;
@@ -369,25 +378,25 @@ const MatchMaking = () => {
     setElapsedTime(count);
     const id = setTimeout(() => runElapsedTimeCounter(count), 1000);
     timeouts.push(id);
-    // TODO: delete below lines, and replace with a call to match/match_id api
-    if (count === 3) {
-      setMatchmakingFlow(MatchmakingFlow.LOBBY_PASSWORD_REQUIRED);
-    }
-    if (count === 6) {
-      setMatchmakingFlow(MatchmakingFlow.MATCH_FOUND_READY);
-    }
-    if (count === 9) {
-      setMatchmakingFlow(MatchmakingFlow.PREPARING_MATCH_LOBBY);
-    }
-    if (count === 12) {
-      setMatchmakingFlow(MatchmakingFlow.SENDING_INVITES);
-    }
-    if (count === 15) {
-      setMatchmakingFlow(MatchmakingFlow.MATCH_IN_PROGRESS);
-    }
-    if (count === 18) {
-      setMatchmakingFlow(MatchmakingFlow.MATCH_END);
-    }
+    // // TODO: delete below lines, and replace with a call to match/match_id api
+    // if (count === 3) {
+    //   setMatchmakingFlow(MatchmakingFlow.LOBBY_PASSWORD_REQUIRED);
+    // }
+    // if (count === 6) {
+    //   setMatchmakingFlow(MatchmakingFlow.MATCH_FOUND_READY);
+    // }
+    // if (count === 9) {
+    //   setMatchmakingFlow(MatchmakingFlow.PREPARING_MATCH_LOBBY);
+    // }
+    // if (count === 12) {
+    //   setMatchmakingFlow(MatchmakingFlow.SENDING_INVITES);
+    // }
+    // if (count === 15) {
+    //   setMatchmakingFlow(MatchmakingFlow.MATCH_IN_PROGRESS);
+    // }
+    // if (count === 18) {
+    //   setMatchmakingFlow(MatchmakingFlow.MATCH_END);
+    // }
   };
 
   const setAllToInitialState = () => {

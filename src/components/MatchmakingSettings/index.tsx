@@ -17,7 +17,7 @@ interface MatchmakingSettingsProps {
   onChangeMatchmakingSettings: (matchmakingSettings: IMatchmakingSettings) => void;
 }
 
-const GameTypeDropDown: Option[] = [
+const GameModeDropDown: Option[] = [
   {
     label: '1 versus 1',
     value: '1v1'
@@ -32,7 +32,7 @@ const GameTypeDropDown: Option[] = [
   }
 ];
 
-const GameModeDropDown: Option[] = [
+const GameTypeDropDown: Option[] = [
   {
     label: 'All pick',
     value: 'allPick'
