@@ -1,0 +1,41 @@
+.pageContainer {
+  display: flex;
+  align-items: self-start;
+  background-color: #e5e5e5;
+}
+
+.mainContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  margin: 0px 0px 0px 114px;
+}
+
+.contentContainer {
+  flex: 1;
+  padding-left: 15px;
+  margin: 0px 10px 10px 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #9c9c9c #cdcfd5;
+}
+
+.contentContainer::-webkit-scrollbar {
+  width: 5px;
+}
+
+.contentContainer::-webkit-scrollbar-thumb {
+  height: 128px;
+  border-radius: 100px;
+  background-color: #cdcfd5;
+}
+
+
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+}

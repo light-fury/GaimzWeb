@@ -57,7 +57,7 @@ export const loadRecentMatches = (userId: string): AppThunk => async (dispatch) 
   try {
     dispatch(startFetching());
     const response = await axios.get(`https://mmapi.gaimz.com/results/list/${userId}`);
-    console.log(response);
+    // console.log(response);
     dispatch(recentMatchesLoaded(response.data));
   } catch (error) {
     // log an error here

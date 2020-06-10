@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { FeedCard, RightModal } from 'src/components';
+import { FeedCard, RightModal, Connections } from 'src/components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'src/app/rootReducer';
@@ -46,10 +46,12 @@ const Feed = () => {
               />
             ))}
         </div>
+        <Connections />
       </div>
       <RightModal>
         <h1 style={{ color: 'white' }}>Hello there!</h1>
       </RightModal>
+
     </div>
   );
 };
