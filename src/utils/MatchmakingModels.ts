@@ -8,6 +8,7 @@ export interface PlayerInterface {
   items?: string[];
   gpm?: number;
   lasthits?: number;
+  denies?: number;
   user_avatar_url?: string;
   player_status: string;
   won?: boolean;

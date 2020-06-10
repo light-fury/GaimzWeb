@@ -31,53 +31,6 @@ const MatchMaking = () => {
   const timeouts: NodeJS.Timeout[] = [];
   const dispatch = useDispatch();
 
-  // TODO: Properly set match name from api
-  const matchResponse: MatchResponse = {
-    bet: 0,
-    end_time: '2020-06-10',
-    game_id: '213',
-    game_mode: 'solo',
-    match_id: '1234',
-    match_status: 'MATCH IN PROGRESS',
-    start_time: '2020-06-10',
-    lobby_name: '#GAMELOBBYNAME1234',
-    game: "Dota 2"
-  };
-  const matchStats: Stats = {
-    dire: {
-      players: [
-        {
-          player_status: 'match_requested',
-          user_id: 'Shroud'
-        }
-      ],
-      name: 'dire',
-      id: 123
-    },
-    radiant: {
-      players: [
-        {
-          player_status: 'match_requested',
-          user_id: 'Swagger'
-        }
-      ],
-      name: 'radiant',
-      id: 123
-    },
-    teams: [
-      {
-        players: [],
-        name: 'dire',
-        id: 123
-      },
-      {
-        players: [],
-        name: 'radiant',
-        id: 123
-      }
-    ]
-  };
-
   const [isSettingsClicked, setIsSettingsClicked] = useState(false);
   const [matchmakingSettings, setMatchmakingSettings] = useState<IMatchmakingSettings>({
     gameType: '1v1',
@@ -95,6 +48,79 @@ const MatchMaking = () => {
       user: s.authentication.user
     })
   );
+
+  // TODO: Properly set match name from api
+  let matchResponse: MatchResponse = {
+    bet: 0,
+    end_time: '2020-06-10',
+    game_id: '213',
+    game_mode: 'solo',
+    match_id: '1234',
+    match_status: 'MATCH IN PROGRESS',
+    start_time: '2020-06-10',
+    lobby_name: '#GAMELOBBYNAME1234',
+    game: "Dota 2"
+  };
+
+  let player1Sample: PlayerInterface = {
+    player_status: 'match_requested',
+    user_id: 'Shroud',
+    hero_name: "Centaur",
+    kills: 10,
+    deaths: 4,
+    assists: 4,
+    lasthits: 60,
+    denies: 5,
+    gpm: 200
+  }
+  let player2Sample: PlayerInterface = {
+    player_status: 'match_requested',
+    user_id: 'Swagger',
+    hero_name: "Pudge",
+    kills: 10,
+    deaths: 4,
+    assists: 4,
+    lasthits: 60,
+    denies: 5,
+    gpm: 200
+  };
+  if(matchmakingFlow == MatchmakingFlow.MATCH_END) {
+    player1Sample.won = true;
+    player2Sample.won = false;
+  }
+
+  let matchStats: Stats = {
+    dire: {
+      players: [
+        player1Sample,
+        player1Sample,
+        player1Sample
+      ],
+      name: 'dire',
+      id: 123
+    },
+    radiant: {
+      players: [
+        player2Sample,
+        player2Sample,
+        player2Sample
+      ],
+      name: 'radiant',
+      id: 123
+    },
+    teams: [
+      {
+        players: [],
+        name: 'dire',
+        id: 123
+      },
+      {
+        players: [],
+        name: 'radiant',
+        id: 123
+      }
+    ]
+  };
 
   useEffect(() => {
     const userId = user?.user_id;
@@ -227,34 +253,14 @@ const MatchMaking = () => {
       case MatchmakingFlow.MATCH_IN_PROGRESS:
       case MatchmakingFlow.MATCH_END:
         // TODO: get players from api
-        let playersTemp: { radiant: PlayerInterface, dire: PlayerInterface }[] = [
-          {
-            radiant: {
-              player_status: 'match_requested',
-              user_id: 'Swagger',
-            },
-            dire: {
-              player_status: 'match_requested',
-              user_id: 'Shroud'
-            }
+        let playersTemp: { radiant: PlayerInterface, dire: PlayerInterface }[] = [];
+        matchStats?.radiant?.players?.forEach((player, index) => {
+          let playerTemp: { radiant: PlayerInterface, dire: PlayerInterface } = {
+            radiant: player,
+            dire: matchStats?.dire?.players[index]
           }
-        ];
-        if (matchmakingFlow === MatchmakingFlow.MATCH_END) {
-          playersTemp = [
-            {
-              radiant: {
-                player_status: 'match_requested',
-                user_id: 'Swagger',
-                won: true
-              },
-              dire: {
-                player_status: 'match_requested',
-                user_id: 'Shroud',
-                won: false
-              }
-            }
-          ];
-        }
+          playersTemp.push(playerTemp);
+        })
         return (
           <div>
             <MatchmakingVersus players={playersTemp} />
