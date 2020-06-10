@@ -379,24 +379,24 @@ const MatchMaking = () => {
     const id = setTimeout(() => runElapsedTimeCounter(count), 1000);
     timeouts.push(id);
     // // TODO: delete below lines, and replace with a call to match/match_id api
-    // if (count === 3) {
-    //   setMatchmakingFlow(MatchmakingFlow.LOBBY_PASSWORD_REQUIRED);
-    // }
-    // if (count === 6) {
-    //   setMatchmakingFlow(MatchmakingFlow.MATCH_FOUND_READY);
-    // }
-    // if (count === 9) {
-    //   setMatchmakingFlow(MatchmakingFlow.PREPARING_MATCH_LOBBY);
-    // }
-    // if (count === 12) {
-    //   setMatchmakingFlow(MatchmakingFlow.SENDING_INVITES);
-    // }
-    // if (count === 15) {
-    //   setMatchmakingFlow(MatchmakingFlow.MATCH_IN_PROGRESS);
-    // }
-    // if (count === 18) {
-    //   setMatchmakingFlow(MatchmakingFlow.MATCH_END);
-    // }
+    if (count === 3) {
+      setMatchmakingFlow(MatchmakingFlow.LOBBY_PASSWORD_REQUIRED);
+    }
+    if (count === 6) {
+      setMatchmakingFlow(MatchmakingFlow.MATCH_FOUND_READY);
+    }
+    if (count === 9) {
+      setMatchmakingFlow(MatchmakingFlow.PREPARING_MATCH_LOBBY);
+    }
+    if (count === 12) {
+      setMatchmakingFlow(MatchmakingFlow.SENDING_INVITES);
+    }
+    if (count === 15) {
+      setMatchmakingFlow(MatchmakingFlow.MATCH_IN_PROGRESS);
+    }
+    if (count === 18) {
+      setMatchmakingFlow(MatchmakingFlow.MATCH_END);
+    }
   };
 
   const setAllToInitialState = () => {
