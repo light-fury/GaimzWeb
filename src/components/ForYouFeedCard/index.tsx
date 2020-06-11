@@ -4,7 +4,6 @@ import Avatar from '../shared/Avatar';
 
 import styles from './ForYouFeedCard.module.css';
 
-// TODO: Let's use a `user` type and get avatar and user from the store
 interface ForYouFeedCardProps {
   id: string;
   userName: string;

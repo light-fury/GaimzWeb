@@ -22,7 +22,6 @@ export interface Feed {
   isLive: boolean;
 }
 
-// new interface
 export interface ForYouFeed {
   user: Streamer;
   id: string;
@@ -41,11 +40,9 @@ export interface FeedState {
 }
 
 const initialState: FeedState = {
-  // maybe discoverFeedData?
   feedData: [],
   isLoading: false,
   streamerData: [],
-  // new line
   forYouFeedData: [],
 };
 
@@ -77,7 +74,6 @@ export const {
   stopFetching,
   streamersLoaded,
   feedLoaded,
-  // new action
   forYouFeedLoaded,
 } = feed.actions;
 
@@ -103,8 +99,7 @@ export const loadStreamers = (): AppThunk => async (dispatch) => {
     const response = { data: streamerData };
     dispatch(streamersLoaded(response.data));
   } catch (error) {
-    // log an error here
-    // console.log(error);
+    console.log(error);
   } finally {
     dispatch(stopFetching());
   }
