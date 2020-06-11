@@ -5,7 +5,9 @@ import { FeedCard, RightModal, Connections } from 'src/components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'src/app/rootReducer';
-import { loadFeed } from 'src/features/feed';
+import { loadFeed, loadForYouFeed } from 'src/features/feed';
+
+import ForYouFeedCard from '../../components/ForYouFeedCard/index';
 
 import styles from './Feed.module.css';
 
@@ -13,8 +15,10 @@ const Feed = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadFeed());
+    dispatch(loadForYouFeed());
   }, [dispatch]);
   const { feedData } = useSelector((s: RootState) => s.feed);
+  const { forYouFeedData } = useSelector((s: RootState) => s.feed);
   return (
     <div className={styles.pageContainer}>
       <div className={styles.mainContainer}>
@@ -49,7 +53,20 @@ const Feed = () => {
         <Connections />
       </div>
       <RightModal>
-        <h1 style={{ color: 'white' }}>Hello there!</h1>
+        <h1 style={{ color: 'white' }}>For you</h1>
+        <div className={styles.row}>
+          {forYouFeedData !== null
+            && forYouFeedData.map((feedItem) => (
+              <ForYouFeedCard
+                key={`${feedItem.id}`}
+                id={feedItem.id}
+                userName={feedItem.user.name}
+                userAvatar={feedItem.user.icon}
+                sourceImg={feedItem.sourceImg}
+                isLive={feedItem.isLive}
+              />
+            ))}
+        </div>
       </RightModal>
 
     </div>
