@@ -68,7 +68,6 @@ const feed = createSlice({
     // new reducer
     forYouFeedLoaded(state, { payload }: PayloadAction<ForYouFeed[]>) {
       state.forYouFeedData = payload;
-      console.log(state.forYouFeedData);
     }
   },
 });

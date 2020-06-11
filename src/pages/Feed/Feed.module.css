@@ -80,17 +80,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  /* overflow-y: scroll; */
   scrollbar-width: thin;
   scrollbar-color: #9c9c9c #cdcfd5;
   align-items: flex-start;
 }
-/* 
-.column {
-  flex: 50%;
-} */
 
-/* Clear floats after the columns */
 .row:after {
   content: "";
   display: table;
