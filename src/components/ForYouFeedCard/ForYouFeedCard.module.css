@@ -1,10 +1,10 @@
 .attraction {
-    position: relative;
-    height: 167.66px;
-    flex-basis: 48%;
-    border-radius: 12px;
-    margin-bottom: 15px;
-  }
+  position: relative;
+  height: 167.66px;
+  flex-basis: 48%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
 
 .livePill {
   position: absolute;
@@ -30,11 +30,11 @@
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
-  
+
 .livePill p {
   display: inline;
 }
-  
+
 @keyframes pillPulse {
   0% {
     background-color: #fa7267;
@@ -46,7 +46,7 @@
     background-color: #fa7267;
   }
 }
-  
+
 .avatarContainer {
   display: flex;
   flex-direction: column;

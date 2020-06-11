@@ -62,7 +62,6 @@ const feed = createSlice({
     streamersLoaded(state, { payload }: PayloadAction<Streamer[]>) {
       state.streamerData = payload;
     },
-    // new reducer
     forYouFeedLoaded(state, { payload }: PayloadAction<ForYouFeed[]>) {
       state.forYouFeedData = payload;
     }
@@ -85,8 +84,7 @@ export const loadFeed = (): AppThunk => async (dispatch) => {
     const response = { data: feedData };
     dispatch(feedLoaded(response.data));
   } catch (error) {
-    // log an error here
-    // console.log(error);
+    console.log(error);
   } finally {
     dispatch(stopFetching());
   }
