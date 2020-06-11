@@ -6,7 +6,7 @@ import loadingSpinner from 'src/images/loadingSpinner.svg';
 
 import { RootState } from 'src/app/rootReducer';
 import { addTwitch, addSteam } from 'src/features/oauth';
-import { settings } from 'src/utils/socialPlatforms';
+import { ourUrl } from 'src/utils/socialPlatforms';
 import styles from './Oauth.module.css';
 
 const Oauth = () => {
@@ -20,7 +20,7 @@ const Oauth = () => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(queryString);
-    const params: { [s: string]: string } = { redirect_uri: `${settings.ourUrl}/oauth/${social}` };
+    const params: { [s: string]: string } = { redirect_uri: `${ourUrl}/oauth/${social}` };
     // downleveliteration option necessary in compiler
     for (const [key, value] of searchParams.entries()) {
       params[key] = value;
