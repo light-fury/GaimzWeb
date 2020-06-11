@@ -50,7 +50,8 @@ const MatchMaking = () => {
     })
   );
 
-  // TODO: Properly set match name from api
+  // TODO: Properly set match name from api. The mock data below should be coming from the reducer
+  // DUMMY DATA START
   let matchResponse: MatchResponse = {
     bet: 0,
     end_time: '2020-06-10',
@@ -122,6 +123,7 @@ const MatchMaking = () => {
       }
     ]
   };
+  // DUMMY DATA END
 
   useEffect(() => {
     const userId = user?.user_id;
@@ -141,6 +143,7 @@ const MatchMaking = () => {
           password: "",
           restriction: matchmakingSettings.region
         }
+        // TODO: dispatch findMatch isn't working properly or not being called properly
         findMatch(matchDto);
         startCounting(0);
         setMatchmakingFlow(MatchmakingFlow.SEARCHING_FOR_MATCHES);
@@ -156,7 +159,7 @@ const MatchMaking = () => {
   };
 
   const onCancelMatchmakingClicked = () => {
-    // TODO: Call cancel matchmaking api, get banned probably
+    // TODO: Call cancel matchmaking api
     setAllToInitialState();
   };
 
@@ -165,7 +168,7 @@ const MatchMaking = () => {
   };
 
   const onResendInvitesClick = () => {
-    // TODO: resend invites click maybe?
+    // TODO: call resend invites api
   };
 
   const onSettingsClick = () => {
@@ -250,7 +253,7 @@ const MatchMaking = () => {
       case MatchmakingFlow.SENDING_INVITES:
         return (
           <FindingMatchmaking
-            title="#GAMELOBBYNAME1234"
+            title={matchResponse.lobby_name}
             progress={90}
             circularButtonCenterText="Gaimz Bot Sending Invites"
           />
@@ -261,7 +264,6 @@ const MatchMaking = () => {
         );
       case MatchmakingFlow.MATCH_IN_PROGRESS:
       case MatchmakingFlow.MATCH_END:
-        // TODO: get players from api
         let playersTemp: { radiant: PlayerInterface, dire: PlayerInterface }[] = [];
         matchStats?.radiant?.players?.forEach((player, index) => {
           let playerTemp: { radiant: PlayerInterface, dire: PlayerInterface } = {
@@ -378,7 +380,8 @@ const MatchMaking = () => {
     setElapsedTime(count);
     const id = setTimeout(() => runElapsedTimeCounter(count), 1000);
     timeouts.push(id);
-    // // TODO: delete below lines, and replace with a call to match/match_id api
+    // TODO: delete below lines, and replace with a call to match/match_id api.
+    //  This function will be the core function from moving the matchmaking flow
     if (count === 3) {
       setMatchmakingFlow(MatchmakingFlow.LOBBY_PASSWORD_REQUIRED);
     }
@@ -400,6 +403,7 @@ const MatchMaking = () => {
   };
 
   const setAllToInitialState = () => {
+    // TODO: timeout not being cleared properly
     if (timeouts?.length > 0) {
       timeouts.forEach((timeOut) => {
         clearTimeout(timeOut);

@@ -73,6 +73,7 @@ export const loadRecentMatches = (userId: string): AppThunk => async (dispatch) 
 export const findMatch = (matchRequestDTO: MatchRequestDTO): AppThunk => async (dispatch) => {
   console.log("findMatch");
   try {
+    // TODO: add reducer variable for this api callout, response should be from the MatchResponse interface located in MatchmakingModel.ts
     const response = await axios.post(`${apiUrl}/match`, matchRequestDTO);
     console.log(response);
     // dispatch(recentMatchesLoaded(response.data));
