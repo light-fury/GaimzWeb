@@ -79,7 +79,7 @@
 .row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
   scrollbar-width: thin;
   scrollbar-color: #9c9c9c #cdcfd5;
   align-items: flex-start;
