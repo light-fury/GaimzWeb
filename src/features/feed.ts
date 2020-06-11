@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { feedData, streamerData } from 'src/utils/dummyData';
+import { feedData, streamerData, forYouFeedData } from 'src/utils/dummyData';
+// import { Stream } from 'stream';
 import { AppThunk } from './helpers';
 
 export interface Streamer {
@@ -21,16 +22,31 @@ export interface Feed {
   isLive: boolean;
 }
 
+// new interface
+export interface ForYouFeed {
+  user: Streamer;
+  id: string;
+  title: string;
+  subTitle: string;
+  sourceImg: string;
+  viewerCount: string;
+  isLive: boolean;
+}
+
 export interface FeedState {
   feedData: Feed[];
   isLoading: boolean;
   streamerData: Streamer[];
+  forYouFeedData: ForYouFeed[];
 }
 
 const initialState: FeedState = {
+  // maybe discoverFeedData?
   feedData: [],
   isLoading: false,
   streamerData: [],
+  // new line
+  forYouFeedData: [],
 };
 
 const feed = createSlice({
@@ -49,6 +65,11 @@ const feed = createSlice({
     streamersLoaded(state, { payload }: PayloadAction<Streamer[]>) {
       state.streamerData = payload;
     },
+    // new reducer
+    forYouFeedLoaded(state, { payload }: PayloadAction<ForYouFeed[]>) {
+      state.forYouFeedData = payload;
+      console.log(state.forYouFeedData);
+    }
   },
 });
 
@@ -57,6 +78,8 @@ export const {
   stopFetching,
   streamersLoaded,
   feedLoaded,
+  // new action
+  forYouFeedLoaded,
 } = feed.actions;
 
 export default feed.reducer;
@@ -77,8 +100,22 @@ export const loadFeed = (): AppThunk => async (dispatch) => {
 export const loadStreamers = (): AppThunk => async (dispatch) => {
   try {
     dispatch(startFetching());
+    // fetch call to https://discoverapi.gaimz.com/discover/foryou
     const response = { data: streamerData };
     dispatch(streamersLoaded(response.data));
+  } catch (error) {
+    // log an error here
+    // console.log(error);
+  } finally {
+    dispatch(stopFetching());
+  }
+};
+
+export const loadForYouFeed = (): AppThunk => async (dispatch) => {
+  try {
+    dispatch(startFetching());
+    const response = { data: forYouFeedData };
+    dispatch(forYouFeedLoaded(response.data));
   } catch (error) {
     // log an error here
     // console.log(error);
