@@ -67,6 +67,11 @@ const Feed = () => {
               />
             ))}
         </div>
+        <span>
+          <button className={styles.seeMoreBtn}>
+            Show more
+          </button>
+        </span>
       </RightModal>
 
     </div>
