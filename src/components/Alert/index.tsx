@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeAlert, AlertStatus } from 'src/features/alert';
+import { removeAlert } from 'src/features/alert';
+import { AlertStatus } from 'src/models/alert-status';
 import dismiss from 'src/images/icons/x.svg';
 import { RootState } from 'src/app/rootReducer';
 

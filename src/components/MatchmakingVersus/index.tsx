@@ -1,8 +1,8 @@
 import React from 'react';
+import { PlayerInterface } from 'src/models/match-interfaces';
 import styles from './MatchmakingVersus.module.css';
 import sharedStyles from '../shared/sharedcss.module.css';
 import MatchmakingVersusRow from '../MatchmakingVersusRow';
-import { PlayerInterface } from '../../utils/MatchmakingModels';
 
 interface MatchmakingVersusProps {
   players: { radiant: PlayerInterface, dire: PlayerInterface }[];

@@ -8,11 +8,11 @@ interface FindingMatchmakingProps {
   percentage: number;
 }
 
-const CircularProgressBar = (props: FindingMatchmakingProps) => (
+const CircularProgressBar = ({ percentage, children }: FindingMatchmakingProps) => (
   <div className={styles.progressCircleCenterContainer}>
     <div className={styles.progressCircleContainer}>
       <CircularProgressbarWithChildren
-        value={props.percentage}
+        value={percentage}
         styles={{
           path: {
             // Path color
@@ -21,7 +21,7 @@ const CircularProgressBar = (props: FindingMatchmakingProps) => (
         }}
         strokeWidth={3}
       >
-        {props.children}
+        {children}
       </CircularProgressbarWithChildren>
     </div>
   </div>

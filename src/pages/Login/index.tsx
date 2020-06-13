@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { createAlert } from 'src/features/alert';
@@ -23,10 +23,15 @@ import { RootState } from 'src/app/rootReducer';
 import { SocialPlatform, connectWithSocial } from 'src/utils/socialPlatforms';
 import styles from './Login.module.css';
 
+
 const Login = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const { from } = (location.state as { from: {pathname: string}}) || { from: { pathname: '/feed' } };
+
   const { isAuthenticated, isLoading } = useSelector(
-    (state: RootState) => state.authentication
+    (s: RootState) => s.authentication
   );
 
   const [formData, setFormData] = useState({
@@ -68,7 +73,7 @@ const Login = () => {
   );
 
   if (isAuthenticated) {
-    return <Redirect to="/feed" />;
+    return <Redirect to={from} />;
   }
 
   return (

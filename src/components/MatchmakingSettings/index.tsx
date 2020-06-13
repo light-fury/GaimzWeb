@@ -1,104 +1,89 @@
 import React from 'react';
 import { Option } from 'react-dropdown';
+import { Game } from 'src/models/match-interfaces';
 import styles from './MatchmakingSettings.module.css';
 import LabelDropdown from '../shared/LabelDropdown';
 import sharedStyles from '../shared/sharedcss.module.css';
+
+export enum Restriction {
+  Everyone = 'Everyone',
+  FollowersOnly = 'FollowersOnly',
+  SubsOnly = 'SubsOnly',
+  PasswordProtected = 'PasswordProtected'
+}
 
 export interface IMatchmakingSettings {
   gameType: string;
   gameMode: string;
   region: string;
-  streamer: string;
-  streamerOption: string;
+  restriction: Restriction;
+  password: string;
+  complete: boolean;
+  [s: string]: string | boolean;
 }
 
 interface MatchmakingSettingsProps {
   matchmakingSettings: IMatchmakingSettings;
   onChangeMatchmakingSettings: (matchmakingSettings: IMatchmakingSettings) => void;
+  game: Game;
 }
-
-const GameModeDropDown: Option[] = [
-  {
-    label: '1 versus 1',
-    value: '1v1'
-  },
-  {
-    label: '5 versus 5',
-    value: '5v5'
-  },
-  {
-    label: '3 versus 3',
-    value: '3v3'
-  }
-];
-
-const GameTypeDropDown: Option[] = [
-  {
-    label: 'All pick',
-    value: 'allPick'
-  },
-  {
-    label: 'Competitive',
-    value: 'competitive'
-  }
-];
 
 const RegionDropDown: Option[] = [
   {
     label: 'Automatic',
     value: 'auto'
-  },
-  {
-    label: 'N. America',
-    value: 'NA'
-  },
-  {
-    label: 'Europe',
-    value: 'EU'
-  },
-  {
-    label: 'Asia',
-    value: 'ASIA'
   }
+  // },
+  // {
+  //   label: 'N. America',
+  //   value: 'NA'
+  // },
+  // {
+  //   label: 'Europe',
+  //   value: 'EU'
+  // },
+  // {
+  //   label: 'Asia',
+  //   value: 'ASIA'
+  // }
 ];
 
-const StreamerDropDown: Option[] = [
+const RestrictionDropDown: Option[] = [
   {
-    label: 'Streamer 1',
-    value: 'streamer1'
-  },
-  {
-    label: 'Streamer 2',
-    value: 'streamer2'
-  },
-  {
-    label: 'Streamer 3',
-    value: 'streamer3'
-  },
-  {
-    label: 'Streamer 4',
-    value: 'streamer4'
-  }
-];
-
-const StreamerOptionDropDown: Option[] = [
-  {
-    label: 'Subscribers only',
-    value: 'subscribers'
+    label: 'Everyone',
+    value: Restriction.Everyone
   },
   {
     label: 'Followers only',
-    value: 'followers'
+    value: Restriction.FollowersOnly
+  },
+  {
+    label: 'Subscribers only',
+    value: Restriction.SubsOnly
+  },
+  {
+    label: 'Password Protected',
+    value: Restriction.PasswordProtected
   }
 ];
 
-const MatchmakingSettings = ({ matchmakingSettings, onChangeMatchmakingSettings }: MatchmakingSettingsProps) => {
+const MatchmakingSettings = (
+  { matchmakingSettings, onChangeMatchmakingSettings, game }: MatchmakingSettingsProps
+) => {
   const onSettingsChange = (val: string, field: string) => {
-    // @ts-ignore
-    matchmakingSettings[field] = val;
-    onChangeMatchmakingSettings(matchmakingSettings);
+    const newSettings: IMatchmakingSettings = { ...matchmakingSettings };
+    newSettings[field] = val;
+    newSettings.complete = true;
+    for (const k in newSettings) {
+      if (k !== 'complete' && !newSettings[k]) { newSettings.complete = false; }
+    }
+    onChangeMatchmakingSettings(newSettings);
   };
 
+  const selectedGameType = game.game_types.find((gt) => gt.type === matchmakingSettings.gameType);
+  const selectedGameMode = selectedGameType?.gameModes.find(
+    (gm) => gm === matchmakingSettings.gameMode
+  );
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -107,16 +92,18 @@ const MatchmakingSettings = ({ matchmakingSettings, onChangeMatchmakingSettings 
       <LabelDropdown
         label="GAME TYPE"
         selectedItemValue={matchmakingSettings.gameType}
-        dropdownItems={GameTypeDropDown}
-        onSelectValue={(val) => onSettingsChange(val, 'gameType')}
+        dropdownItems={game.game_types.map((gt) => ({ label: gt.type, value: gt.type }))}
+        onSelectValue={(val) => { onSettingsChange(val, 'gameType'); }}
       />
       <div className={sharedStyles.row}>
         <div className={styles.halfContainer}>
           <div className={styles.leftContainer}>
             <LabelDropdown
               label="GAME MODE"
-              selectedItemValue={matchmakingSettings.gameMode}
-              dropdownItems={GameModeDropDown}
+              selectedItemValue={selectedGameMode || ''}
+              dropdownItems={selectedGameType
+                ? selectedGameType.gameModes.map((gm) => ({ label: gm, value: gm }))
+                : []}
               onSelectValue={(val) => onSettingsChange(val, 'gameMode')}
             />
           </div>
@@ -133,16 +120,10 @@ const MatchmakingSettings = ({ matchmakingSettings, onChangeMatchmakingSettings 
         </div>
       </div>
       <LabelDropdown
-        label="SELECT STREAMER"
-        selectedItemValue={matchmakingSettings.streamer}
-        dropdownItems={StreamerDropDown}
-        onSelectValue={(val) => onSettingsChange(val, 'streamer')}
-      />
-      <LabelDropdown
         label="CREATE MATCH"
-        selectedItemValue={matchmakingSettings.streamerOption}
-        dropdownItems={StreamerOptionDropDown}
-        onSelectValue={(val) => onSettingsChange(val, 'streamerOption')}
+        selectedItemValue={matchmakingSettings.restriction}
+        dropdownItems={RestrictionDropDown}
+        onSelectValue={(val) => onSettingsChange(val, 'restriction')}
       />
     </div>
   );

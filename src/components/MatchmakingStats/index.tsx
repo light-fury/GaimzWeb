@@ -1,12 +1,14 @@
 import React from 'react';
+import { MatchResponse, Stats, Game } from 'src/models/match-interfaces';
 import styles from './MatchmakingStats.module.css';
 import sharedStyles from '../shared/sharedcss.module.css';
-import {MatchResponse, Stats} from '../../utils/MatchmakingModels';
-import MatchmakingPlayerHero from "../MatchmakingPlayerHero";
+
+import MatchmakingPlayerHero from '../MatchmakingPlayerHero';
 
 interface MatchmakingStatsProps {
   matchStats: Stats;
   matchResponse: MatchResponse;
+  game: Game;
 }
 
 export const matchmakingStatsColWidth = [
@@ -16,10 +18,10 @@ export const matchmakingStatsColWidth = [
   11,
   11,
   16
-]
+];
 
 const MatchMakingStats = (props: MatchmakingStatsProps) => {
-  const {matchResponse, matchStats} = props;
+  const { matchResponse, matchStats, game } = props;
 
   return (
     <div>
@@ -49,7 +51,7 @@ const MatchMakingStats = (props: MatchmakingStatsProps) => {
         </div>
         <div className={`${sharedStyles.row}`}>
           <div className={styles.headerText}>
-            {matchResponse.game}
+            {game.game_name}
           </div>
           <div className={styles.headerText}>
             EU
@@ -68,47 +70,47 @@ const MatchMakingStats = (props: MatchmakingStatsProps) => {
           </div>
         </div>
         <div className={`${sharedStyles.row} ${styles.playerHeaderContainer}`}>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[0]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[0]}%` }}>
             Dire
           </div>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[1]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[1]}%` }}>
             Hero
           </div>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[2]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[2]}%` }}>
             K/D/A
           </div>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[3]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[3]}%` }}>
             GPM
           </div>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[4]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[4]}%` }}>
             LH/DN
           </div>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[5]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[5]}%` }}>
             ITEMS
           </div>
         </div>
-        {matchStats.dire.players.map(player => <MatchmakingPlayerHero player={player}/>)}
+        {matchStats.dire.players.map((player) => <MatchmakingPlayerHero player={player} />)}
         <div className={`${sharedStyles.row} ${styles.playerHeaderContainer}`}>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[0]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[0]}%` }}>
             Radiant
           </div>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[1]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[1]}%` }}>
             Hero
           </div>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[2]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[2]}%` }}>
             K/D/A
           </div>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[3]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[3]}%` }}>
             GPM
           </div>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[4]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[4]}%` }}>
             LH/DN
           </div>
-          <div className={styles.playerHeader} style={{width: `${matchmakingStatsColWidth[5]}%`}}>
+          <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[5]}%` }}>
             ITEMS
           </div>
         </div>
-        {matchStats.radiant.players.map(player => <MatchmakingPlayerHero player={player}/>)}
+        {matchStats.radiant.players.map((player) => <MatchmakingPlayerHero player={player} />)}
       </div>
     </div>
   );

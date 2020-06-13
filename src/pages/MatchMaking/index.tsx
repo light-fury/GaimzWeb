@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RightModal } from 'src/components';
+import { RightModal, MatchmakingSettings, FindingMatchmaking, MatchmakingPassword, MatchmakingVersus, MatchmakingStats } from 'src/components';
 import RecentMatches from 'src/components/RecentMatches';
 import { RootState } from 'src/app/rootReducer';
-import {findMatch, loadRecentMatches} from 'src/features/matches';
+import { findMatch, loadRecentMatches, loadGame, updateMatch, getMatchStatus } from 'src/features/matches';
+import { MatchRequestDTO, MatchResponse, PlayerInterface, Stats, MatchStatus } from 'src/models/match-interfaces';
 
-import dota2Bg from 'src/images/matchmaking/dota2Bg.svg';
+import { IMatchmakingSettings, Restriction } from 'src/components/MatchmakingSettings';
+
+import { Direction } from 'src/components/FindingMatchmaking';
 import styles from './MatchMaking.module.css';
-import MatchmakingSettings, { IMatchmakingSettings } from '../../components/MatchmakingSettings';
-import FindingMatchmaking from '../../components/FindingMatchmaking';
-import MatchmakingPassword from '../../components/MatchmakingPassword';
-import MatchmakingVersus from '../../components/MatchmakingVersus';
-import {MatchRequestDTO, MatchResponse, PlayerInterface, Stats} from '../../utils/MatchmakingModels';
-import MatchMakingStats from '../../components/MatchmakingStats';
-import {match} from "assert";
+
+declare const window: Window;
 
 enum MatchmakingFlow {
   INITIAL_STATE = 'INITIAL_STATE',
@@ -29,56 +27,82 @@ enum MatchmakingFlow {
 }
 
 const MatchMaking = () => {
-  const timeouts: NodeJS.Timeout[] = [];
   const dispatch = useDispatch();
 
   const [isSettingsClicked, setIsSettingsClicked] = useState(false);
   const [matchmakingSettings, setMatchmakingSettings] = useState<IMatchmakingSettings>({
-    gameType: 'allPick',
-    gameMode: '1v1',
+    gameType: '',
+    gameMode: '',
     region: 'auto',
-    streamer: 'streamer1',
-    streamerOption: 'subscribers'
+    restriction: Restriction.Everyone,
+    password: '',
+    complete: false
   });
-  const [matchmakingFlow, setMatchmakingFlow] = useState<MatchmakingFlow>(MatchmakingFlow.INITIAL_STATE);
-  const [elapsedTime, setElapsedTime] = useState<number>(0);
+  const [matchmakingFlow, setMatchmakingFlow] = useState<MatchmakingFlow>(
+    MatchmakingFlow.INITIAL_STATE
+  );
 
-  const { recentMatchesData, user } = useSelector(
+  const { recentMatchesData, user, game, match } = useSelector(
     (s: RootState) => ({
       recentMatchesData: s.matches.recentMatchesData,
-      user: s.authentication.user
+      user: s.authentication.user,
+      game: s.matches.gameData,
+      match: s.matches.matchData
     })
   );
+  const matchId = useMemo(() => match.match_id, [match.match_id]);
+
+  useEffect(() => {
+    const userId = user?.user_id;
+    if (userId !== undefined) {
+      dispatch(loadRecentMatches(userId));
+    }
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    dispatch(loadGame('1')); // 1 is hard coded DOTA 2
+  }, [dispatch]);
+
+  useEffect(() => {
+    let timeout = 5000;
+    if (matchmakingFlow === MatchmakingFlow.MATCH_END) {
+      timeout = 60000;
+    }
+    if (matchmakingFlow !== MatchmakingFlow.INITIAL_STATE) {
+      const timoutid = setInterval(() => {
+        dispatch(getMatchStatus(matchId!));
+      }, timeout);
+      return () => clearInterval(timoutid);
+    }
+    return () => { };
+  }, [dispatch, matchmakingFlow, matchId]);
+
+  useEffect(() => {
+    switch (match.match_status) {
+      case MatchStatus.MatchCancelled:
+        setMatchmakingFlow(MatchmakingFlow.INITIAL_STATE);
+        break;
+      case MatchStatus.MatchAccepted:
+        setMatchmakingFlow(MatchmakingFlow.PREPARING_MATCH_LOBBY);
+        break;
+      case MatchStatus.PlayersFound:
+        setMatchmakingFlow(MatchmakingFlow.MATCH_FOUND_READY);
+        break;
+      default:
+        break;
+    }
+  }, [match]);
+
+  const setAllToInitialState = () => {
+    setMatchmakingFlow(MatchmakingFlow.INITIAL_STATE);
+  };
 
   // TODO: Properly set match name from api. The mock data below should be coming from the reducer
   // DUMMY DATA START
-  let matchResponse: MatchResponse = {
-    bet: 0,
-    end_time: '2020-06-10',
-    game_id: '213',
-    game_mode: 'solo',
-    match_id: '1234',
-    match_status: 'MATCH IN PROGRESS',
-    start_time: '2020-06-10',
-    lobby_name: '#GAMELOBBYNAME1234',
-    game: "Dota 2"
-  };
-
-  let player1Sample: PlayerInterface = {
+  const player1Sample: PlayerInterface = {
     player_status: 'match_requested',
     user_id: 'Shroud',
-    hero_name: "Centaur",
-    kills: 10,
-    deaths: 4,
-    assists: 4,
-    lasthits: 60,
-    denies: 5,
-    gpm: 200
-  }
-  let player2Sample: PlayerInterface = {
-    player_status: 'match_requested',
-    user_id: 'Swagger',
-    hero_name: "Pudge",
+    hero_name: 'Centaur',
     kills: 10,
     deaths: 4,
     assists: 4,
@@ -86,12 +110,23 @@ const MatchMaking = () => {
     denies: 5,
     gpm: 200
   };
-  if(matchmakingFlow == MatchmakingFlow.MATCH_END) {
+  const player2Sample: PlayerInterface = {
+    player_status: 'match_requested',
+    user_id: 'Swagger',
+    hero_name: 'Pudge',
+    kills: 10,
+    deaths: 4,
+    assists: 4,
+    lasthits: 60,
+    denies: 5,
+    gpm: 200
+  };
+  if (matchmakingFlow === MatchmakingFlow.MATCH_END) {
     player1Sample.won = true;
     player2Sample.won = false;
   }
 
-  let matchStats: Stats = {
+  const matchStats: Stats = {
     dire: {
       players: [
         player1Sample,
@@ -121,45 +156,23 @@ const MatchMaking = () => {
         name: 'radiant',
         id: 123
       }
-    ]
+    ],
+    duration: 60
   };
   // DUMMY DATA END
 
-  useEffect(() => {
-    const userId = user?.user_id;
-    if (userId !== undefined) {
-      dispatch(loadRecentMatches(userId));
-    }
-  }, [dispatch, user]);
-
-  const onMainButtonClicked = () => {
-    switch (matchmakingFlow) {
-      case MatchmakingFlow.INITIAL_STATE:
-        let matchDto: MatchRequestDTO = {
-          bet: 0,
-          game_id: "123",
-          game_mode: matchmakingSettings.gameMode,
-          game_type: matchmakingSettings.gameType,
-          password: "",
-          restriction: matchmakingSettings.region
-        }
-        // TODO: dispatch findMatch isn't working properly or not being called properly
-        findMatch(matchDto);
-        startCounting(0);
-        setMatchmakingFlow(MatchmakingFlow.SEARCHING_FOR_MATCHES);
-        break;
-      case MatchmakingFlow.SEARCHING_FOR_MATCHES:
-        setAllToInitialState();
-        break;
-    }
-  };
 
   const onAcceptMatchmaking = () => {
-    // TODO: Call accept matchmaking api
+    if (match && match.match_id) {
+      dispatch(updateMatch(match.match_id, true));
+    }
   };
 
   const onCancelMatchmakingClicked = () => {
-    // TODO: Call cancel matchmaking api
+    if (match && match.match_id) {
+      dispatch(updateMatch(match.match_id, false));
+    }
+
     setAllToInitialState();
   };
 
@@ -175,6 +188,32 @@ const MatchMaking = () => {
     setIsSettingsClicked(!isSettingsClicked);
   };
 
+  const onMainButtonClicked = () => {
+    switch (matchmakingFlow) {
+      case MatchmakingFlow.INITIAL_STATE:
+        if (!game) {
+          // oops - you first need to select a game!
+          return;
+        }
+        dispatch(findMatch({
+          bet: 0,
+          game_id: game.game_id,
+          game_mode: matchmakingSettings.gameMode || game.game_types[0].gameModes[0],
+          game_type: matchmakingSettings.gameType || game.game_types[0].type,
+          password: matchmakingSettings.password,
+          restriction: matchmakingSettings.restriction || Restriction.Everyone
+        }));
+        setMatchmakingFlow(MatchmakingFlow.SEARCHING_FOR_MATCHES);
+        break;
+      case MatchmakingFlow.SEARCHING_FOR_MATCHES:
+        onCancelMatchmakingClicked();
+        break;
+      default:
+        break;
+    }
+  };
+
+
   const getButtonText = () => {
     switch (matchmakingFlow) {
       case MatchmakingFlow.SEARCHING_FOR_MATCHES:
@@ -182,7 +221,7 @@ const MatchMaking = () => {
       case MatchmakingFlow.MATCH_FOUND_READY:
         return 'Accept';
       default:
-        return 'Find Match';
+        return 'Start Search';
     }
   };
 
@@ -191,9 +230,10 @@ const MatchMaking = () => {
       case MatchmakingFlow.MATCH_IN_PROGRESS:
       case MatchmakingFlow.MATCH_END:
         return (
-          <MatchMakingStats
+          <MatchmakingStats
             matchStats={matchStats}
-            matchResponse={matchResponse}
+            matchResponse={match}
+            game={game}
           />
         );
       default:
@@ -204,7 +244,7 @@ const MatchMaking = () => {
             </div>
             <div className={styles.contentContainer}>
               {recentMatchesData !== null && (
-                <RecentMatches recentMatchesData={recentMatchesData} />
+                <RecentMatches userId={user!.user_id} recentMatchesData={recentMatchesData} />
               )}
             </div>
           </>
@@ -213,14 +253,24 @@ const MatchMaking = () => {
   };
 
   const renderRightPanel = () => {
+    if (!user?.apps.steam) {
+      return (
+        <div className={styles.centerContainer}>
+          <h3 className={styles.steamWarning}>
+            Make sure you first connect your steam id before trying to continue!
+          </h3>
+        </div>
+      );
+    }
+
     switch (matchmakingFlow) {
       case MatchmakingFlow.INITIAL_STATE:
         return (
           <div className={styles.centerContainer}>
             <img
               className={styles.dota2Bg}
-              src={dota2Bg}
-              alt="Dota 2 Background"
+              src={game?.game_picture_url}
+              alt={`${game?.game_name} Background`}
             />
           </div>
         );
@@ -228,34 +278,35 @@ const MatchMaking = () => {
         return (
           <FindingMatchmaking
             title="Finding Match..."
-            progress={20}
-            circularButtonCenterText={`${elapsedTime} seconds`}
-            description="Double click the timer to hide the search and explore Gaimz. We will notify you when the match is found."
+            description="A match has 10 minutes to find available players. It will cancel after that timeout."
+            completedTimeInS={600}
+            onFinished={() => onCancelMatchmakingClicked()}
           />
         );
       case MatchmakingFlow.MATCH_FOUND_READY:
         return (
           <FindingMatchmaking
             title="Your match is ready"
-            progress={50}
-            circularButtonCenterText={`${elapsedTime} seconds`}
+            completedTimeInS={30}
+            direction={Direction.Down}
             description="Failing to accept may result in a temporary match ban."
           />
         );
       case MatchmakingFlow.PREPARING_MATCH_LOBBY:
         return (
           <FindingMatchmaking
-            title={matchResponse.lobby_name}
-            progress={80}
-            circularButtonCenterText="Gaimz Bot Preparing Lobby"
+            title={`#GMZLOBBY${match.match_id}`}
+            completedTimeInS={0}
+            centerText="Gaimz Bot Preparing Lobby"
           />
         );
       case MatchmakingFlow.SENDING_INVITES:
         return (
           <FindingMatchmaking
-            title={matchResponse.lobby_name}
-            progress={90}
-            circularButtonCenterText="Gaimz Bot Sending Invites"
+            title={`#GMZLOBBY${match.match_id}`}
+            completedTimeInS={30}
+            direction={Direction.Down}
+            centerText="Gaimz Bot Sending Invites"
           />
         );
       case MatchmakingFlow.LOBBY_PASSWORD_REQUIRED:
@@ -264,14 +315,14 @@ const MatchMaking = () => {
         );
       case MatchmakingFlow.MATCH_IN_PROGRESS:
       case MatchmakingFlow.MATCH_END:
-        let playersTemp: { radiant: PlayerInterface, dire: PlayerInterface }[] = [];
+        const playersTemp: { radiant: PlayerInterface, dire: PlayerInterface }[] = [];
         matchStats?.radiant?.players?.forEach((player, index) => {
-          let playerTemp: { radiant: PlayerInterface, dire: PlayerInterface } = {
+          const playerTemp: { radiant: PlayerInterface, dire: PlayerInterface } = {
             radiant: player,
             dire: matchStats?.dire?.players[index]
-          }
+          };
           playersTemp.push(playerTemp);
-        })
+        });
         return (
           <div>
             <MatchmakingVersus players={playersTemp} />
@@ -284,25 +335,28 @@ const MatchMaking = () => {
 
 
   const renderRightButtonsComponent = () => {
+    if (!user?.apps.steam) {
+      return <></>;
+    }
     switch (matchmakingFlow) {
       case MatchmakingFlow.MATCH_FOUND_READY:
         return (
           <>
             <div className={styles.centerContainer}>
-              <div
+              <button
                 className={styles.matchButton}
                 onClick={onAcceptMatchmaking}
               >
                 Accept
-              </div>
+              </button>
             </div>
             <div className={styles.centerContainer}>
-              <div
+              <button
                 className={styles.settingsButton}
                 onClick={onCancelMatchmakingClicked}
               >
                 Cancel
-              </div>
+              </button>
             </div>
           </>
         );
@@ -312,45 +366,47 @@ const MatchMaking = () => {
         return (
           <>
             <div className={styles.centerContainer}>
-              <div
+              <button
+                disabled={matchmakingFlow === MatchmakingFlow.INITIAL_STATE
+                  && isSettingsClicked && matchmakingSettings.complete}
                 className={styles.matchButton}
                 onClick={onMainButtonClicked}
               >
                 {getButtonText()}
-              </div>
+              </button>
             </div>
             <div className={styles.centerContainer}>
-              <div
+              <button
                 className={styles.settingsButton}
                 onClick={onSettingsClick}
               >
                 {isSettingsClicked ? 'Close Settings' : 'Settings'}
-              </div>
+              </button>
             </div>
           </>
         );
       case MatchmakingFlow.PREPARING_MATCH_LOBBY:
         return (
           <>
-            <div className={styles.reportIssuesButton} onClick={onReportIssueClicked}>
+            <button className={styles.reportIssuesButton} onClick={onReportIssueClicked}>
               REPORT ISSUE
-            </div>
+            </button>
           </>
         );
       case MatchmakingFlow.SENDING_INVITES:
         return (
           <>
             <div className={styles.centerContainer}>
-              <div
+              <button
                 className={styles.resendInvitesButton}
                 onClick={onResendInvitesClick}
               >
                 SEND INVITES AGAIN
-              </div>
+              </button>
             </div>
-            <div className={styles.reportIssuesButton} onClick={onReportIssueClicked}>
+            <button className={styles.reportIssuesButton} onClick={onReportIssueClicked}>
               REPORT ISSUE
-            </div>
+            </button>
           </>
         );
       case MatchmakingFlow.MATCH_IN_PROGRESS:
@@ -358,11 +414,11 @@ const MatchMaking = () => {
         return (
           <div className={styles.bottomButtonContainer}>
             <div className={styles.bottomTextMatchName}>
-              {matchResponse.lobby_name}
+              {`#GMZLOBBY${match.match_id}`}
             </div>
-            <div className={styles.reportIssuesButton} onClick={onReportIssueClicked}>
+            <button className={styles.reportIssuesButton} onClick={onReportIssueClicked}>
               REPORT ISSUE
-            </div>
+            </button>
           </div>
         );
       default:
@@ -370,49 +426,6 @@ const MatchMaking = () => {
     }
   };
 
-  const startCounting = (count: number) => {
-    const id = setTimeout(() => runElapsedTimeCounter(count), 1000);
-    timeouts.push(id);
-  };
-
-  const runElapsedTimeCounter = (count: number) => {
-    count++;
-    setElapsedTime(count);
-    const id = setTimeout(() => runElapsedTimeCounter(count), 1000);
-    timeouts.push(id);
-    // TODO: delete below lines, and replace with a call to match/match_id api.
-    //  This function will be the core function from moving the matchmaking flow
-    if (count === 3) {
-      setMatchmakingFlow(MatchmakingFlow.LOBBY_PASSWORD_REQUIRED);
-    }
-    if (count === 6) {
-      setMatchmakingFlow(MatchmakingFlow.MATCH_FOUND_READY);
-    }
-    if (count === 9) {
-      setMatchmakingFlow(MatchmakingFlow.PREPARING_MATCH_LOBBY);
-    }
-    if (count === 12) {
-      setMatchmakingFlow(MatchmakingFlow.SENDING_INVITES);
-    }
-    if (count === 15) {
-      setMatchmakingFlow(MatchmakingFlow.MATCH_IN_PROGRESS);
-    }
-    if (count === 18) {
-      setMatchmakingFlow(MatchmakingFlow.MATCH_END);
-    }
-  };
-
-  const setAllToInitialState = () => {
-    // TODO: timeout not being cleared properly
-    if (timeouts?.length > 0) {
-      timeouts.forEach((timeOut) => {
-        clearTimeout(timeOut);
-      });
-    }
-    setElapsedTime(0);
-    setMatchmakingFlow(MatchmakingFlow.INITIAL_STATE);
-    window.location.reload();
-  };
 
   return (
     <div className={styles.pageContainer}>
@@ -433,6 +446,7 @@ const MatchMaking = () => {
           isSettingsClicked
             ? (
               <MatchmakingSettings
+                game={game}
                 matchmakingSettings={matchmakingSettings}
                 onChangeMatchmakingSettings={setMatchmakingSettings}
               />
