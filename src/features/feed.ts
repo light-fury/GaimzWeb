@@ -24,11 +24,9 @@ export interface Feed {
 }
 
 export interface ForYouFeed {
-  // user: Streamer;
   user_id: string;
   user_name: string;
   twitch_title: string;
-  // subTitle: string;
   user_avatar_url: string;
   twitch_thumbnail_url: string;
   twitch_viewer_count: string;
@@ -99,7 +97,6 @@ export const loadFeed = (): AppThunk => async (dispatch) => {
 export const loadStreamers = (): AppThunk => async (dispatch) => {
   try {
     dispatch(startFetching());
-    // fetch call to https://discoverapi.gaimz.com/discover/foryou
     const response = { data: streamerData };
     dispatch(streamersLoaded(response.data));
   } catch (error) {
