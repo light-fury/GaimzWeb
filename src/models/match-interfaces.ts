@@ -15,6 +15,7 @@ export interface PlayerInterface {
 }
 
 export interface Stats {
+  [s: string]: Side | number | Side[] | undefined;
   teams: Side[];
   dire: Side;
   radiant: Side;

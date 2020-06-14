@@ -194,7 +194,8 @@ export const pollEpic: Epic<AnyAction, AnyAction, RootState> = (action$, state$)
       () => from(axios.get(`${mmapiUrl}/match/${state$.value.matches.matchData.match_id}`))
         .pipe(
           switchMap((res) => {
-            if (res.data.match_status === MatchStatus.MatchCancelled) {
+            if (res.data.match_status === MatchStatus.MatchCancelled
+              || res.data.match_status === MatchStatus.MatchEnded) {
               return from([matchStarted(res.data), pollStop()]);
             }
             return of(matchStarted(res.data));

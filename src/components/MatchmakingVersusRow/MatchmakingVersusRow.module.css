@@ -17,3 +17,10 @@
   border: 3px solid #4BDD08;
   border-radius: 12px;
 }
+
+.playerAvatar{
+  width: 40%;
+}
+.right{
+  float: right;
+}

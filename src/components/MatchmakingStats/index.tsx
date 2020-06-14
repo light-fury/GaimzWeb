@@ -1,6 +1,5 @@
-/* eslint-disable no-param-reassign */
 import React from 'react';
-import { MatchResponse, Stats, Game } from 'src/models/match-interfaces';
+import { MatchResponse, Stats, Game, Side } from 'src/models/match-interfaces';
 import styles from './MatchmakingStats.module.css';
 import sharedStyles from '../shared/sharedcss.module.css';
 
@@ -21,18 +20,35 @@ export const matchmakingStatsColWidth = [
   16
 ];
 
-const MatchMakingStats = (props: MatchmakingStatsProps) => {
-  const { matchResponse, matchStats, game } = props;
+const MatchMakingStats = ({ matchResponse, matchStats, game }: MatchmakingStatsProps) => {
   if (!matchStats) {
     return (<div><h3>We&apos;re still loading data.</h3></div>);
   }
+
+  const tempMatchStats = { ...matchStats };
   if (matchStats.teamWon) {
-    const winningTeam = matchStats.teams.find((t) => t.id === matchStats.teamWon);
-    winningTeam!.players.forEach((p) => { p.won = true; });
-    const losingTeam = matchStats.teams.find((t) => t.id !== matchStats.teamWon);
-    losingTeam!.players.forEach((p) => { p.won = false; });
-    matchStats.dire = winningTeam?.name === 'Dire' ? winningTeam! : losingTeam!;
-    matchStats.radiant = winningTeam?.name === 'Radiant' ? winningTeam! : losingTeam!;
+    let winningTeam: Side;
+    let losingTeam: Side;
+    for (let i = 0; i < matchStats.teams.length; i += 1) {
+      const element = matchStats.teams[i];
+      if (element.id === matchStats.teamWon) {
+        winningTeam = { ...element };
+        winningTeam.players = winningTeam.players.map((p) => {
+          const newPlayer = { ...p };
+          newPlayer.won = true;
+          return newPlayer;
+        });
+        tempMatchStats[winningTeam.name.toLowerCase()] = winningTeam;
+      } else {
+        losingTeam = { ...element };
+        losingTeam.players = losingTeam.players.map((p) => {
+          const newPlayer = { ...p };
+          newPlayer.won = false;
+          return newPlayer;
+        });
+        tempMatchStats[losingTeam.name.toLowerCase()] = losingTeam;
+      }
+    }
   }
 
   return (
@@ -101,7 +117,9 @@ const MatchMakingStats = (props: MatchmakingStatsProps) => {
             ITEMS
           </div>
         </div>
-        {matchStats.dire.players.map((player) => <MatchmakingPlayerHero player={player} />)}
+        {tempMatchStats.dire.players.map(
+          (player) => <MatchmakingPlayerHero player={player} key={player.user_id} />
+        )}
         <div className={`${sharedStyles.row} ${styles.playerHeaderContainer}`}>
           <div className={styles.playerHeader} style={{ width: `${matchmakingStatsColWidth[0]}%` }}>
             Radiant
@@ -122,7 +140,9 @@ const MatchMakingStats = (props: MatchmakingStatsProps) => {
             ITEMS
           </div>
         </div>
-        {matchStats.radiant.players.map((player) => <MatchmakingPlayerHero player={player} />)}
+        {tempMatchStats.radiant.players.map(
+          (player) => <MatchmakingPlayerHero player={player} key={player.user_id} />
+        )}
       </div>
     </div>
   );

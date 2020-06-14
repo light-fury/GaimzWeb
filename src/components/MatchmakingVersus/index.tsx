@@ -27,7 +27,7 @@ const MatchmakingVersus = ({ players }: MatchmakingVersusProps) => (
         </div>
       </div>
     </div>
-    {players?.map((p) => <MatchmakingVersusRow radiantPlayer={p.radiant} direPlayer={p.dire} />)}
+    {players?.map((p) => <MatchmakingVersusRow key={`${p.radiant.user_id}${p.dire.user_id}`} radiantPlayer={p.radiant} direPlayer={p.dire} />)}
   </div>
 );
 
