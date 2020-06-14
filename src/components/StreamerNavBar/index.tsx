@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   useState,
   useCallback,
@@ -56,9 +58,7 @@ const StreamerNavBar = () => {
     setStreamerLimit,
   ]);
 
-  const handleSettings = () => {
-    console.log('Settings Clicked');
-  };
+  const handleSettings = () => { };
 
   const handleSearch = useCallback(
     (event) => {
@@ -134,7 +134,7 @@ const StreamerNavBar = () => {
         )}
       </div>
 
-      <div className={styles.middleContainer}>
+      {/* <div className={styles.middleContainer}>
         <div
           className={[
             styles.streamerContainer,
@@ -275,7 +275,7 @@ const StreamerNavBar = () => {
             direction={collapsed ? 'right' : 'left'}
           />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
