@@ -22,6 +22,6 @@ export function connectWithSocial(platform: SocialPlatform) {
       window.location.assign(steamSigninUrl);
       break;
     default:
-      break;
+      throw new Error(`${platform} is currently not supported yet.`);
   }
 }

@@ -41,8 +41,12 @@ const Login = () => {
   const { email, password } = formData;
 
   const handleSocialClick = useCallback((socialMedia: SocialPlatform) => {
-    connectWithSocial(socialMedia);
-  }, []);
+    try {
+      connectWithSocial(socialMedia);
+    } catch (error) {
+      dispatch(createAlert(error.message, 'danger'));
+    }
+  }, [dispatch]);
 
   const handleChange = useCallback(
     (event) => {
