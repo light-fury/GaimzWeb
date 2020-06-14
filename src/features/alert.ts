@@ -26,7 +26,7 @@ export default alert.reducer;
 
 export const createAlert = (
   message: string,
-  alertType: string,
+  alertType: 'success'|'danger',
   timeout = 5000
 ): AppThunk => (dispatch) => {
   const id = uuidv4();

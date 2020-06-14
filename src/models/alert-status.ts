@@ -1,5 +1,5 @@
 export interface AlertStatus {
   message: string;
-  alertType: string;
+  alertType: 'success'|'danger';
   id: string;
 }
