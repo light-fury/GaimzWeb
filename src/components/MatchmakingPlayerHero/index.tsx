@@ -1,6 +1,5 @@
 import React from 'react';
 import { PlayerInterface } from 'src/models/match-interfaces';
-import centaur from 'src/images/matchmaking/centaur.svg';
 
 import styles from './MatchmakingPlayerHero.module.css';
 import sharedStyles from '../shared/sharedcss.module.css';
@@ -11,9 +10,9 @@ interface MatchmakingPlayerHeroProps {
 }
 
 const MatchmakingPlayerHero = ({ player }: MatchmakingPlayerHeroProps) => (
-  <div className={`${sharedStyles.row} ${styles.containerCard} ${player.won === true ? styles.borderedWon : player.won === false ? styles.borderedLost : ''}`}>
+  <div className={`${sharedStyles.row} ${styles.containerCard} ${player.won === true ? styles.borderedWon : ''} ${player.won === false ? styles.borderedLost : ''}`}>
     <div style={{ width: `${matchmakingStatsColWidth[0]}%` }}>
-      <img src={centaur} />
+      <img src={player.hero_avatar_url} alt={player.hero_name} />
     </div>
     <div className={styles.playerStats} style={{ width: `${matchmakingStatsColWidth[1]}%` }}>
       {player.hero_name}

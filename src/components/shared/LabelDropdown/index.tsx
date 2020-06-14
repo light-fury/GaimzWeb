@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './Dropdown.module.css';
 import 'react-dropdown/style.css';
 import Dropdown, { Option } from 'react-dropdown';
+import styles from './Dropdown.module.css';
 
 interface LabelDropdownProps {
   label?: string;
@@ -10,7 +10,12 @@ interface LabelDropdownProps {
   onSelectValue: (value: string) => void;
 }
 
-const LabelDropdown = ({ label, selectedItemValue, dropdownItems, onSelectValue }: LabelDropdownProps) => {
+const LabelDropdown = ({
+  label,
+  selectedItemValue,
+  dropdownItems,
+  onSelectValue
+}: LabelDropdownProps) => {
   const onChange = (option: Option) => {
     onSelectValue(option.value);
   };

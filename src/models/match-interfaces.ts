@@ -1,4 +1,6 @@
 export interface PlayerInterface {
+  player_status: string;
+  won?: boolean;
   user_id: string;
   hero_name?: string;
   hero_avatar_url?: string;
@@ -8,10 +10,8 @@ export interface PlayerInterface {
   items?: string[];
   gpm?: number;
   lasthits?: number;
-  denies?: number;
   user_avatar_url?: string;
-  player_status: string;
-  won?: boolean;
+  denies?: number;
 }
 
 export interface Stats {
@@ -38,6 +38,7 @@ export interface MatchResponse {
   end_time?: string;
   bet?: number;
   game_mode?: string;
+  game_type?: string;
   match_status?: string;
   players?: PlayerDto[];
   stats?: Stats;
@@ -88,10 +89,8 @@ export interface MatchResult {
   stats: Stats;
 }
 
-export interface MatchesState {
-  recentMatchesData: MatchResult[];
-  gameData: Game;
-  gamesData?: Game[];
-  matchData: MatchResponse;
-  isLoading: boolean;
+export enum PlayerStatus{
+  MatchRequested = 'match_requested',
+  MatchAccepted = 'match_accepted',
+  MatchCancelled = 'match_cancelled',
 }

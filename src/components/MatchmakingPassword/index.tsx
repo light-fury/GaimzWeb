@@ -3,11 +3,7 @@ import styles from './MatchmakingPassword.module.css';
 import { InputType } from '../shared/InputField';
 import DarkInputField from '../shared/DarkInputField';
 
-interface MatchmakingPasswordProps {
-
-}
-
-const MatchmakingPassword = ({}: MatchmakingPasswordProps) => {
+const MatchmakingPassword = () => {
   const [password, setPassword] = useState<string>('');
 
   const onPasswordEnter = () => {
@@ -30,24 +26,25 @@ const MatchmakingPassword = ({}: MatchmakingPasswordProps) => {
         onChange={setPassword}
       />
       <div className={styles.centerContainer}>
-        <div
+        <button
           className={styles.passwordButton}
           onClick={onPasswordEnter}
         >
           Enter
-        </div>
+        </button>
       </div>
       <div className={styles.centerContainer}>
-        <div
+        <button
           className={styles.cancelButton}
           style={{ marginTop: 20 }}
           onClick={onCancel}
         >
           Cancel
-        </div>
+        </button>
       </div>
       <div className={styles.description}>
-        You are trying to enter a password protected lobby. Please enter the password to queue for the match
+        You are trying to enter a password protected lobby.
+        Please enter the password to queue for the match
       </div>
     </div>
   );

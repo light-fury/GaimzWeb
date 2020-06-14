@@ -9,21 +9,21 @@ interface DarkInputFieldProps {
   onChange: (val: string) => void;
 }
 
-const DarkInputField = (props: DarkInputFieldProps) => (
+const DarkInputField = ({ label, type, value, onChange }: DarkInputFieldProps) => (
   <div className={styles.container}>
     {
-        props.label
+        label
         && (
           <div className={styles.label}>
-            {props.label}
+            {label}
           </div>
         )
       }
     <input
       className={styles.input}
-      type={props.type}
-      value={props.value}
-      onChange={(event) => props.onChange(event.target.value)}
+      type={type}
+      value={value}
+      onChange={(event) => onChange(event.target.value)}
     />
   </div>
 );

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { MatchResponse, Stats, Game } from 'src/models/match-interfaces';
 import styles from './MatchmakingStats.module.css';
@@ -22,6 +23,17 @@ export const matchmakingStatsColWidth = [
 
 const MatchMakingStats = (props: MatchmakingStatsProps) => {
   const { matchResponse, matchStats, game } = props;
+  if (!matchStats) {
+    return (<div><h3>We&apos;re still loading data.</h3></div>);
+  }
+  if (matchStats.teamWon) {
+    const winningTeam = matchStats.teams.find((t) => t.id === matchStats.teamWon);
+    winningTeam!.players.forEach((p) => { p.won = true; });
+    const losingTeam = matchStats.teams.find((t) => t.id !== matchStats.teamWon);
+    losingTeam!.players.forEach((p) => { p.won = false; });
+    matchStats.dire = winningTeam?.name === 'Dire' ? winningTeam! : losingTeam!;
+    matchStats.radiant = winningTeam?.name === 'Radiant' ? winningTeam! : losingTeam!;
+  }
 
   return (
     <div>
@@ -60,7 +72,7 @@ const MatchMakingStats = (props: MatchmakingStatsProps) => {
             {matchResponse.game_mode}
           </div>
           <div className={styles.headerText}>
-            1v1
+            {matchResponse.game_type}
           </div>
           <div className={styles.headerText}>
             00:00

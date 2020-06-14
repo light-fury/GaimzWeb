@@ -9578,6 +9578,11 @@ redux-mock-store@1.5.4:
   dependencies:
     lodash.isplainobject "^4.0.6"
 
+redux-observable@^2.0.0-alpha.0:
+  version "2.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/redux-observable/-/redux-observable-2.0.0-alpha.0.tgz#e2fbb9da1db722a581c861976958c3b5d58f49cd"
+  integrity sha512-w0RsVGprIFiYi1AhFCOATiv3ld2AtuobvbcVsLvX19p8eAwLowWl2OrKYcCq/QEeEpmSHTXutXfVfcBnzaWmdw==
+
 redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
@@ -9929,7 +9934,7 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs@^6.5.3:
+rxjs@^6.5.3, rxjs@^6.5.5:
   version "6.5.5"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.5.tgz#c5c884e3094c8cfee31bf27eb87e54ccfc87f9ec"
   integrity sha512-WfQI+1gohdf0Dai/Bbmk5L5ItH5tYqm3ki2c5GdWhKjalzjg93N3avFjVStyZZz+A2Em+ZxKH5bNghw9UeylGQ==

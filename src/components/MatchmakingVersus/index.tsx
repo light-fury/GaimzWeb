@@ -8,7 +8,7 @@ interface MatchmakingVersusProps {
   players: { radiant: PlayerInterface, dire: PlayerInterface }[];
 }
 
-const MatchmakingVersus = (props: MatchmakingVersusProps) => (
+const MatchmakingVersus = ({ players }: MatchmakingVersusProps) => (
   <div className={styles.container}>
     <div className={sharedStyles.row} style={{ marginBottom: 30 }}>
       <div className={styles.leftContainer}>
@@ -27,7 +27,7 @@ const MatchmakingVersus = (props: MatchmakingVersusProps) => (
         </div>
       </div>
     </div>
-    {props.players?.map((players) => <MatchmakingVersusRow radiantPlayer={players.radiant} direPlayer={players.dire} />)}
+    {players?.map((p) => <MatchmakingVersusRow radiantPlayer={p.radiant} direPlayer={p.dire} />)}
   </div>
 );
 

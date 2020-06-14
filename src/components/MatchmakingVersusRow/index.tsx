@@ -1,6 +1,4 @@
 import React from 'react';
-import direImg from 'src/images/matchmaking/direImage.svg';
-import radiantImg from 'src/images/matchmaking/radiantImage.svg';
 import { PlayerInterface } from 'src/models/match-interfaces';
 import styles from './MatchmakingVersusRow.module.css';
 import sharedStyles from '../shared/sharedcss.module.css';
@@ -10,22 +8,22 @@ interface MatchmakingVersusRowProps {
   direPlayer: PlayerInterface;
 }
 
-const MatchmakingVersusRow = (props: MatchmakingVersusRowProps) => (
+const MatchmakingVersusRow = ({ radiantPlayer, direPlayer }: MatchmakingVersusRowProps) => (
   <div className={sharedStyles.row}>
     <div className={`${sharedStyles.halfContainer} ${sharedStyles.row}`}>
-      <div className={props.radiantPlayer.won === true ? styles.borderedWonImg : props.radiantPlayer.won === false ? styles.borderedLostImg : ''}>
-        <img src={radiantImg} />
+      <div className={`${radiantPlayer.won === true ? styles.borderedWonImg : ''} ${radiantPlayer.won === false ? styles.borderedLostImg : ''}`}>
+        <img src={radiantPlayer.user_avatar_url} alt={radiantPlayer.user_id} />
       </div>
       <div className={styles.playerText} style={{ marginLeft: '1rem' }}>
-        {props.radiantPlayer.user_id}
+        {radiantPlayer.user_id}
       </div>
     </div>
     <div className={`${sharedStyles.halfContainer} ${sharedStyles.row} ${sharedStyles.alignRight}`}>
       <div className={styles.playerText} style={{ marginRight: '1rem' }}>
-        {props.direPlayer.user_id}
+        {direPlayer.user_id}
       </div>
-      <div className={props.direPlayer.won === true ? styles.borderedWonImg : props.direPlayer.won === false ? styles.borderedLostImg : ''}>
-        <img src={direImg} />
+      <div className={`${direPlayer.won === true ? styles.borderedWonImg : ''} ${direPlayer.won === false ? styles.borderedLostImg : ''}`}>
+        <img src={direPlayer.user_avatar_url} alt={direPlayer.user_id} />
       </div>
     </div>
   </div>
