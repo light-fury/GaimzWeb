@@ -1,0 +1,28 @@
+.container {
+
+}
+
+.topText {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.leftContainer {
+  width: 45%;
+}
+
+.middleContainer {
+  width: 10%;
+  text-align: center;
+}
+
+.rightContainer {
+  width: 45%;
+  text-align: right;
+}

@@ -2,6 +2,7 @@
   display: flex;
   align-items: self-start;
   background-color: #e5e5e5;
+  height: 100%;
 }
 
 .mainContainer {
@@ -91,4 +92,93 @@
   height: 5px;
   border-radius: 12px;
   background-color: #1e1f20;
+}
+
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.matchButton {
+  padding: 1rem 0;
+  background-color: #613BFF;
+  min-width: 300px;
+  font-size: 14px;
+  font-family: 'Muli';
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+  border-radius: 12px;
+  border: 0;
+}
+
+.settingsButton {
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Muli';
+  min-width: 300px;
+  text-align: center;
+  font-weight: bold;
+  color: #979797;
+  margin-top: 3rem;
+  border: 0;
+  background-color: inherit;
+}
+
+.dota2Bg {
+  margin-bottom: 3.5rem;
+}
+
+.reportIssuesButton {
+  cursor: pointer;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  padding-bottom: 10px;
+  color: #979797;
+  max-width: 300px;
+  background-color: inherit;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+
+}
+
+.resendInvitesButton {
+  padding: 0.5rem 0;
+  background-color: #613BFF;
+  width: 200px;
+  font-size: 14px;
+  font-family: 'Muli';
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+  border-radius: 12px;
+  margin-bottom: 3rem;
+  border: 0;
+}
+
+.bottomButtonContainer {
+  position: absolute;
+  bottom: 3rem;
+  width: 100%;
+}
+
+.bottomTextMatchName {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 30px;
+  color: rgba(255, 255, 255, 0.69);
+  margin-bottom: 1rem;
+}
+
+.steamWarning{
+  margin-top: 100px;
+  color: white;
+  text-align: center;
 }

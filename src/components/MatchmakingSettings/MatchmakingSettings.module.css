@@ -1,0 +1,26 @@
+.container {
+  padding: 0 3rem;
+  margin-bottom: 3rem;
+}
+
+.title {
+  color: #FFFFFF;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.halfContainer {
+  width: 50%;
+}
+
+.leftContainer {
+  padding-right: 0.5rem;
+}
+
+.rightContainer {
+  padding-left: 0.5rem;
+}

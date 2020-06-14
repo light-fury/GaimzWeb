@@ -1,0 +1,27 @@
+.container {
+  margin-top: 2rem;
+}
+
+.label {
+  margin-bottom: 0.5rem;
+  color: white;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.input {
+  width: 100%;
+  flex: 1;
+  border: 2px solid rgba(143, 146, 161, 0.2);
+  border-radius: 5px;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.63);
+  background-color: transparent;
+  min-height: 40px;
+}
