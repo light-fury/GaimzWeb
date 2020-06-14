@@ -30,7 +30,7 @@ const MatchmakingPlayerHero = ({ player }: MatchmakingPlayerHeroProps) => {
       }
     }
     return returnItems;
-  }, [player]);
+  }, [player.items]);
 
 
   return (
