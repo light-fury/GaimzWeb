@@ -13,10 +13,11 @@ import styles from './Feed.module.css';
 
 const Feed = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((s: RootState) => s.authentication);
   useEffect(() => {
     dispatch(loadFeed());
-    dispatch(loadForYouFeed());
-  }, [dispatch]);
+    dispatch(loadForYouFeed(user));
+  }, [dispatch, user]);
   const { feedData } = useSelector((s: RootState) => s.feed);
   const { forYouFeedData } = useSelector((s: RootState) => s.feed);
   return (
@@ -58,15 +59,20 @@ const Feed = () => {
           {forYouFeedData !== null
             && forYouFeedData.map((feedItem) => (
               <ForYouFeedCard
-                key={`${feedItem.id}`}
-                id={feedItem.id}
-                userName={feedItem.user.name}
-                userAvatar={feedItem.user.icon}
-                sourceImg={feedItem.sourceImg}
-                isLive={feedItem.isLive}
+                key={`${feedItem.user_id}`}
+                id={feedItem.user_id}
+                userName={feedItem.user_name}
+                userAvatar={feedItem.user_avatar_url}
+                sourceImg={feedItem.twitch_thumbnail_url}
+                isLive={feedItem.twitch_account_name}
               />
             ))}
         </div>
+        <span>
+          <button className={styles.seeMoreBtn}>
+            Show more
+          </button>
+        </span>
       </RightModal>
 
     </div>

@@ -13,7 +13,6 @@ import { Arrow, StreamerTile } from 'src/components';
 import logo from 'src/images/logos/logo.svg';
 import gear from 'src/images/icons/gear.svg';
 import search from 'src/images/icons/search.svg';
-
 import { Streamer, loadStreamers } from 'src/features/feed';
 import { RootState } from 'src/app/rootReducer';
 import styles from './StreamerNavBar.module.css';

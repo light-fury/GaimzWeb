@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { feedData, streamerData, forYouFeedData } from 'src/utils/dummyData';
+import { feedData, streamerData } from 'src/utils/dummyData';
 // import { Stream } from 'stream';
+import axios from 'axios';
 import { AppThunk } from './helpers';
 
 export interface Streamer {
@@ -23,13 +24,13 @@ export interface Feed {
 }
 
 export interface ForYouFeed {
-  user: Streamer;
-  id: string;
-  title: string;
-  subTitle: string;
-  sourceImg: string;
-  viewerCount: string;
-  isLive: boolean;
+  user_id: string;
+  user_name: string;
+  twitch_title: string;
+  user_avatar_url: string;
+  twitch_thumbnail_url: string;
+  twitch_viewer_count: string;
+  twitch_account_name: boolean;
 }
 
 export interface FeedState {
@@ -63,6 +64,9 @@ const feed = createSlice({
       state.streamerData = payload;
     },
     forYouFeedLoaded(state, { payload }: PayloadAction<ForYouFeed[]>) {
+      payload.forEach((element) => {
+        element.twitch_thumbnail_url = element.twitch_thumbnail_url.replace('{width}', '400').replace('{height}', '200');
+      });
       state.forYouFeedData = payload;
     }
   },
@@ -93,7 +97,6 @@ export const loadFeed = (): AppThunk => async (dispatch) => {
 export const loadStreamers = (): AppThunk => async (dispatch) => {
   try {
     dispatch(startFetching());
-    // fetch call to https://discoverapi.gaimz.com/discover/foryou
     const response = { data: streamerData };
     dispatch(streamersLoaded(response.data));
   } catch (error) {
@@ -103,11 +106,14 @@ export const loadStreamers = (): AppThunk => async (dispatch) => {
   }
 };
 
-export const loadForYouFeed = (): AppThunk => async (dispatch) => {
+export const loadForYouFeed = (user:any): AppThunk => async (dispatch) => {
   try {
     dispatch(startFetching());
-    const response = { data: forYouFeedData };
-    dispatch(forYouFeedLoaded(response.data));
+    if (user.apps.twitch) {
+      const response = await axios.get('https://discoveryapi.gaimz.com/discover/foryou');
+      console.log(response);
+      dispatch(forYouFeedLoaded(response.data));
+    }
   } catch (error) {
     // log an error here
     // console.log(error);
