@@ -74,9 +74,10 @@ const authentication = createSlice({
     stopFetching(state) {
       state.isLoading = false;
     },
-    userLoaded(state, { payload }: PayloadAction<UserNestedObject>) {
+    userLoaded(state, { payload }: PayloadAction<User>) {
       state.isAuthenticated = true;
-      state.user = payload;
+      state.user = payload.user;
+      setAuthToken(payload.auth_token);
     },
     loginSuccess: setAuthenticated,
     registerSuccess: setAuthenticated,
@@ -104,7 +105,7 @@ export default authentication.reducer;
 export const loadUser = (): AppThunk => async (dispatch) => {
   try {
     const response = await axios.get('https://basicapi.gaimz.com/checktoken');
-    dispatch(userLoaded(response.data.user));
+    dispatch(userLoaded(response.data));
   } catch (error) {
     dispatch(authenticationError());
   }
@@ -130,8 +131,7 @@ export const login = (email: string, password: string): AppThunk => async (
       throw new Error();
     }
     dispatch(loginSuccess());
-    setAuthToken(response.data.auth_token);
-    dispatch(userLoaded(response.data.user));
+    dispatch(userLoaded(response.data));
     dispatch(
       createAlert(`Welcome back, ${response.data.user.user_name}`, 'success')
     );
@@ -179,8 +179,7 @@ export const register = (
       throw new Error();
     }
     dispatch(registerSuccess());
-    setAuthToken(response.data.auth_token);
-    dispatch(userLoaded(response.data.user));
+    dispatch(userLoaded(response.data));
     dispatch(
       createAlert(`Welcome, ${response.data.user.user_name}`, 'success')
     );
