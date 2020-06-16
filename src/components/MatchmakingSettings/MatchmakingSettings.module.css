@@ -24,3 +24,23 @@
 .rightContainer {
   padding-left: 0.5rem;
 }
+
+.matchButton {
+  margin-top: 20px;
+  padding: 1rem 0;
+  background-color: #613BFF;
+  min-width: 300px;
+  font-size: 14px;
+  font-family: 'Muli';
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+  border-radius: 12px;
+  border: 0;
+}
+
+.matchButton:disabled{
+  background-color: #b5aae0;
+  cursor: not-allowed;
+}

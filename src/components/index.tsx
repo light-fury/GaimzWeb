@@ -12,6 +12,7 @@ import MatchmakingStats from './MatchmakingStats';
 import MatchmakingVersus from './MatchmakingVersus';
 import MatchmakingVersusRow from './MatchmakingVersusRow';
 import RecentMatches from './RecentMatches';
+import GameSelector from './GameSelector';
 
 export * from './shared';
 export {
@@ -22,11 +23,12 @@ export {
   StreamerTile,
   Connections,
   FindingMatchmaking,
+  GameSelector,
   MatchmakingPassword,
   MatchmakingPlayerHero,
   MatchmakingSettings,
   MatchmakingStats,
   MatchmakingVersus,
   MatchmakingVersusRow,
-  RecentMatches
+  RecentMatches,
 };
