@@ -58,14 +58,16 @@ const Feed = () => {
         <div className={styles.row}>
           {forYouFeedData !== null
             && forYouFeedData.map((feedItem) => (
-              <ForYouFeedCard
-                key={`${feedItem.user_id}`}
-                id={feedItem.user_id}
-                userName={feedItem.user_name}
-                userAvatar={feedItem.user_avatar_url}
-                sourceImg={feedItem.twitch_thumbnail_url}
-                isLive={feedItem.twitch_account_name}
-              />
+              <Link to={`/stream/${feedItem.user_name}`}>
+                <ForYouFeedCard
+                  key={`${feedItem.user_id}`}
+                  id={feedItem.user_id}
+                  userName={feedItem.user_name}
+                  userAvatar={feedItem.user_avatar_url}
+                  sourceImg={feedItem.twitch_thumbnail_url}
+                  isLive={feedItem.twitch_account_name}
+                />
+              </Link>
             ))}
         </div>
         <span>

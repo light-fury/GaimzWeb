@@ -1,0 +1,125 @@
+.pageContainer {
+    display: flex;
+    align-items: self-start;
+    background-color: #e5e5e5;
+  }
+  
+  .mainContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    margin: 0px 0px 0px 114px;
+  }
+  
+  .topNavBar {
+    width: 635px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 60px 0px 60px 0px;
+  }
+  
+  .topNavBarItem {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: auto;
+    height: 25px;
+    margin: 0px 28px 0px 0px;
+    cursor: pointer;
+  }
+  
+  .topNavBarItem a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+  
+  .active,
+  .inactive {
+    font-family: 'Muli';
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  
+  .active {
+    color: #090909;
+  }
+  
+  .inactive {
+    color: #8f92a1;
+  }
+  
+  .titleContainer {
+    width: 635px;
+    margin: 0px 0px 28px 0px;
+  }
+  
+  .title {
+    font-family: 'Muli';
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 30px;
+    color: #1e1f20;
+  }
+  
+  .contentContainer {
+    flex: 1;
+    padding-left: 15px;
+    margin: 0px 10px 10px 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #9c9c9c #cdcfd5;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    scrollbar-width: thin;
+    scrollbar-color: #9c9c9c #cdcfd5;
+    align-items: flex-start;
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  .contentContainer::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .contentContainer::-webkit-scrollbar-thumb {
+    height: 128px;
+    border-radius: 100px;
+    background-color: #cdcfd5;
+  }
+  
+  .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 12px;
+    background-color: #1e1f20;
+  }
+  
+  .seeMoreBtn {
+    width: 130px;
+    height: 30px;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8F92A1;
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 32px 0px 0px 32px;
+  }
