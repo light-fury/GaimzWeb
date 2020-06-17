@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { feedData, streamerData } from 'src/utils/dummyData';
-// import { Stream } from 'stream';
 import axios from 'axios';
 import { AppThunk } from './helpers';
 

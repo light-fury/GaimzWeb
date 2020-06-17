@@ -12,14 +12,13 @@ import { getCurrentStreamer } from 'src/features/feed';
 
 import styles from './UserStream.module.css';
 
-declare let params: any;
 const UserStream = () => {
   const dispatch = useDispatch();
   const streamerName = useLocation().pathname.slice(8);
   let StreamerData:any;
   StreamerData = null;
   const { forYouFeedData } = useSelector((s: RootState) => s.feed);
-  console.log(forYouFeedData);
+  // console.log('foryoufeeddata', forYouFeedData);
   for (let i = 0; i < forYouFeedData.length; i += 1) {
     if (forYouFeedData[i].user_name === streamerName) {
       StreamerData = forYouFeedData[i];
@@ -29,9 +28,10 @@ const UserStream = () => {
   // console.log(currentStreamer);
   useEffect(() => {
     dispatch(getCurrentStreamer(StreamerData));
+    // console.log('hi victor');
   }, [dispatch, StreamerData]);
   const { currentStreamer } = useSelector((s: RootState) => s.feed);
-  console.log('here', currentStreamer);
+  // console.log('here', currentStreamer);
   return (
     <div className={styles.pageContainer}>
       <div className={styles.mainContainer}>
@@ -63,7 +63,17 @@ const UserStream = () => {
       </div>
       <RightModal>
         <h1 style={{ color: 'white' }}>Chat</h1>
-        <StreamChat />
+        {currentStreamer
+          && (
+            <StreamChat
+              key={`${currentStreamer!.user_id}`}
+              id={currentStreamer!.user_id}
+              userName={currentStreamer!.user_name}
+              userAvatar={currentStreamer!.user_avatar_url}
+              sourceImg={currentStreamer!.twitch_thumbnail_url}
+              isLive={currentStreamer!.twitch_account_name}
+            />
+          )}
       </RightModal>
     </div>
   );
