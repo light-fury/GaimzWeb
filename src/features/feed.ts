@@ -13,6 +13,7 @@ export interface Streamer {
   subscribed: boolean;
   online: boolean;
 }
+
 export interface Feed {
   user: Streamer;
   id: string;
@@ -68,6 +69,9 @@ const feed = createSlice({
         element.twitch_thumbnail_url = element.twitch_thumbnail_url.replace('{width}', '400').replace('{height}', '200');
       });
       state.forYouFeedData = payload;
+    },
+    currentStreamerLoaded(state, { payload }: PayloadAction<ForYouFeed[]>) {
+      console.log(payload);
     }
   },
 });
@@ -78,6 +82,7 @@ export const {
   streamersLoaded,
   feedLoaded,
   forYouFeedLoaded,
+  currentStreamerLoaded
 } = feed.actions;
 
 export default feed.reducer;
@@ -111,9 +116,20 @@ export const loadForYouFeed = (user:any): AppThunk => async (dispatch) => {
     dispatch(startFetching());
     if (user.apps.twitch) {
       const response = await axios.get('https://discoveryapi.gaimz.com/discover/foryou');
-      console.log(response);
       dispatch(forYouFeedLoaded(response.data));
     }
+  } catch (error) {
+    // log an error here
+    // console.log(error);
+  } finally {
+    dispatch(stopFetching());
+  }
+};
+
+export const getCurrentStreamer = (id:any): AppThunk => async (dispatch) => {
+  try {
+    console.log(id);
+    dispatch(currentStreamerLoaded);
   } catch (error) {
     // log an error here
     // console.log(error);

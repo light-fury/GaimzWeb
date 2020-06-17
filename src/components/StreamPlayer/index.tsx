@@ -13,6 +13,7 @@ const StreamPlayer = () => {
     );
     script.setAttribute('type', 'text/javascript');
     script.addEventListener('load', () => {
+      // need const... but typescript complains if it is there. if I take it out, player won't play
       embed = new window.Twitch.Player('twitch-stream', {
         channel: 'pokimane',
         height: '600px',
