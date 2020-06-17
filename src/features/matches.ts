@@ -147,11 +147,12 @@ export const loadGame = (gameId: string): AppThunk => async (dispatch) => {
   }
 };
 
-export const findMatch = (matchRequestDTO: MatchRequestDTO): AppThunk => async (dispatch) => {
+export const settingsSubmitted = (mrDTO: MatchRequestDTO): AppThunk => async (dispatch) => {
   try {
     dispatch(startFetching());
-    const response = await axios.post(`${mmapiUrl}/match`, matchRequestDTO);
+    const response = await axios.post(`${mmapiUrl}/match`, mrDTO);
     dispatch(matchStarted(response.data));
+    dispatch(pollStart());
     // dispatch(recentMatchesLoaded(response.data));
   } catch (error) {
     // log an error here
@@ -160,13 +161,35 @@ export const findMatch = (matchRequestDTO: MatchRequestDTO): AppThunk => async (
   }
 };
 
+
+export const getCurrentMatch = (): AppThunk => async (dispatch) => {
+  try {
+    const response = (await axios.get(`${mmapiUrl}/match/current`));
+    dispatch(matchStarted(response.data));
+  } catch (error) {
+    // eslint hates console.log - needs to go to pro logger (like sentry)
+  }
+};
+
 export const updateMatch = (matchId: string, accept: boolean): AppThunk => async (dispatch) => {
   try {
     dispatch(startFetching());
     const response = (await axios.put(`${mmapiUrl}/match/${matchId}`, { accept_match: accept }));
     // console.log(response);
-    if (accept) { dispatch(acceptMatch()); }
+    if (accept) { dispatch(acceptMatch()); } else { dispatch(pollStop); }
     dispatch(matchStarted(response.data));
+  } catch (error) {
+    // eslint hates console.log - needs to go to pro logger (like sentry)
+  } finally {
+    dispatch(stopFetching());
+  }
+};
+
+export const resendUpdates = (matchId: string): AppThunk => async (dispatch) => {
+  try {
+    dispatch(startFetching());
+    await axios.post(`${mmapiUrl}/lobby/invite`, { match_id: matchId });
+    // console.log(response);
   } catch (error) {
     // eslint hates console.log - needs to go to pro logger (like sentry)
   } finally {
