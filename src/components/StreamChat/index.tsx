@@ -2,29 +2,32 @@ import React, { useEffect } from 'react';
 
 declare const document: Document;
 declare const window: any;
-const TWITCH_CHAT_URL = 'https://www.twitch.tv/embed';
+// const TWITCH_CHAT_URL = 'https://www.twitch.tv/embed';
 
 const StreamChat = () => {
-  const embedURL = `${TWITCH_CHAT_URL}/pokimane/chat`;
-  const chatURL = 'https://www.twitch.tv/embed/loltyler1/chat?parent=z6yyt2tbn36fxromr8j4hbo626a329';
-  //   const twitch_Key = 'z6yyt2tbn36fxromr8j4hbo626a329';
+//   const embedURL = `${TWITCH_CHAT_URL}/pokimane/chat`;
+  const chatURL = `http://twitch.tv/embed/loltyler1/chat?parent=${window.location.hostname}`;
   useEffect(() => {
     const iframe = document.createElement('iframe');
-    iframe.setAttribute('src', embedURL);
-    document.body.appendChild(iframe);
+    iframe.setAttribute('src', chatURL);
+    iframe.setAttribute('style', 'width: 300px');
+    iframe.setAttribute('style', 'height: 500px');
+    iframe.setAttribute('X-Frame-Options', 'deny');
+    // document.body.appendChild(iframe);
+    document.getElementById('twitch-chat')!.appendChild(iframe);
   });
   return (
-    <iframe
-      title="twitch-chat"
-      id="pokimane"
-      src={chatURL}
-    //   parent={twitch_Key}
-      height="200"
-      width="300"
-    >
-      Hello
-    </iframe>
+    <div id="twitch-chat">
+      hello
+    </div>
   );
 };
 
 export default StreamChat;
+
+
+// title: `${id} chat`,
+// key: `${id} chat - ${isDarkMode ? "Dark mode" : "Light mode"}`,
+// src: `https://www.twitch.tv/embed/${id}/chat?parent=${
+//   window.location.hostname
+// }${isDarkMode ? "&darkpopout" : ""}`

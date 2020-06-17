@@ -13,6 +13,7 @@ interface ForYouFeedCardProps {
   isLive: boolean;
 }
 
+
 const ForYouFeedCard = ({
   userName,
   userAvatar,
@@ -21,8 +22,8 @@ const ForYouFeedCard = ({
 }: ForYouFeedCardProps) => (
   <div className={styles.attraction} style={{ backgroundImage: `url(${sourceImg})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
     <div className={styles.avatarContainer}>
+      <Avatar name={userName} icon={userAvatar} online size="28px" />
       <Link to={`/stream/${userName}`}>
-        <Avatar name={userName} icon={userAvatar} online size="28px" />
         <span className={styles.username}>{userName}</span>
       </Link>
     </div>

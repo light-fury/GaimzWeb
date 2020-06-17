@@ -14,6 +14,16 @@ export interface Streamer {
   online: boolean;
 }
 
+export interface CurrentStreamer {
+  user_id: string;
+  user_name: string;
+  twitch_title: string;
+  user_avatar_url: string;
+  twitch_thumbnail_url: string;
+  twitch_viewer_count: string;
+  twitch_account_name: boolean;
+}
+
 export interface Feed {
   user: Streamer;
   id: string;
@@ -39,6 +49,7 @@ export interface FeedState {
   isLoading: boolean;
   streamerData: Streamer[];
   forYouFeedData: ForYouFeed[];
+  currentStreamer?: CurrentStreamer;
 }
 
 const initialState: FeedState = {
@@ -70,8 +81,8 @@ const feed = createSlice({
       });
       state.forYouFeedData = payload;
     },
-    currentStreamerLoaded(state, { payload }: PayloadAction<ForYouFeed[]>) {
-      console.log(payload);
+    currentStreamerLoaded(state, { payload }: PayloadAction<CurrentStreamer>) {
+      state.currentStreamer = payload;
     }
   },
 });
@@ -126,10 +137,10 @@ export const loadForYouFeed = (user:any): AppThunk => async (dispatch) => {
   }
 };
 
-export const getCurrentStreamer = (id:any): AppThunk => async (dispatch) => {
+export const getCurrentStreamer = (currentStreamer:any): AppThunk => async (dispatch) => {
   try {
-    console.log(id);
-    dispatch(currentStreamerLoaded);
+    dispatch(startFetching());
+    dispatch(currentStreamerLoaded(currentStreamer));
   } catch (error) {
     // log an error here
     // console.log(error);
