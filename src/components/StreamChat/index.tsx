@@ -16,6 +16,7 @@ interface StreamPlayerProps {
 }
 const StreamChat = ({
   userName,
+// may need these props later
 //   userAvatar,
 //   sourceImg,
 //   isLive,
