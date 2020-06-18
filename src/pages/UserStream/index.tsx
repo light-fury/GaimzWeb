@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { RightModal } from 'src/components';
 
@@ -14,8 +14,9 @@ import styles from './UserStream.module.css';
 
 const UserStream = () => {
   const dispatch = useDispatch();
-  const streamerName = useLocation().pathname.slice(8);
-  let StreamerData:any;
+  const { user } = useParams();
+  const streamerName = user;
+  let StreamerData: any;
   StreamerData = null;
   const { forYouFeedData } = useSelector((s: RootState) => s.feed);
   for (let i = 0; i < forYouFeedData.length; i += 1) {

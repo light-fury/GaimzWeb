@@ -10,7 +10,6 @@ import { Feed, Login, Register, MatchMaking, Oauth } from 'src/pages';
 import UserStream from 'src/pages/UserStream/index';
 import setAuthToken from 'src/utils/setAuthToken';
 import { StreamerNavbar, Alert } from 'src/components';
-// import { UserStream } from 'src/components';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadUser } from 'src/features/authentication';
 import PrivateRoute from './PrivateRoute';
