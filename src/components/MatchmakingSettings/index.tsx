@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Option } from 'react-dropdown';
 import { Game } from 'src/models/match-interfaces';
 import styles from './MatchmakingSettings.module.css';
 import LabelDropdown from '../shared/LabelDropdown';
 import sharedStyles from '../shared/sharedcss.module.css';
+import DarkInputField from '../shared/DarkInputField';
+import { InputType } from '../shared';
 
 export enum Restriction {
   Everyone = 'Everyone',
@@ -18,14 +20,20 @@ export interface IMatchmakingSettings {
   region: string;
   restriction: Restriction;
   password: string;
-  complete: boolean;
-  [s: string]: string | boolean;
+  [s: string]: string;
+}
+
+interface MatchmakingSettingsUpdate{
+  gameType?: string;
+  gameMode?: string;
+  region?: string;
+  restriction?: Restriction;
+  password?: string;
 }
 
 interface MatchmakingSettingsProps {
-  matchmakingSettings: IMatchmakingSettings;
-  onChangeMatchmakingSettings: (matchmakingSettings: IMatchmakingSettings) => void;
   game: Game;
+  onSubmitForm(settings: IMatchmakingSettings): void;
 }
 
 const RegionDropDown: Option[] = [
@@ -33,19 +41,6 @@ const RegionDropDown: Option[] = [
     label: 'Automatic',
     value: 'auto'
   }
-  // },
-  // {
-  //   label: 'N. America',
-  //   value: 'NA'
-  // },
-  // {
-  //   label: 'Europe',
-  //   value: 'EU'
-  // },
-  // {
-  //   label: 'Asia',
-  //   value: 'ASIA'
-  // }
 ];
 
 const RestrictionDropDown: Option[] = [
@@ -68,16 +63,30 @@ const RestrictionDropDown: Option[] = [
 ];
 
 const MatchmakingSettings = (
-  { matchmakingSettings, onChangeMatchmakingSettings, game }: MatchmakingSettingsProps
+  { game, onSubmitForm }: MatchmakingSettingsProps
 ) => {
-  const onSettingsChange = (val: string, field: string) => {
-    const newSettings: IMatchmakingSettings = { ...matchmakingSettings };
-    newSettings[field] = val;
-    newSettings.complete = true;
-    for (const k in newSettings) {
-      if (k !== 'complete' && !newSettings[k]) { newSettings.complete = false; }
+  const [matchmakingSettings, setMatchmakingSettings] = useState<IMatchmakingSettings>({
+    gameType: '',
+    gameMode: '',
+    region: 'auto',
+    restriction: Restriction.Everyone,
+    password: '',
+  });
+
+  const [valid, setValid] = useState<boolean>(false);
+
+  const onSettingsChange = (update: MatchmakingSettingsUpdate) => {
+    const newSettings: IMatchmakingSettings = { ...matchmakingSettings, ...update };
+    setMatchmakingSettings(newSettings);
+    if (!newSettings.gameMode
+      || !newSettings.gameType
+      || !newSettings.restriction
+      || !newSettings.region
+      || (!newSettings.password && newSettings.restriction === Restriction.PasswordProtected)) {
+      setValid(false);
+    } else {
+      setValid(true);
     }
-    onChangeMatchmakingSettings(newSettings);
   };
 
   const selectedGameType = game.game_types.find((gt) => gt.type === matchmakingSettings.gameType);
@@ -87,13 +96,13 @@ const MatchmakingSettings = (
   return (
     <div className={styles.container}>
       <div className={styles.title}>
-        SEARCH SETTINGS
+        {`SEARCH SETTINGS - ${game.game_name}`}
       </div>
       <LabelDropdown
         label="GAME TYPE"
         selectedItemValue={matchmakingSettings.gameType}
         dropdownItems={game.game_types.map((gt) => ({ label: gt.type, value: gt.type }))}
-        onSelectValue={(val) => { onSettingsChange(val, 'gameType'); }}
+        onSelectValue={(val) => onSettingsChange({ gameType: val, gameMode: '' })}
       />
       <div className={sharedStyles.row}>
         <div className={styles.halfContainer}>
@@ -104,7 +113,7 @@ const MatchmakingSettings = (
               dropdownItems={selectedGameType
                 ? selectedGameType.gameModes.map((gm) => ({ label: gm, value: gm }))
                 : []}
-              onSelectValue={(val) => onSettingsChange(val, 'gameMode')}
+              onSelectValue={(val) => onSettingsChange({ gameMode: val })}
             />
           </div>
         </div>
@@ -114,17 +123,29 @@ const MatchmakingSettings = (
               label="REGION"
               selectedItemValue={matchmakingSettings.region}
               dropdownItems={RegionDropDown}
-              onSelectValue={(val) => onSettingsChange(val, 'region')}
+              onSelectValue={(val) => onSettingsChange({ region: val })}
             />
           </div>
         </div>
       </div>
       <LabelDropdown
-        label="CREATE MATCH"
+        label="RESTRICTION"
         selectedItemValue={matchmakingSettings.restriction}
         dropdownItems={RestrictionDropDown}
-        onSelectValue={(val) => onSettingsChange(val, 'restriction')}
+        onSelectValue={(val) => onSettingsChange({ restriction: val as Restriction })}
       />
+      {
+        matchmakingSettings.restriction === Restriction.PasswordProtected
+          ? <DarkInputField type={InputType.Password} label="PASSWORD" value={matchmakingSettings.password} onChange={(val) => onSettingsChange({ password: val })} />
+          : ''
+      }
+      <button
+        disabled={!valid}
+        className={styles.matchButton}
+        onClick={() => onSubmitForm(matchmakingSettings)}
+      >
+        Start Search
+      </button>
     </div>
   );
 };

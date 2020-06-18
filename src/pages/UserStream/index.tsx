@@ -17,18 +17,11 @@ interface params {
 }
 
 const UserStream = () => {
-  const { user } = useParams();
   const dispatch = useDispatch();
-  const streamerName = user;
-  let StreamerData:any;
-  StreamerData = null;
+  const { user } = useParams();
   const { forYouFeedData } = useSelector((s: RootState) => s.feed);
-  for (let i = 0; i < forYouFeedData.length; i += 1) {
-    if (forYouFeedData[i].user_name === streamerName) {
-      StreamerData = forYouFeedData[i];
-      break;
-    }
-  }
+  const StreamerData = forYouFeedData.find((feed) => feed.user_name === user);
+
   useEffect(() => {
     dispatch(getCurrentStreamer(StreamerData));
   }, [dispatch, StreamerData]);
