@@ -31,6 +31,21 @@ const Feed = () => {
           <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
             <Link to="/matches">Matchmaking</Link>
           </div>
+          <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
+            <Link to="/feed">Feed</Link>
+          </div>
+          <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
+            <Link to="/games">Games</Link>
+          </div>
+          <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
+            <Link to="/videos">Videos</Link>
+          </div>
+          <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
+            <Link to="/chats">Chats</Link>
+          </div>
+          <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
+            <Link to="/labels">Labels</Link>
+          </div>
         </div>
         <div className={styles.titleContainer}>
           <span className={styles.title}>Live Streams</span>
