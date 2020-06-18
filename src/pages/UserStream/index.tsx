@@ -12,10 +12,6 @@ import { getCurrentStreamer } from 'src/features/feed';
 
 import styles from './UserStream.module.css';
 
-interface params {
-  user: string;
-}
-
 const UserStream = () => {
   const dispatch = useDispatch();
   const { user } = useParams();
