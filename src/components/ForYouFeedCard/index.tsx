@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Avatar from '../shared/Avatar';
 
@@ -12,6 +13,7 @@ interface ForYouFeedCardProps {
   isLive: boolean;
 }
 
+
 const ForYouFeedCard = ({
   userName,
   userAvatar,
@@ -21,7 +23,9 @@ const ForYouFeedCard = ({
   <div className={styles.attraction} style={{ backgroundImage: `url(${sourceImg})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
     <div className={styles.avatarContainer}>
       <Avatar name={userName} icon={userAvatar} online size="28px" />
-      <span className={styles.username}>{userName}</span>
+      <Link to={`/stream/${userName}`}>
+        <span className={styles.username}>{userName}</span>
+      </Link>
     </div>
     {isLive && (
       <div className={styles.livePill}>

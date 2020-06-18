@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { feedData, streamerData } from 'src/utils/dummyData';
-// import { Stream } from 'stream';
 import axios from 'axios';
 import { AppThunk } from './helpers';
 
@@ -13,6 +12,17 @@ export interface Streamer {
   subscribed: boolean;
   online: boolean;
 }
+
+export interface CurrentStreamer {
+  user_id: string;
+  user_name: string;
+  twitch_title: string;
+  user_avatar_url: string;
+  twitch_thumbnail_url: string;
+  twitch_viewer_count: string;
+  twitch_account_name: boolean;
+}
+
 export interface Feed {
   user: Streamer;
   id: string;
@@ -38,6 +48,7 @@ export interface FeedState {
   isLoading: boolean;
   streamerData: Streamer[];
   forYouFeedData: ForYouFeed[];
+  currentStreamer?: CurrentStreamer;
 }
 
 const initialState: FeedState = {
@@ -68,6 +79,9 @@ const feed = createSlice({
         element.twitch_thumbnail_url = element.twitch_thumbnail_url.replace('{width}', '400').replace('{height}', '200');
       });
       state.forYouFeedData = payload;
+    },
+    currentStreamerLoaded(state, { payload }: PayloadAction<CurrentStreamer>) {
+      state.currentStreamer = payload;
     }
   },
 });
@@ -78,6 +92,7 @@ export const {
   streamersLoaded,
   feedLoaded,
   forYouFeedLoaded,
+  currentStreamerLoaded
 } = feed.actions;
 
 export default feed.reducer;
@@ -111,9 +126,20 @@ export const loadForYouFeed = (user:any): AppThunk => async (dispatch) => {
     dispatch(startFetching());
     if (user.apps.twitch) {
       const response = await axios.get('https://discoveryapi.gaimz.com/discover/foryou');
-      console.log(response);
       dispatch(forYouFeedLoaded(response.data));
     }
+  } catch (error) {
+    // log an error here
+    // console.log(error);
+  } finally {
+    dispatch(stopFetching());
+  }
+};
+
+export const getCurrentStreamer = (currentStreamer:any): AppThunk => async (dispatch) => {
+  try {
+    dispatch(startFetching());
+    dispatch(currentStreamerLoaded(currentStreamer));
   } catch (error) {
     // log an error here
     // console.log(error);

@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { Feed, Login, Register, MatchMaking, Oauth } from 'src/pages';
+import UserStream from 'src/pages/UserStream/index';
 import setAuthToken from 'src/utils/setAuthToken';
 import { StreamerNavbar, Alert } from 'src/components';
 import { useSelector, useDispatch } from 'react-redux';
@@ -47,6 +48,9 @@ const App: React.FC = () => {
           </PrivateRoute>
           <PrivateRoute path="/matches" exact>
             <MatchMaking />
+          </PrivateRoute>
+          <PrivateRoute path="/stream/:user">
+            <UserStream />
           </PrivateRoute>
           <Redirect to="/feed" />
         </Switch>
