@@ -29,7 +29,7 @@ const MatchMakingStats = ({ matchResponse, matchStats, game }: MatchmakingStatsP
   if (matchStats.teamWon) {
     let winningTeam: Side;
     let losingTeam: Side;
-    for (let i = 0; i < matchStats.teams.length; i += 1) {
+    for (let i = 0; i < matchStats.teams.length; i++) {
       const element = matchStats.teams[i];
       if (element.id === matchStats.teamWon) {
         winningTeam = { ...element };

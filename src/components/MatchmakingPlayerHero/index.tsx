@@ -13,7 +13,7 @@ const MatchmakingPlayerHero = ({ player }: MatchmakingPlayerHeroProps) => {
   const rowItems = useMemo(() => {
     const returnItems = [];
     if (player.items) {
-      for (let i = 0; i < 6; i += 1) {
+      for (let i = 0; i < 6; i++) {
         const element = player.items[i];
         if (!element) {
           returnItems[i] = <div key={element + i} className={`${styles.item} ${styles.empty}`} />;
