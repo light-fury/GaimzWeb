@@ -15,8 +15,15 @@ import styles from './UserStream.module.css';
 const UserStream = () => {
   const dispatch = useDispatch();
   const { user } = useParams();
+  let StreamerData: any;
   const { forYouFeedData } = useSelector((s: RootState) => s.feed);
-  const StreamerData = forYouFeedData.find((feed) => feed.user_name === user);
+  const { feedData } = useSelector((s: RootState) => s.feed);
+  if (forYouFeedData.find((feed) => feed.user_name === user)) {
+    StreamerData = forYouFeedData.find((feed) => feed.user_name === user);
+  }
+  if (feedData.find((feed) => feed.user_name === user)) {
+    StreamerData = feedData.find((feed) => feed.user_name === user);
+  }
 
   useEffect(() => {
     dispatch(getCurrentStreamer(StreamerData));
