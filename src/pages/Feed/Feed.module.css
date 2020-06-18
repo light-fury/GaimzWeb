@@ -57,6 +57,14 @@
   margin: 0px 0px 28px 0px;
 }
 
+.mockUp {
+  height: 30px;
+  margin: 0 7px;
+  background: #dadde8;
+  border-radius: 4px;
+  padding: 0 8px;
+}
+
 .title {
   font-family: 'Muli';
   font-weight: bold;

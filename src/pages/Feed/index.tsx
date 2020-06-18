@@ -48,6 +48,26 @@ const Feed = () => {
           </div>
         </div>
         <div className={styles.titleContainer}>
+          <span className={styles.title}>Explore by Categories</span>
+          <div className={styles.titleContainer}>
+            <span>
+              <button className={styles.mockUp}>For You</button>
+            </span>
+            <span>
+              <button className={styles.mockUp}>Featured</button>
+            </span>
+            <span>
+              <button className={styles.mockUp}>Lobbies</button>
+            </span>
+            <span>
+              <button className={styles.mockUp}>Buddies</button>
+            </span>
+            <span>
+              <button className={styles.mockUp}>Events</button>
+            </span>
+          </div>
+        </div>
+        <div className={styles.titleContainer}>
           <span className={styles.title}>Trending Now</span>
         </div>
         <div className={styles.contentContainer}>
