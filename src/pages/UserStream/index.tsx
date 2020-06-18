@@ -18,20 +18,16 @@ const UserStream = () => {
   let StreamerData:any;
   StreamerData = null;
   const { forYouFeedData } = useSelector((s: RootState) => s.feed);
-  // console.log('foryoufeeddata', forYouFeedData);
   for (let i = 0; i < forYouFeedData.length; i += 1) {
     if (forYouFeedData[i].user_name === streamerName) {
       StreamerData = forYouFeedData[i];
       break;
     }
   }
-  // console.log(currentStreamer);
   useEffect(() => {
     dispatch(getCurrentStreamer(StreamerData));
-    // console.log('hi victor');
   }, [dispatch, StreamerData]);
   const { currentStreamer } = useSelector((s: RootState) => s.feed);
-  // console.log('here', currentStreamer);
   return (
     <div className={styles.pageContainer}>
       <div className={styles.mainContainer}>

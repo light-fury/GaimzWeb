@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
 
+import { useDispatch } from 'react-redux';
+
+import { getCurrentStreamer } from 'src/features/feed';
+
 declare const document: Document;
 declare const window: any;
 
@@ -16,6 +20,7 @@ const StreamChat = ({
 //   sourceImg,
 //   isLive,
 }: StreamPlayerProps) => {
+  const dispatch = useDispatch();
   const chatURL = `http://twitch.tv/embed/${userName}/chat?parent=${window.location.hostname}`;
   useEffect(() => {
     const iframe = document.createElement('iframe');
@@ -23,12 +28,12 @@ const StreamChat = ({
     iframe.setAttribute('style', 'width: 350px');
     iframe.setAttribute('style', 'height: 600px');
     document.getElementById('twitch-chat')!.appendChild(iframe);
-  }, [chatURL]);
+    return () => {
+      dispatch(getCurrentStreamer(null));
+    };
+  }, [dispatch, chatURL]);
   return (
-    <div id="twitch-chat">
-      hello
-    </div>
-    // <iframe title="hello" src={chatURL} style={{ height: '600px', width: '350px' }} />
+    <div id="twitch-chat" />
   );
 };
 

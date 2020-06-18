@@ -4,6 +4,9 @@
 * and therefore the const in there is supposedly unused in our code, but it is used in Twitch's
 * embed code */
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { getCurrentStreamer } from 'src/features/feed';
 
 declare const document: Document;
 declare const window: any;
@@ -23,7 +26,9 @@ const StreamPlayer = ({
   sourceImg,
   isLive,
 }: StreamPlayerProps) => {
+  const dispatch = useDispatch();
   useEffect(() => {
+    console.log(userName);
     const script = document.createElement('script');
     script.setAttribute(
       'src',
@@ -38,7 +43,10 @@ const StreamPlayer = ({
       });
     });
     document.body.appendChild(script);
-  }, [userName]);
+    return () => {
+      dispatch(getCurrentStreamer(null));
+    };
+  }, [dispatch, userName]);
   return (
     <div id="twitch-stream" />
   );

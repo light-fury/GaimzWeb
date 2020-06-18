@@ -5,7 +5,6 @@ import { FeedCard, RightModal, Connections } from 'src/components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'src/app/rootReducer';
-// import currentStreamerLoaded
 import { loadFeed, loadForYouFeed } from 'src/features/feed';
 
 import ForYouFeedCard from '../../components/ForYouFeedCard/index';
