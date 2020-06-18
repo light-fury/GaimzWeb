@@ -76,21 +76,6 @@
     scrollbar-color: #9c9c9c #cdcfd5;
   }
   
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    scrollbar-width: thin;
-    scrollbar-color: #9c9c9c #cdcfd5;
-    align-items: flex-start;
-  }
-  
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  
   .contentContainer::-webkit-scrollbar {
     width: 5px;
   }
@@ -108,18 +93,3 @@
     background-color: #1e1f20;
   }
   
-  .seeMoreBtn {
-    width: 130px;
-    height: 30px;
-    font-family: Muli;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 20px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #8F92A1;
-    background-color: transparent;
-    padding: 5px;
-    border-radius: 32px 0px 0px 32px;
-  }
