@@ -31,23 +31,49 @@ const Feed = () => {
           <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
             <Link to="/matches">Matchmaking</Link>
           </div>
+          <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
+            <Link to="/buddies">Buddies</Link>
+          </div>
+          <div className={[styles.topNavBarItem, styles.inactive].join(' ')}>
+            <Link to="/events">Events</Link>
+          </div>
         </div>
         <div className={styles.titleContainer}>
-          <span className={styles.title}>Live Streams</span>
+          <span className={styles.title}>Explore by Categories</span>
+          <div className={styles.titleContainer}>
+            <span>
+              <button className={styles.mockUp}>For You</button>
+            </span>
+            <span>
+              <button className={styles.mockUp}>Featured</button>
+            </span>
+            <span>
+              <button className={styles.mockUp}>Lobbies</button>
+            </span>
+            <span>
+              <button className={styles.mockUp}>Buddies</button>
+            </span>
+            <span>
+              <button className={styles.mockUp}>Events</button>
+            </span>
+          </div>
+        </div>
+        <div className={styles.titleContainer}>
+          <span className={styles.title}>Trending Now</span>
         </div>
         <div className={styles.contentContainer}>
           {feedData !== null
             && feedData.map((feedItem) => (
               <FeedCard
-                key={`${feedItem.id}`}
-                id={feedItem.id}
-                userName={feedItem.user.name}
-                userAvatar={feedItem.user.icon}
-                title={feedItem.title}
-                subTitle={feedItem.subTitle}
-                sourceImg={feedItem.sourceImg}
-                viewerCount={feedItem.viewerCount}
-                isLive={feedItem.isLive}
+                key={`${feedItem.user_id}`}
+                id={feedItem.user_id}
+                userName={feedItem.user_name}
+                userAvatar={feedItem.user_avatar_url}
+                title={feedItem.twitch_title}
+                gameID={feedItem.twitch_game_id}
+                sourceImg={feedItem.twitch_thumbnail_url}
+                viewerCount={feedItem.twitch_viewer_count}
+                isLive={feedItem.twitch_account_name}
               />
             ))}
         </div>

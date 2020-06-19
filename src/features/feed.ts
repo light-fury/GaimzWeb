@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { feedData, streamerData } from 'src/utils/dummyData';
+import { streamerData } from 'src/utils/dummyData';
 import axios from 'axios';
 import { AppThunk } from './helpers';
 
@@ -24,13 +24,15 @@ export interface CurrentStreamer {
 }
 
 export interface Feed {
-  user: Streamer;
-  id: string;
-  title: string;
-  subTitle: string;
-  sourceImg: string;
-  viewerCount: string;
-  isLive: boolean;
+  user_id: string;
+  user_name: string;
+  twitch_title: string;
+  user_avatar_url: string;
+  twitch_thumbnail_url: string;
+  twitch_game_id: string;
+  twitch_viewer_count: string;
+  twitch_started_at: string;
+  twitch_account_name: boolean;
 }
 
 export interface ForYouFeed {
@@ -69,6 +71,9 @@ const feed = createSlice({
       state.isLoading = false;
     },
     feedLoaded(state, { payload }: PayloadAction<Feed[]>) {
+      payload.forEach((element) => {
+        element.twitch_thumbnail_url = element.twitch_thumbnail_url.replace('{width}', '400').replace('{height}', '200');
+      });
       state.feedData = payload;
     },
     streamersLoaded(state, { payload }: PayloadAction<Streamer[]>) {
@@ -100,7 +105,7 @@ export default feed.reducer;
 export const loadFeed = (): AppThunk => async (dispatch) => {
   try {
     dispatch(startFetching());
-    const response = { data: feedData };
+    const response = await axios.get('https://discoveryapi.gaimz.com/discover/trending?page=2');
     dispatch(feedLoaded(response.data));
   } catch (error) {
     console.log(error);

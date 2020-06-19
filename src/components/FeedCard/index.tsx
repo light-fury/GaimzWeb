@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import MeatballMenu from '../shared/Icons/MeatballMenu';
 import Viewer from '../shared/Icons/Viewer';
 import Avatar from '../shared/Avatar';
@@ -11,7 +12,7 @@ interface FeedCardProps {
   userName: string;
   userAvatar: string;
   title: string;
-  subTitle: string;
+  gameID: string;
   sourceImg: string;
   viewerCount: string;
   isLive: boolean;
@@ -21,19 +22,21 @@ const FeedCard = ({
   userName,
   userAvatar,
   title,
-  subTitle,
+  gameID,
   sourceImg,
   viewerCount,
   isLive,
 }: FeedCardProps) => (
   <div className={styles.container}>
     <div className={styles.attraction}>
-      <img className={styles.mainImage} src={sourceImg} alt="card" />
-      {isLive && (
+      <Link to={`/stream/${userName}`}>
+        <img className={styles.mainImage} src={sourceImg} alt="card" />
+        {isLive && (
         <div className={styles.livePill}>
           <p>Live</p>
         </div>
-      )}
+        )}
+      </Link>
     </div>
     <div className={styles.detailsContainer}>
       <div className={styles.titleContainer}>
@@ -45,7 +48,7 @@ const FeedCard = ({
         </div>
       </div>
       <div className={styles.metaContainer}>
-        <p className={styles.subTitle}>{subTitle}</p>
+        <p className={styles.subTitle}>{gameID}</p>
         <div className={styles.viewerContainer}>
           <div className={styles.spacerDot} />
           <Viewer />
