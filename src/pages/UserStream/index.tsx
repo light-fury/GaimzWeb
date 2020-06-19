@@ -20,8 +20,7 @@ const UserStream = () => {
   const { feedData } = useSelector((s: RootState) => s.feed);
   if (forYouFeedData.find((feed) => feed.user_name === user)) {
     StreamerData = forYouFeedData.find((feed) => feed.user_name === user);
-  }
-  if (feedData.find((feed) => feed.user_name === user)) {
+  } else if (feedData.find((feed) => feed.user_name === user)) {
     StreamerData = feedData.find((feed) => feed.user_name === user);
   }
 
